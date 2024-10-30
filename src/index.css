@@ -24,11 +24,21 @@
   font-style: normal;
 }
 
-body {
-  margin: 0;
+@font-face {
+  font-family: 'Aero'; /* The name of the custom font */
+  src: url('./assets/fonts/Aero.ttf') format('truetype'); /* Path to your .ttf file */
+}
+
+* {
   font-family: 'Aeonik-Regular', 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+}
+
+
+body {
+  margin: 0;
+overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #141414;
@@ -39,11 +49,117 @@ code {
     monospace;
 }
 
+.font-aero {
+  font-family: "Aero", sans-serif;
+}
 
+input {
+  font-family: 'Aeonik-Regular', sans-serif;
+}
+
+input:focus {
+  outline: none;
+  border: none;
+}
+
+.gradient-text {
+  font-weight: bold;
+  background: linear-gradient(90deg, #1AB6F9, #91DEFF 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.border-style-decoration-container {
+  position: relative;
+  outline: none;
+  transition: .25s;
+ 
+}
+.border-style-decoration-container::before {
+ content: "";
+ position: absolute;
+ bottom: -2px;
+ background: white;
+ width: 100%;
+  height: 100%;
+  transition: .25s;
+  right: -5px;
+  opacity: 0;
+ /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+ /* overflow: hidden; */
+ clip-path: polygon(
+   0 8px, 8px 8px, 8px 0,
+   calc(100% - 8px) 0, 100% 0, 100% 8px,
+   100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+   calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
+ );
+}
+
+
+.border-style-decoration-container.active::before {
+ content: "";
+ position: absolute;
+ bottom: -2px;
+ background: white;
+ width: 100%;
+  height: 100%;
+  transition: .25s;
+  right: -5px;
+  opacity: 1;
+ /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+ /* overflow: hidden; */
+ clip-path: polygon(
+   0 8px, 8px 8px, 8px 0,
+   calc(100% - 8px) 0, 100% 0, 100% 8px,
+   100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+   calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
+ );
+}
+
+.border-style-decoration-container:hover::before {
+ content: "";
+ position: absolute;
+ bottom: -2px;
+ background: white;
+ width: 100%;
+  height: 100%;
+  transition: .25s;
+  right: -5px;
+  opacity: 1;
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+ /* overflow: hidden; */
+ clip-path: polygon(
+   0 8px, 8px 8px, 8px 0,
+   calc(100% - 8px) 0, 100% 0, 100% 8px,
+   100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+   calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
+ );
+}
 
 .border-style-decoration {
   position: relative;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  transition: .25s;
+  /* overflow: hidden; */
+  clip-path: polygon(
+    0 8px, 8px 8px, 8px 0,
+    calc(100% - 8px) 0, 100% 0, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
+  );
+  
 }
+/* 
+.border-style-decoration:hover {
+  top: -2px;
+  transition: .25s;
+} */
+
+
 
 
 .border-style-decoration::before {
@@ -53,7 +169,7 @@ code {
   left: 0px;
   width: 8px;
   height: 8px;
-  background-color: #141414;
+  /* background-color: #141414; */
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
   border-right: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
   pointer-events: none;
@@ -66,8 +182,176 @@ code {
   right: 0px;
   width: 8px;
   height: 8px;
-  background-color: #141414;
+  /* background-color: #141414; */
   border-top: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
   border-left: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
   pointer-events: none;
+}
+
+
+/* card categories */
+.card-category {
+  position: relative;
+  outline: none;
+cursor: pointer;  
+}
+/* 
+.border-style-decoration-white:hover {
+  top: -2px;
+  transition: .25s;
+} */
+
+.card-category:hover {
+  border: 2px solid rgba(255, 255, 255, 1);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(
+    0 15px, 15px 15px, 15px 0,
+    calc(100% - 15px) 0, 100% 0, 100% 15px,
+    100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
+    calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px)
+  );
+}
+
+
+
+
+.card-category:hover::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 15px;
+  height: 15px;
+  /* background-color: #141414; */
+  border-bottom: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-right: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
+  pointer-events: none;
+}
+
+.card-category:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 15px;
+  height: 15px;
+  background-color: #141414;
+  border-top: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-left: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
+  pointer-events: none;
+}
+
+.product-ask-section {
+  position: relative;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, .2);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(
+    0 15px, 15px 15px, 15px 0,
+    calc(100% - 15px) 0, 100% 0, 100% 15px,
+    100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
+    calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px)
+  );
+}
+
+
+.product-ask-section::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 15px;
+  height: 15px;
+  /* background-color: #141414; */
+  border-bottom: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
+  border-right: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
+  pointer-events: none;
+}
+
+.product-ask-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 15px;
+  height: 15px;
+  background-color: #141414;
+  border-top: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
+  border-left: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
+  pointer-events: none;
+}
+
+
+/* card item */
+
+/* card categories */
+.card-item {
+  position: relative;
+  outline: none;
+border: 1px solid rgba(255, 255, 255, 1);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(
+    0 10px, 10px 10px, 10px 0,
+    calc(100% - 10px) 0, 100% 0, 100% 10px,
+    100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+    calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px)
+  );
+}
+/* 
+.border-style-decoration-white:hover {
+  top: -1px;
+  transition: .25s;
+} */
+
+.card-item:hover {
+  border: 1px solid rgba(26, 182, 249, 1);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(
+    0 10px, 10px 10px, 10px 0,
+    calc(100% - 10px) 0, 100% 0, 100% 10px,
+    100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+    calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px)
+  );
+}
+
+
+
+
+.card-item::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 10px;
+  height: 10px;
+  /* background-color: #141414; */
+  border-bottom: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-right: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
+  pointer-events: none;
+}
+
+.card-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 10px;
+  height: 10px;
+  background-color: #141414;
+  border-top: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-left: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
+  pointer-events: none;
+}
+.card-item:hover::before {
+  border-bottom: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
+  border-right: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
+}
+
+.card-item:hover::after {
+  border-top: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
+  border-left: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
 }
