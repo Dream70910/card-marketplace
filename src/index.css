@@ -35,6 +35,10 @@
     sans-serif;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 
 body {
   margin: 0;
@@ -355,3 +359,19 @@ border: 1px solid rgba(255, 255, 255, 1);
   border-top: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
   border-left: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
 }
+
+.animate-marquee {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+

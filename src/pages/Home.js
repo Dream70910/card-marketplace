@@ -13,7 +13,7 @@ const Home = () => {
     <div>
       <Header />
       <HeroSection />
-      <div className="pt-64 ">
+      <div className="pt-20 lg:pt-64 ">
         <HottestCategorySection />
         <ProductQuestionSection />
         <NewlyListedSection />

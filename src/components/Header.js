@@ -8,6 +8,16 @@ const Header = () => {
     <div className="relative after:content-['']  after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">
       <div className="container mx-auto px-4 py-8 w-full absolute top-0 inset-0 bg-transparent z-10 h-fit">
         <div className="flex items-center justify-between w-full">
+          {/*  */}
+          <div className="flex items-center lg:hidden  gap-6">
+            <button>
+              <img src="/assets/icons/icon-menu.svg" alt="" />
+            </button>
+            <button>
+              <img src="/assets/icons/icon-search.svg" alt="" />
+            </button>
+          </div>
+
           <img
             className="h-[2rem] lg:min-h-[3rem]"
             src="/assets/logos/logo.svg"
@@ -33,7 +43,11 @@ const Header = () => {
           </div>
 
           <div className="flex items-center space-x-6">
-            <Button isActive>
+            {/*  */}
+            <button className="lg:hidden">
+              <img src="/assets/icons/icon-person.svg" alt="" />
+            </button>
+            <Button isActive divClassName="hidden lg:block">
               <img
                 src="/assets/icons/icon-person.svg"
                 alt="icon"
@@ -41,6 +55,7 @@ const Header = () => {
               />{" "}
               Login
             </Button>
+            {/*  */}
             <button className="relative">
               <span className="text-[8px] font-bold rounded-full flex items-center justify-center bg-primary text-white absolute  w-[14px] h-[14px] right-[-.25rem]  bottom-[-.25rem]">
                 2

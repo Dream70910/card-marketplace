@@ -11,23 +11,26 @@ const CategoryCard = ({
   descriptionClassName = "",
 }) => (
   <div
-    className={`w-full max-w-[380px] flex flex-col justify-between card-category relative group ${cardClassName}`}
+    className={`w-full min-w-[140px] max-w-[380px] flex flex-col justify-between card-category relative group ${cardClassName}`}
   >
     <button
-      className={`absolute top-0 right-0 bg-white p-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition ${buttonClassName}`}
+      className={`absolute top-0 right-0 bg-white p-2 lg:p-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition ${buttonClassName}`}
     >
       <img
         src={iconSrc || "/assets/icons/icon-arrow-up-right.svg"}
         alt="icon"
+        className="max-w-[12px] max-h-[12px] lg:max-w-[unset] lg:max-h-[unset]"
       />
     </button>
-    <div className="p-6 mb-5">
+    <div className="p-4 py-6 pb-0 lg:p-6  mb-0 lg:mb-5">
       <h4
-        className={`font-aero uppercase text-[32px] text-white ${titleClassName}`}
+        className={`font-aero uppercase text-base lg:text-[32px] text-white leading-[1.2] mb-3 ${titleClassName}`}
       >
         {title}
       </h4>
-      <p className={`text-base text-white ${descriptionClassName}`}>
+      <p
+        className={`text-[8px] lg:text-base text-white ${descriptionClassName}`}
+      >
         {description}
       </p>
     </div>
