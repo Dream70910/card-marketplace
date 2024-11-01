@@ -66,6 +66,18 @@ input:focus {
   border: none;
 }
 
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 .gradient-text {
   font-weight: bold;
   background: linear-gradient(90deg, #1AB6F9, #91DEFF 70%);
