@@ -5,7 +5,7 @@ import CardItem from "../../components/cards/CardItem";
 
 const TopSellersSection = () => {
   return (
-    <div className="container px-5 lg:px-20 mx-auto pb-24 lg:pb-48 relative">
+    <div className="container px-5 lg:px-20 mx-auto pb-24 lg:pb-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
       <div className="flex items-end md:items-center  justify-between">
         <h2 className="uppercase font-aero text-[32px] lg:text-[42px] leading-[1.4] text-white">
           Top Sellers

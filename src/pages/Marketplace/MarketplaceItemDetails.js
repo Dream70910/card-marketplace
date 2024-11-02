@@ -41,8 +41,8 @@ const MarketplaceItemDetails = () => {
 
   return (
     <div>
-      <Header />
-      <div className="container mx-auto px-5  py-24 lg:py-48 lg:pb-24">
+      <Header isLogin/>
+      <div className="container mx-auto px-5  py-24 lg:py-48 lg:pb-24 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[60%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
         <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-12">
           <div className="w-full max-w-[620px] 2xl:max-w-[700px]">
             {/* Main Displayed Image */}

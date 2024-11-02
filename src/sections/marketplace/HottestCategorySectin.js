@@ -3,7 +3,7 @@ import CategoryCard from "../../components/cards/CardCategory";
 
 const HottestCategorySection = () => {
   return (
-    <div className="container px-5 lg:px-20 mx-auto pb-24 lg:pb-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:translate-y-[50%] after:blur-[300px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
+    <div className="container px-5 lg:px-20 mx-auto pb-24 lg:pb-48 relative after:content-[''] after:w-[360px] after:left-[100%] after:h-[360px] after:top-[100%] after:blur-[300px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
       <div className="flex items-end justify-between">
         <h2 className="uppercase font-aero  text-[32px]  lg:text-[42px]  leading-[1.4] text-white">
           Hottest categories

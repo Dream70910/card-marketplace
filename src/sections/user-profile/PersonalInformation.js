@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import UploadInput from "../../components/commons/UploadInput";
 import TextInput from "../../components/commons/TextInput";
 import Dropdown from "../../components/commons/Dropdown";
 import Button from "../../components/commons/Button";
+import DialogConfirmation from "../../components/dialogs/DialogConfirmation";
 
 const PersonalInformation = () => {
+  const [openDialog, setOpenDialog] = useState(null);
   const options = [
     { value: "", label: "Select your gender" },
     { value: "option1", label: "Option 1" },
@@ -19,6 +21,15 @@ const PersonalInformation = () => {
   return (
     <div>
       <br />
+      <DialogConfirmation
+        open={openDialog === "error"}
+        onClose={() => setOpenDialog(null)}
+        type="failed"
+        title="Failed"
+        message="Your booking could not be completed due to error from payment getaway"
+        buttonText="Try Again"
+        onButtonClick={() => setOpenDialog(null)}
+      />
       <div className="flex items-center gap-6 lg:gap-8">
         <UploadInput
           onFileSelect={(file) => console.log("Selected file:", file)}
@@ -92,7 +103,11 @@ const PersonalInformation = () => {
       </div>
 
       <div className="w-full flex justify-center mt-10 lg:mt-20">
-        <Button isActive divClassName="w-full lg:max-w-[300px]">
+        <Button
+          isActive
+          divClassName="w-full lg:max-w-[300px]"
+          onClick={() => setOpenDialog("error")}
+        >
           Create
         </Button>
       </div>

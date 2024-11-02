@@ -10,7 +10,7 @@ import TopSellersSection from "../../sections/marketplace/TopSellersSection";
 const Marketplace = () => {
   return (
     <div>
-      <Header />
+      <Header isLogin />
       <HeroSection />
       <FeaturedListingSection />
       <HottestCategorySection />

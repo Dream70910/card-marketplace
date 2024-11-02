@@ -10,6 +10,7 @@ import CardUser from "../../components/cards/CardUser";
 import DialogUserOverview from "../../components/dialogs/DialogUserOverview";
 import DialogEditCategory from "../../components/dialogs/DialogEditCategory";
 import DialogSupport from "../../components/dialogs/DialogSupport";
+import DialogAddCategory from "../../components/dialogs/DialogAddCategory";
 
 const Admin = () => {
   const [openDialog, setOpenDialog] = useState(null);
@@ -26,9 +27,13 @@ const Admin = () => {
         open={openDialog === "edit-category"}
         onClose={closeDialog}
       />
+      <DialogAddCategory
+        open={openDialog === "add-category"}
+        onClose={closeDialog}
+      />
       <DialogSupport open={openDialog === "support"} onClose={closeDialog} />
-      <Header />
-      <div className="container mx-auto px-5 py-32 lg:py-48">
+      <Header isLogin />
+      <div className="container mx-auto px-5 py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1] before:content-[''] before:w-[360px] before:left-[100%] before:h-[360px] before:bottom-[50%] before:translate-y-[50%] before:blur-[250px] before:bg-primary before:rounded-full before:absolute before:z-[1]">
         <h1 className="font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[48px]">
           DASHBOARD
         </h1>
@@ -378,7 +383,11 @@ const Admin = () => {
                     </button>
                   </div>
 
-                  <Button isActive divClassName="!mt-5">
+                  <Button
+                    isActive
+                    divClassName="!mt-5"
+                    onClick={() => setOpenDialog("add-category")}
+                  >
                     Add new category
                   </Button>
                   {/*  */}

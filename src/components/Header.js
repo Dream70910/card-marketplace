@@ -1,7 +1,8 @@
 import React from "react";
 import Button from "./commons/Button";
+import DropdownMenu from "./commons/DropdownMenu";
 
-const Header = () => {
+const Header = ({ isLogin = false }) => {
   const menuItems = ["AI Tools", "History", "Settings", "Log out"];
 
   return (
@@ -47,14 +48,40 @@ const Header = () => {
             <button className="lg:hidden">
               <img src="/assets/icons/icon-person.svg" alt="" />
             </button>
-            <Button isActive divClassName="hidden lg:block">
-              <img
-                src="/assets/icons/icon-person.svg"
-                alt="icon"
-                className="mr-2"
-              />{" "}
-              Login
-            </Button>
+            {!isLogin ? (
+              <Button isActive divClassName="hidden lg:block">
+                <img
+                  src="/assets/icons/icon-person.svg"
+                  alt="icon"
+                  className="mr-2"
+                />{" "}
+                Login
+              </Button>
+            ) : (
+              <DropdownMenu
+                contentPlaceholder={
+                  <div className="flex items-center relative">
+                    <div className="border-style-decoration">
+                      <img
+                        src="/assets/avatars/avatar.png"
+                        className="object-cover lg:w-[45px] lg:h-[45px] relative z-0"
+                      />
+                    </div>
+                    <div className="ml-4 hidden lg:flex items-center whitespace-nowrap">
+                      <span className="text-base text-white">
+                        Emily Johnson
+                      </span>
+                      <img
+                        src="/assets/icons/icon-arrow-drop-down.svg"
+                        className="rotate-[180deg] ml-2"
+                      />
+                    </div>
+                  </div>
+                }
+                menuItems={["Profile Settings", "Your Listing", "Log out"]}
+              />
+            )}
+
             {/*  */}
             <button className="relative">
               <span className="text-[8px] font-bold rounded-full flex items-center justify-center bg-primary text-white absolute  w-[14px] h-[14px] right-[-.25rem]  bottom-[-.25rem]">
