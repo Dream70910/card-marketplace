@@ -37,6 +37,7 @@
 
 html {
   overflow-x: hidden;
+  font-family: 'Aeonik-Regular', sans-serif;
 }
 
 
@@ -152,56 +153,6 @@ input:focus {
    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
    calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
  );
-}
-
-.border-style-decoration {
-  position: relative;
-  outline: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
-  transition: .25s;
-  /* overflow: hidden; */
-  clip-path: polygon(
-    0 8px, 8px 8px, 8px 0,
-    calc(100% - 8px) 0, 100% 0, 100% 8px,
-    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
-    calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
-  );
-  
-}
-/* 
-.border-style-decoration:hover {
-  top: -2px;
-  transition: .25s;
-} */
-
-
-
-
-.border-style-decoration::before {
-  content: '';
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 8px;
-  height: 8px;
-  /* background-color: #141414; */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
-  border-right: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
-  pointer-events: none;
-}
-
-.border-style-decoration::after {
-  content: '';
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 8px;
-  height: 8px;
-  /* background-color: #141414; */
-  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
-  border-left: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
-  pointer-events: none;
 }
 
 
@@ -333,6 +284,58 @@ border: 1px solid rgba(255, 255, 255, 1);
     calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px)
   );
 }
+
+
+.border-style-decoration {
+  position: relative;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  transition: .25s;
+  /* overflow: hidden; */
+  clip-path: polygon(
+    0 8px, 8px 8px, 8px 0,
+    calc(100% - 8px) 0, 100% 0, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
+  );
+  
+}
+/* 
+.border-style-decoration:hover {
+  top: -2px;
+  transition: .25s;
+} */
+
+
+
+
+.border-style-decoration::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 8px;
+  height: 8px;
+  /* background-color: #141414; */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
+  border-right: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
+  pointer-events: none;
+}
+
+.border-style-decoration::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 8px;
+  height: 8px;
+  /* background-color: #141414; */
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
+  border-left: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
+  pointer-events: none;
+}
+
 
 
 

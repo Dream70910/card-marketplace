@@ -5,6 +5,16 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Marketplace from "./pages/Marketplace";
 import MarketplaceCategories from "./pages/Marketplace/MarketplaceCategories";
+import MarketplaceItemDetails from "./pages/Marketplace/MarketplaceItemDetails";
+import MarketplaceCreateListing from "./pages/Marketplace/MarketplaceCreateListing";
+import UserProfile from "./pages/UserProfile";
+import MarketplaceChat from "./pages/Marketplace/MarketplaceChat";
+import Faq from "./pages/Faq";
+import Support from "./pages/Support";
+import Tickets from "./pages/Tickets";
+import AdminLogin from "./pages/Admin/Login";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
@@ -15,7 +25,24 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/marketplace/categories" element={<MarketplaceCategories />} />
+          <Route
+            path="/marketplace/categories"
+            element={<MarketplaceCategories />}
+          />
+          <Route
+            path="/marketplace/:itemId"
+            element={<MarketplaceItemDetails />}
+          />
+          <Route
+            path="/marketplace/create-listing"
+            element={<MarketplaceCreateListing />}
+          />
+          <Route path="/marketplace/chat" element={<MarketplaceChat />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/tickets" element={<Tickets />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
         </Routes>
       </div>
     </Router>
