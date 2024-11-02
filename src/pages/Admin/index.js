@@ -8,6 +8,8 @@ import Button from "../../components/commons/Button";
 import TextAreaInput from "../../components/commons/TextAreaInput";
 import CardUser from "../../components/cards/CardUser";
 import DialogUserOverview from "../../components/dialogs/DialogUserOverview";
+import DialogEditCategory from "../../components/dialogs/DialogEditCategory";
+import DialogSupport from "../../components/dialogs/DialogSupport";
 
 const Admin = () => {
   const [openDialog, setOpenDialog] = useState(null);
@@ -20,6 +22,11 @@ const Admin = () => {
         open={openDialog === "view-user"}
         onClose={closeDialog}
       />
+      <DialogEditCategory
+        open={openDialog === "edit-category"}
+        onClose={closeDialog}
+      />
+      <DialogSupport open={openDialog === "support"} onClose={closeDialog} />
       <Header />
       <div className="container mx-auto px-5 py-32 lg:py-48">
         <h1 className="font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[48px]">
@@ -155,7 +162,7 @@ const Admin = () => {
               User tickets
             </h4>
             <div className="p-4 lg:px-8 pb-2">
-              <TableUsersTicket />
+              <TableUsersTicket onClick={() => setOpenDialog("support")} />
             </div>
           </div>
           <div className="product-ask-section w-full hidden lg:block">
@@ -172,7 +179,7 @@ const Admin = () => {
                   <div className="flex flex-col items-end">
                     <div className="border-style-decoration p-4 px-6 bg-white/5 backdrop-blur-sm">
                       <span className="uppercase text-xs lg:text-sm text-white/60 font-medium block">
-                        YOU
+                        Client
                       </span>
                       <p className="text-white text-sm lg:text-base mt-1">
                         I am not able to create a listing
@@ -297,49 +304,73 @@ const Admin = () => {
               <div className="flex items-center gap-6">
                 <div className="w-full">
                   <div className="space-y-4">
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       Zelda{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       Formula 1{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       Naruto{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       One Piece{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       Football{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       aot{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       pokemon{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live
                       </button>
                     </button>
-                    <button className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full">
+                    <button
+                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
+                      onClick={() => setOpenDialog("edit-category")}
+                    >
                       wwe{" "}
                       <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
                         Make Live

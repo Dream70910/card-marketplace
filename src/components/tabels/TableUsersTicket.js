@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../commons/Button";
 
-const TableUsersTicket = () => {
+const TableUsersTicket = ({ onClick }) => {
   return (
     <table
       className="border-separate w-full mt-[-15px]"
@@ -28,7 +28,10 @@ const TableUsersTicket = () => {
         </th>
       </thead>
       <tbody>
-        <tr className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration">
+        <tr
+          className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration"
+          onClick={onClick}
+        >
           <td className="p-3 lg:p-5 lg:px-6 border-l border-l-white/20 border-y border-y-white/20 text-xs lg:text-sm">
             749839
           </td>
@@ -39,7 +42,10 @@ const TableUsersTicket = () => {
             05 Jan 2024
           </td>
         </tr>
-        <tr className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration">
+        <tr
+          className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration"
+          onClick={onClick}
+        >
           <td className="p-3 lg:p-5 lg:px-6 border-l border-l-white/20 border-y border-y-white/20">
             298403
           </td>
@@ -50,7 +56,10 @@ const TableUsersTicket = () => {
             12 Apr 2024
           </td>
         </tr>
-        <tr className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration">
+        <tr
+          className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration"
+          onClick={onClick}
+        >
           <td className="p-3 lg:p-5 lg:px-6 border-l border-l-white/20 border-y border-y-white/20">
             298403
           </td>
@@ -61,7 +70,10 @@ const TableUsersTicket = () => {
             05 Jan 2024
           </td>
         </tr>
-        <tr className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration">
+        <tr
+          className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-xs lg:text-sm border-style-decoration"
+          onClick={onClick}
+        >
           <td className="p-3 lg:p-5 lg:px-6 border-l border-l-white/20 border-y border-y-white/20">
             298403
           </td>
