@@ -13,6 +13,7 @@ import Faq from "./pages/Faq";
 import Support from "./pages/Support";
 import Tickets from "./pages/Tickets";
 import AdminLogin from "./pages/Admin/Login";
+import Admin from "./pages/Admin";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </Router>
