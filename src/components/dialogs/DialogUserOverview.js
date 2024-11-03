@@ -20,9 +20,9 @@ export default function DialogUserOverview({ open, onClose }) {
         <div className="flex min-h-full items-center justify-center p-4 sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden product-ask-section rounded-lg bg-[#141414] backdrop-blur-sm shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in w-full max-w-[431px]"
+            className="relative transform overflow-hidden product-ask-section bg-[#141414] backdrop-blur-sm shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in w-full max-w-[431px]"
           >
-            <div className="product-ask-section w-full ">
+            <div className="w-full ">
               <div className="uppercase font-aero w-full bg-white/5 backdrop-blur-sm p-5  text-white text-base lg:text-xl  flex items-center justify-between">
                 User Overview{" "}
                 <button onClick={onClose}>

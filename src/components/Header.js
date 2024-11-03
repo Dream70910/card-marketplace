@@ -58,28 +58,30 @@ const Header = ({ isLogin = false }) => {
                 Login
               </Button>
             ) : (
-              <DropdownMenu
-                contentPlaceholder={
-                  <div className="flex items-center relative">
-                    <div className="border-style-decoration">
-                      <img
-                        src="/assets/avatars/avatar.png"
-                        className="object-cover lg:w-[45px] lg:h-[45px] relative z-0"
-                      />
+              <div className="hidden lg:block">
+                <DropdownMenu
+                  contentPlaceholder={
+                    <div className="flex items-center relative">
+                      <div className="border-style-decoration">
+                        <img
+                          src="/assets/avatars/avatar.png"
+                          className="object-cover lg:w-[45px] lg:h-[45px] relative z-0"
+                        />
+                      </div>
+                      <div className="ml-4 hidden lg:flex items-center whitespace-nowrap">
+                        <span className="text-base text-white">
+                          Emily Johnson
+                        </span>
+                        <img
+                          src="/assets/icons/icon-arrow-drop-down.svg"
+                          className="rotate-[180deg] ml-2"
+                        />
+                      </div>
                     </div>
-                    <div className="ml-4 hidden lg:flex items-center whitespace-nowrap">
-                      <span className="text-base text-white">
-                        Emily Johnson
-                      </span>
-                      <img
-                        src="/assets/icons/icon-arrow-drop-down.svg"
-                        className="rotate-[180deg] ml-2"
-                      />
-                    </div>
-                  </div>
-                }
-                menuItems={["Profile Settings", "Your Listing", "Log out"]}
-              />
+                  }
+                  menuItems={["Profile Settings", "Your Listing", "Log out"]}
+                />
+              </div>
             )}
 
             {/*  */}

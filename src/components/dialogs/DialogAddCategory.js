@@ -23,9 +23,9 @@ export default function DialogAddCategory({ open, onClose }) {
         <div className="flex min-h-full items-center justify-center p-4 sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden product-ask-section rounded-lg bg-[#141414] backdrop-blur-sm shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in w-full max-w-[604px]"
+            className="relative transform overflow-hidden product-ask-section bg-[#141414] backdrop-blur-sm shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in w-full max-w-[604px]"
           >
-            <div className="product-ask-section w-full relative">
+            <div className="w-full relative">
               <button
                 onClick={onClose}
                 className="absolute top-2 right-2 cursor-pointer z-[1]"
@@ -35,7 +35,7 @@ export default function DialogAddCategory({ open, onClose }) {
                   className="invert cursor-pointer"
                 />
               </button>
-              <div className="border-style-decoration p-5 w-full ">
+              <div className="p-5 w-full ">
                 <div className="flex items-end gap-6">
                   {/* <img
                     src="/assets/images/image_pokemon.svg"

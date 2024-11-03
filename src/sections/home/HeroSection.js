@@ -4,7 +4,8 @@ import Button from "../../components/commons/Button";
 
 const HeroSection = () => {
   return (
-    <div className="relative h-screen w-full text-white  pt-[15rem] lg:pt-[8em] px-5">
+    // <div className="relative h-screen w-full text-white  pt-[15rem] lg:pt-[8em] px-5">
+    <div className="relative w-full text-white  pt-[15rem] lg:pt-[10rem] px-5">
       {/* left  decoration */}
       <div className="absolute top-0 left-0">
         <img

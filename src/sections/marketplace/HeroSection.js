@@ -25,7 +25,7 @@ const HeroSection = () => {
         <img
           src="/assets/decorations/marketplace_decoration_3.png"
           // className="hidden lg:block absolute right-[-3rem] top-[50%] translate-y-[-60%] z-[2] drop-shadow-[0px_4px_40px_#fff5] pointer-events-none"
-          className="block absolute max-w-[140px] lg:max0-w-[unset] right-[0] top-[25%] translate-y-[-50%] lg:top-[50%] lg:translate-y-[-60%] z-[2] drop-shadow-[0px_4px_40px_#fff5] pointer-events-none"
+          className="block absolute max-w-[140px] lg:max-w-[160px] right-[0] top-[25%] translate-y-[-50%] lg:top-[50%] lg:translate-y-[-60%] z-[2] drop-shadow-[0px_4px_40px_#fff5] pointer-events-none"
         />
         <div className="text-white product-ask-section bg-white/5 backdrop-blur-md flex flex-col-reverse lg:flex-row">
           <div className="flex flex-col w-full p-5 py-10 lg:p-20">
@@ -63,16 +63,17 @@ const HeroSection = () => {
           <div className="h-[420px] lg:h-[unset] w-full lg:max-w-[480px] relative pointer-events-none z-[2] overflow-hidden lg:overflow-visible">
             <img
               src="/assets/decorations/marketplace_decoration_1.png"
-              className="hidden lg:block lg:max-w-[unset] absolute left-[-1.5rem] bottom-[50%] translate-y-[50%] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
+              className="hidden lg:block lg:max-w-[270px] absolute left-[-1.5rem] bottom-[50%] translate-y-[50%] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
             />
             <img
               src="/assets/decorations/marketplace_decoration_2.png"
-              className="block max-w-[190px] bottom-[-4.5rem] lg:max-w-[unset] absolute right-[1.5rem] lg:bottom-[-6.5rem] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
+              // className="block max-w-[190px] bottom-[-4.5rem] lg:max-w-[unset] absolute right-[1.5rem] lg:bottom-[-6.5rem] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
+              className="block max-w-[190px] bottom-[-4.5rem] lg:max-w-[250px] absolute right-[7.5%] lg:right-[1.5rem] lg:translate-x-0 translate-x-[-7.5%] lg:bottom-[-6.5rem] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
             />
 
             <img
               src="/assets/decorations/marketplace_decoration_4.png"
-              className="max-w-[130px] lg:max-w-[unset] block absolute top-[-4rem] lg:top-[-3.5rem] right-[3.75rem] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
+              className="max-w-[130px] lg:max-w-[150px] block absolute top-[-2.5rem] lg:top-[-3.5rem] right-[3.5rem] lg:right-[3.75rem] z-[1] drop-shadow-[0px_4px_40px_#fff5]"
             />
             <div className="w-full h-full bg-primary-gradient product-ask-section"></div>
             {/* <div className="h-[480px] w-full max-w-[480px] bg-primary-gradient"></div> */}

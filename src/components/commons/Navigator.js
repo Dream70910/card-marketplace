@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import DialogConfirmation from "../dialogs/DialogConfirmation";
 
 const Navigator = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [openDialog, setOpenDialog] = useState(null);
 
   const toggleNavigator = () => {
     setIsVisible(!isVisible);
@@ -10,6 +12,24 @@ const Navigator = () => {
 
   return (
     <div>
+      <DialogConfirmation
+        open={openDialog === "error"}
+        onClose={() => setOpenDialog(null)}
+        type="failed"
+        title="Failed"
+        message="Your booking could not be completed due to error from payment getaway"
+        buttonText="Try Again"
+        onButtonClick={() => setOpenDialog(null)}
+      />
+      <DialogConfirmation
+        open={openDialog === "loading"}
+        onClose={() => setOpenDialog(null)}
+        type="loading"
+        title="Please wait"
+        message="We are processing your booking request. Please wait and don’t close this page"
+        buttonText="Cancel"
+        onButtonClick={() => setOpenDialog(null)}
+      />
       <div
         className={`text-xs lg:text-sm space-y-3 border border-[#E4DDF6] font-semibold fixed left-[-1rem]  bg-[rgba(255,255,255,0.6)] backdrop-blur-md top-[5%] rounded-[2rem] p-[1rem] pl-[2rem] z-[9999999] transition-transform duration-300 ${
           isVisible ? "translate-x-0" : "-translate-x-full"
@@ -57,7 +77,14 @@ const Navigator = () => {
         <div>
           <Link to="/admin">Admin</Link>
         </div>
-        
+        {/* <div>
+          <button onClick={() => setOpenDialog("error")}>Dialog Failed</button>
+        </div>
+        <div>
+          <button onClick={() => setOpenDialog("loading")}>
+            Dialog Loading
+          </button>
+        </div> */}
       </div>
 
       <button
