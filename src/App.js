@@ -14,6 +14,7 @@ import Support from "./pages/Support";
 import Tickets from "./pages/Tickets";
 import AdminLogin from "./pages/Admin/Login";
 import Admin from "./pages/Admin";
+import Navigator from "./components/commons/Navigator";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <Router>
       <div>
+        <Navigator />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
