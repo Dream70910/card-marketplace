@@ -77,14 +77,14 @@ const Navigator = () => {
         <div>
           <Link to="/admin">Admin</Link>
         </div>
-        {/* <div>
+        <div>
           <button onClick={() => setOpenDialog("error")}>Dialog Failed</button>
         </div>
         <div>
           <button onClick={() => setOpenDialog("loading")}>
             Dialog Loading
           </button>
-        </div> */}
+        </div>
       </div>
 
       <button
