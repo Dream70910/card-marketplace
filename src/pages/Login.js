@@ -14,6 +14,7 @@ const Login = () => {
     try {
       await loginWithGoogle()
       alert("Successfully logged in")
+      navigate("/")
     } catch (error) {
       console.log(error.code)
     }
@@ -32,18 +33,29 @@ const Login = () => {
         alert("Please verify your email");
       }
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Email already in use")
+      if (error.code === "auth/invalid-credential") {
+        alert("The credential is invalid. Please try again.");
       }
+
       if (error.code === "auth/invalid-email") {
-        alert("Invalid email")
+        alert("The email address is not valid. Please enter a valid email.");
       }
+
       if (error.code === "auth/weak-password") {
-        alert("Password is too weak")
+        alert("The password is too weak. Please choose a stronger password.");
       }
-      alert(error.code)
     }
   }
+
+  const handleResetPassword = async () => {
+    if (!email) return alert("Please enter your email");
+    try {
+      await resetPassword(email);
+      alert("Password reset email sent");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div
@@ -102,7 +114,7 @@ const Login = () => {
                   onChange={(value) => { setPassword(value) }}
                 />
               </label>
-              <button className="text-primary mt-3 w-fit ml-auto flex">
+              <button className="text-primary mt-3 w-fit ml-auto flex" onClick={handleResetPassword}>
                 Forgot Password?
               </button>
             </div>

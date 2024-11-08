@@ -8,7 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const { signup } = useAuth()
+  const { signup, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
   // const [error, setError] = useState()
 
@@ -30,6 +30,17 @@ const Register = () => {
 
     signup(email, password)
   }
+
+  const handleGoogleSignin = async () => {
+    try {
+      await loginWithGoogle()
+      alert("Successfully logged in")
+      navigate("/")
+    } catch (error) {
+      console.log(error.code)
+    }
+  }
+
 
   return (
     <div
@@ -101,7 +112,7 @@ const Register = () => {
               />
             </label>
             <Button isActive onClick={handleSubmit}>Register</Button>
-            <Button>
+            <Button onClick={handleGoogleSignin}>
               <img src="/assets/logos/google.svg" className="mr-3" /> Login with
               Google
             </Button>
