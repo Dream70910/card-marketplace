@@ -15,41 +15,44 @@ import Tickets from "./pages/Tickets";
 import AdminLogin from "./pages/Admin/Login";
 import Admin from "./pages/Admin";
 import Navigator from "./components/commons/Navigator";
+import { AuthProvider } from './context/authContext'
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Navigator />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route
-            path="/marketplace/categories"
-            element={<MarketplaceCategories />}
-          />
-          <Route
-            path="/marketplace/:itemId"
-            element={<MarketplaceItemDetails />}
-          />
-          <Route
-            path="/marketplace/create-listing"
-            element={<MarketplaceCreateListing />}
-          />
-          <Route path="/marketplace/chat" element={<MarketplaceChat />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/tickets" element={<Tickets />} />
-          <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div>
+          <Navigator />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route
+              path="/marketplace/categories"
+              element={<MarketplaceCategories />}
+            />
+            <Route
+              path="/marketplace/:itemId"
+              element={<MarketplaceItemDetails />}
+            />
+            <Route
+              path="/marketplace/create-listing"
+              element={<MarketplaceCreateListing />}
+            />
+            <Route path="/marketplace/chat" element={<MarketplaceChat />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/tickets" element={<Tickets />} />
+            <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

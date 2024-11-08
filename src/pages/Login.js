@@ -1,9 +1,18 @@
-import React from "react";
-import TextInput from "../components/commons/TextInput";
-import Button from "../components/commons/Button";
-import { Link } from "react-router-dom";
+import React from "react"
+import TextInput from "../components/commons/TextInput"
+import Button from "../components/commons/Button"
+import { Link } from "react-router-dom"
 
 const Login = () => {
+  // const handleGoogleSignin = async () => {
+  //   try {
+  //     await loginWithGoogle()
+  //     navigate("/")
+  //   } catch (error) {
+  //     setError(error.message)
+  //   }
+  // }
+
   return (
     <div
       className="container h-screen mx-auto p-5"
@@ -83,7 +92,7 @@ const Login = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

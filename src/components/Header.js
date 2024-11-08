@@ -1,9 +1,12 @@
 import React from "react";
 import Button from "./commons/Button";
 import DropdownMenu from "./commons/DropdownMenu";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = ({ isLogin = false }) => {
   const menuItems = ["AI Tools", "History", "Settings", "Log out"];
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
 
   return (
     <div className="relative after:content-['']  after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">
@@ -26,11 +29,11 @@ const Header = ({ isLogin = false }) => {
           />
 
           <div className="hidden lg:flex gap-[2rem] text-[1.1rem] uppercase  text-white ">
-            <div className="flex items-center font-bold">
-              <a href="/#">Home</a>
+            <div className="flex items-center text-[#484F52]">
+              <Link to="/" className={isActive('/') ? 'text-white' : ''}>Home</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
-              <a href="/#">Categories</a>
+              <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Categories</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
               <a href="/#">Buy Cards</a>
@@ -49,14 +52,16 @@ const Header = ({ isLogin = false }) => {
               <img src="/assets/icons/icon-person.svg" alt="" />
             </button>
             {!isLogin ? (
-              <Button isActive divClassName="hidden lg:block">
-                <img
-                  src="/assets/icons/icon-person.svg"
-                  alt="icon"
-                  className="mr-2"
-                />{" "}
-                Login
-              </Button>
+              <Link to="/login">
+                <Button isActive divClassName="hidden lg:block">
+                  <img
+                    src="/assets/icons/icon-person.svg"
+                    alt="icon"
+                    className="mr-2"
+                  />{" "}
+                  Login
+                </Button>
+              </Link>
             ) : (
               <div className="hidden lg:block">
                 <DropdownMenu

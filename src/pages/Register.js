@@ -1,9 +1,36 @@
-import React from "react";
-import TextInput from "../components/commons/TextInput";
-import Button from "../components/commons/Button";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import TextInput from "../components/commons/TextInput"
+import Button from "../components/commons/Button"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/authContext"
 
 const Register = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const { signup } = useAuth()
+  const navigate = useNavigate()
+  // const [error, setError] = useState()
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSubmit = () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match. Please try again.")
+      return
+    }
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address")
+      return
+    }
+
+    signup(email, password)
+  }
+
   return (
     <div
       className="container h-screen mx-auto p-5"
@@ -47,6 +74,7 @@ const Register = () => {
               <TextInput
                 placeholder="Enter email address"
                 inputClassName="placeholder:text-white/60"
+                onChange={(value) => { setEmail(value) }}
               />
             </label>
             <label className="w-full block">
@@ -59,6 +87,7 @@ const Register = () => {
                 inputClassName="placeholder:text-white/60"
                 type="password"
                 endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
+                onChange={(value) => { setPassword(value) }}
               />
             </label>
             <label className="w-full block">
@@ -67,10 +96,11 @@ const Register = () => {
                 placeholder="Enter confirm password"
                 inputClassName="placeholder:text-white/60"
                 type="password"
+                onChange={(value) => { setConfirmPassword(value) }}
                 endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
               />
             </label>
-            <Button isActive>Login</Button>
+            <Button isActive onClick={handleSubmit}>Register</Button>
             <Button>
               <img src="/assets/logos/google.svg" className="mr-3" /> Login with
               Google
@@ -90,7 +120,7 @@ const Register = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
