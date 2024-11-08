@@ -1,17 +1,49 @@
-import React from "react"
+import React, { useState } from "react"
 import TextInput from "../components/commons/TextInput"
 import Button from "../components/commons/Button"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/authContext"
 
 const Login = () => {
-  // const handleGoogleSignin = async () => {
-  //   try {
-  //     await loginWithGoogle()
-  //     navigate("/")
-  //   } catch (error) {
-  //     setError(error.message)
-  //   }
-  // }
+  const { login, loginWithGoogle, resetPassword } = useAuth()
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+  const navigate = useNavigate()
+
+  const handleGoogleSignin = async () => {
+    try {
+      await loginWithGoogle()
+      alert("Successfully logged in")
+    } catch (error) {
+      console.log(error.code)
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const userCredential = await login(email, password)
+      const user = userCredential.user
+
+      if (user.emailVerified) {
+        alert("Successfully logged in");
+        navigate("/")
+      } else {
+        alert("Please verify your email");
+      }
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("Email already in use")
+      }
+      if (error.code === "auth/invalid-email") {
+        alert("Invalid email")
+      }
+      if (error.code === "auth/weak-password") {
+        alert("Password is too weak")
+      }
+      alert(error.code)
+    }
+  }
 
   return (
     <div
@@ -56,6 +88,7 @@ const Login = () => {
               <TextInput
                 placeholder="Enter email address"
                 inputClassName="placeholder:text-white/60"
+                onChange={(value) => { setEmail(value) }}
               />
             </label>
             <div className="w-full">
@@ -66,14 +99,15 @@ const Login = () => {
                   inputClassName="placeholder:text-white/60"
                   type="password"
                   endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
+                  onChange={(value) => { setPassword(value) }}
                 />
               </label>
               <button className="text-primary mt-3 w-fit ml-auto flex">
                 Forgot Password?
               </button>
             </div>
-            <Button isActive>Login</Button>
-            <Button>
+            <Button onClick={handleSubmit}>Login</Button>
+            <Button onClick={handleGoogleSignin}>
               <img src="/assets/logos/google.svg" className="mr-3" /> Login with
               Google
             </Button>
