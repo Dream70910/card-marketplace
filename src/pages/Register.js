@@ -3,6 +3,7 @@ import TextInput from "../components/commons/TextInput"
 import Button from "../components/commons/Button"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext"
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [email, setEmail] = useState("")
@@ -19,12 +20,12 @@ const Register = () => {
 
   const handleSubmit = () => {
     if (password !== confirmPassword) {
-      alert("Passwords do not match. Please try again.")
+      toast.error("Passwords do not match. Please try again.")
       return
     }
 
     if (!validateEmail(email)) {
-      alert("Please enter a valid email address")
+      toast.error("Please enter a valid email address")
       return
     }
 
@@ -34,7 +35,7 @@ const Register = () => {
   const handleGoogleSignin = async () => {
     try {
       await loginWithGoogle()
-      alert("Successfully logged in")
+      toast.success("Successfully logged in")
       navigate("/")
     } catch (error) {
       console.log(error.code)
@@ -96,7 +97,7 @@ const Register = () => {
               <TextInput
                 placeholder="Enter password"
                 inputClassName="placeholder:text-white/60"
-                type="password"
+                defaultType="password"
                 endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
                 onChange={(value) => { setPassword(value) }}
               />
@@ -106,7 +107,7 @@ const Register = () => {
               <TextInput
                 placeholder="Enter confirm password"
                 inputClassName="placeholder:text-white/60"
-                type="password"
+                defaultType="password"
                 onChange={(value) => { setConfirmPassword(value) }}
                 endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
               />

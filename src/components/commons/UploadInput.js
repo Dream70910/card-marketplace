@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const UploadInput = ({
   className = "",
@@ -10,9 +10,17 @@ const UploadInput = ({
   titleClassName = "",
   subtitleClassName = "",
   iconClassName = "",
+  editTimes = 0,
   ...props
 }) => {
   const [preview, setPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (editTimes > 0 && fileInputRef.current) {
+      fileInputRef.current.click(); // Programmatically trigger the file input click
+    }
+  }, [editTimes])
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -33,6 +41,7 @@ const UploadInput = ({
         onChange={handleFileChange}
         style={{ display: "none" }}
         id="upload-input"
+        ref={fileInputRef}
       />
       {preview ? (
         <img

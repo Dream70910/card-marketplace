@@ -9,7 +9,7 @@ import {
   sendPasswordResetEmail,
   sendEmailVerification
 } from "firebase/auth"
-import { auth } from "../firebase-config"
+import { auth } from "../firebase/config"
 
 export const authContext = createContext()
 
@@ -51,8 +51,9 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const login = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password)
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password)
+  }
 
   const logout = () => signOut(auth)
 

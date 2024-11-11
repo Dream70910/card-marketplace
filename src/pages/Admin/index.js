@@ -8,27 +8,20 @@ import Button from "../../components/commons/Button";
 import TextAreaInput from "../../components/commons/TextAreaInput";
 import CardUser from "../../components/cards/CardUser";
 import DialogUserOverview from "../../components/dialogs/DialogUserOverview";
-import DialogEditCategory from "../../components/dialogs/DialogEditCategory";
 import DialogSupport from "../../components/dialogs/DialogSupport";
-import DialogAddCategory from "../../components/dialogs/DialogAddCategory";
+import CategoriesSection from "../../sections/admin/CategoriesSection";
 
 const Admin = () => {
   const [openDialog, setOpenDialog] = useState(null);
+
   const closeDialog = () => {
     setOpenDialog(null);
   };
+
   return (
     <div>
       <DialogUserOverview
         open={openDialog === "view-user"}
-        onClose={closeDialog}
-      />
-      <DialogEditCategory
-        open={openDialog === "edit-category"}
-        onClose={closeDialog}
-      />
-      <DialogAddCategory
-        open={openDialog === "add-category"}
         onClose={closeDialog}
       />
       <DialogSupport open={openDialog === "support"} onClose={closeDialog} />
@@ -235,215 +228,7 @@ const Admin = () => {
           </div>
         </div>
 
-        <div className="product-ask-section w-full mt-14">
-          <h4 className="uppercase font-aero w-full bg-white/5 backdrop-blur-sm p-5 px-10 text-white text-base lg:text-xl">
-            MANAGE CATEGORIES
-          </h4>
-          <div>
-            <div className="p-5 pb-8 border-b-2 border-b-white/20">
-              <h4 className="uppercase font-aero w-full text-white text-base lg:text-xl mt-4 my-8">
-                live CATEGORIES
-              </h4>
-
-              <div className="flex flex-wrap gap-5 ">
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  Zelda{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  Formula 1{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  Naruto{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  One Piece{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  Football{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  AOT{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  Pokemon{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-                <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                  WWE{" "}
-                  <button className="p-2 bg-primary-gradient">
-                    <img src="/assets/icons/icon-close.svg" />
-                  </button>
-                </button>
-              </div>
-
-              <Button isActive divClassName="!mt-5 lg:max-w-[580px]">
-                Manage Categories
-              </Button>
-            </div>
-            {/*  */}
-            <div className="p-5 pb-8">
-              <h4 className="uppercase font-aero w-full text-white text-base lg:text-xl mt-4 my-8">
-                ALL CATEGORIES
-              </h4>
-
-              <div className="flex items-center gap-6">
-                <div className="w-full">
-                  <div className="space-y-4">
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      Zelda{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      Formula 1{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      Naruto{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      One Piece{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      Football{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      aot{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      pokemon{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                    <button
-                      className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                      onClick={() => setOpenDialog("edit-category")}
-                    >
-                      wwe{" "}
-                      <button className="p-2 px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Make Live
-                      </button>
-                    </button>
-                  </div>
-
-                  <Button
-                    isActive
-                    divClassName="!mt-5"
-                    onClick={() => setOpenDialog("add-category")}
-                  >
-                    Add new category
-                  </Button>
-                  {/*  */}
-                </div>
-
-                <div className="border-style-decoration p-5 w-full hidden lg:block">
-                  <div className="flex items-end gap-6">
-                    <img src="/assets/images/image_pokemon.svg" />
-
-                    <div>
-                      <h4 className="text-[36px] font-aero text-white uppercase">
-                        POKEMON
-                      </h4>
-
-                      <button className="p-2 mt-4 text-white px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                        Edit Image
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-col gap-8">
-                    <label className="w-full  text-white">
-                      <span className="w-full flex items-center justify-between  mb-3 ">
-                        <span className="text-base lg:text-xl block">
-                          Category Name
-                        </span>
-                        <span className="border-style-decoration p-2 px-2.5">
-                          <img src="/assets/icons/icon-pen-border.svg" />
-                        </span>
-                      </span>
-                      <TextInput
-                        placeholder="Pokemon"
-                        inputClassName="placeholder:text-white/60"
-                      />
-                    </label>
-                    <label className="w-full  text-white">
-                      <span className="w-full flex items-center justify-between  mb-3 ">
-                        <span className="text-base lg:text-xl block">
-                          Description
-                        </span>
-                        <span className="border-style-decoration p-2 px-2.5">
-                          <img src="/assets/icons/icon-pen-border.svg" />
-                        </span>
-                      </span>
-                      <TextAreaInput
-                        placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
-                        textAreaClassName="placeholder:text-white/60 h-[110px]"
-                      />
-                    </label>
-                  </div>
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CategoriesSection />
       </div>
 
       <Footer />

@@ -16,14 +16,26 @@ import AdminLogin from "./pages/Admin/Login";
 import Admin from "./pages/Admin";
 import Navigator from "./components/commons/Navigator";
 import { AuthProvider } from './context/authContext'
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div>
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            closeOnClick={true}
+            pauseOnHover={true}
+            draggable={true}
+          />
+
           <Navigator />
           <Routes>
             <Route path="/" element={<Home />} />

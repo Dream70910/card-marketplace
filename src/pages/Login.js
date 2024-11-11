@@ -3,6 +3,7 @@ import TextInput from "../components/commons/TextInput"
 import Button from "../components/commons/Button"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext"
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { login, loginWithGoogle, resetPassword } = useAuth()
@@ -13,49 +14,49 @@ const Login = () => {
   const handleGoogleSignin = async () => {
     try {
       await loginWithGoogle()
-      alert("Successfully logged in")
+
+      toast.success("Successfully logged in!");
       navigate("/")
     } catch (error) {
       console.log(error.code)
     }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async () => {
     try {
       const userCredential = await login(email, password)
       const user = userCredential.user
 
       if (user.emailVerified) {
-        alert("Successfully logged in");
+        toast.success("Successfully logged in!");
         navigate("/")
       } else {
-        alert("Please verify your email");
+        toast.warn("Please verify your email")
       }
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
-        alert("The credential is invalid. Please try again.");
+        toast.error("The credential is invalid. Please try again.")
       }
 
       if (error.code === "auth/invalid-email") {
-        alert("The email address is not valid. Please enter a valid email.");
+        toast.error("The email address is not valid. Please enter a valid email.")
       }
 
       if (error.code === "auth/weak-password") {
-        alert("The password is too weak. Please choose a stronger password.");
+        toast.error("The password is too weak. Please choose a stronger password.")
       }
     }
   }
 
   const handleResetPassword = async () => {
-    if (!email) return alert("Please enter your email");
+    if (!email) return alert("Please enter your email")
     try {
-      await resetPassword(email);
-      alert("Password reset email sent");
+      await resetPassword(email)
+      toast.success("Password reset email sent")
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message)
     }
-  };
+  }
 
   return (
     <div
@@ -109,7 +110,7 @@ const Login = () => {
                 <TextInput
                   placeholder="Enter password"
                   inputClassName="placeholder:text-white/60"
-                  type="password"
+                  defaultType="password"
                   endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
                   onChange={(value) => { setPassword(value) }}
                 />
