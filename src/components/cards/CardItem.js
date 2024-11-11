@@ -44,7 +44,10 @@ const CardItem = ({
           <span
             className={`text-[10px] lg:text-base text-primary uppercase font-aero ${priceClassName}`}
           >
-            {price}
+            {
+              typeof price === 'number' ?
+                '$' + price.toFixed(2) : price
+            }
           </span>
         </div>
         <p

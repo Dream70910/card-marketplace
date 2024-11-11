@@ -28,6 +28,7 @@ const CategoriesSection = () => {
 
     const closeDialog = () => {
         setOpenDialog(null)
+        updateCategories()
     }
 
     const makeCategoryActive = (cat) => {
@@ -162,13 +163,24 @@ const CategoriesSection = () => {
                         selectedCategory ?
                             <div className="border-style-decoration p-5 w-full hidden lg:block" key={selectedCategory.cat}>
                                 <div className="flex items-end gap-6">
-                                    <img src={selectedCategory.image} alt="selected-category" width={200} height={200} />
+                                    {
+                                        selectedCategory.image ?
+                                            <>
+                                                <img src={selectedCategory.image} alt="selected-category" width={200} height={200} />
+                                                <div>
+                                                    <button className="p-2 mt-4 text-white px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
+                                                        Edit Image
+                                                    </button>
+                                                </div>
+                                            </>
+                                            :
+                                            <div>
+                                                <button className="p-2 mt-4 text-white px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
+                                                    Upload Image
+                                                </button>
+                                            </div>
+                                    }
 
-                                    <div>
-                                        <button className="p-2 mt-4 text-white px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                                            Edit Image
-                                        </button>
-                                    </div>
                                 </div>
 
                                 <div className="mt-6 flex flex-col gap-8">

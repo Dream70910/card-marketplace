@@ -8,6 +8,9 @@ import Dropdown from "../../components/commons/Dropdown"
 import UploadInput from "../../components/commons/UploadInput"
 import Button from "../../components/commons/Button"
 import { getAllCategories } from "../../firebase/categories"
+import { toast } from "react-toastify"
+import { createListing } from "../../firebase/listings"
+import { useNavigate } from "react-router-dom"
 
 const MarketplaceCreateListing = () => {
 	const [categories, setCategories] = useState([])
@@ -16,27 +19,8 @@ const MarketplaceCreateListing = () => {
 	const [price, setPrice] = useState(null)
 	const [category, setCategory] = useState("")
 	const [description, setDescription] = useState("")
-
-	const options = [
-		{ value: "", label: "Select Category" },
-		{ value: "option1", label: "Option 1" },
-		{ value: "option2", label: "Option 2" },
-		{ value: "option3", label: "Option 3" },
-	]
-
-	const options2 = [
-		{ value: "", label: "Select  Sub - Category" },
-		{ value: "option1", label: "Option 1" },
-		{ value: "option2", label: "Option 2" },
-		{ value: "option3", label: "Option 3" },
-	]
-
-	const priceOptions = [
-		{ value: "", label: "USD ($)" },
-		{ value: "option1", label: "Option 1" },
-		{ value: "option2", label: "Option 2" },
-		{ value: "option3", label: "Option 3" },
-	]
+	const [images, setImages] = useState([])
+	const naviate = useNavigate()
 
 	useEffect(() => {
 		getAllCategories().then((cats) => {
@@ -46,20 +30,42 @@ const MarketplaceCreateListing = () => {
 				catOptions.push({ value: cat.id, label: cat.name })
 			})
 
+			if (cats.length > 0)
+				setCategory(cats[0].id)
+
 			setCategories(catOptions)
 		})
 	}, [])
 
-	const handleDropdownChange = (event) => {
-		console.log(event.target.value)
+	const onCreateListing = () => {
+		if (title.length === 0) {
+			toast.error("Title cannot be empty. Please provide a title.")
+			return
+		}
+
+		if (price === null || price === 0) {
+			toast.error("Price is required and cannot be zero. Please provide a valid price.")
+			return
+		}
+
+		if (description.length < 10) {
+			toast.error("Description is too short. Please provide at least 10 characters.")
+			return
+		}
+
+		if (images.length === 0) {
+			toast.error("No images selected. Please upload at least one image.")
+			return
+		}
+
+		createListing(images, title, condition, price, category, description)
+		toast.success("Listing has been created successfully!")
+		naviate("/marketplace/categories")
 	}
 
-	const handleDropdownChange2 = (event) => {
-		console.log(event.target.value)
-	}
-
-	const createListing = () => {
-
+	const addImage = (file) => {
+		const files = [...images, file]
+		setImages(files)
 	}
 
 	return (
@@ -101,13 +107,8 @@ const MarketplaceCreateListing = () => {
 									placeholder="Add price"
 									inputClassName="placeholder:text-white/60"
 									defaultType="number"
+									onChange={(value) => setPrice(value)}
 								/>
-								{/* <TextInputDropdown
-                  dropdownOptions={priceOptions}
-                  dropdownPlaceholder="USD ($)"
-                  inputPlaceholder="Enter product price"
-                  inputClassName="placeholder:text-white/60"
-                /> */}
 							</label>
 						</div>
 						<div className="text-white">
@@ -118,24 +119,11 @@ const MarketplaceCreateListing = () => {
 								<Dropdown
 									options={categories}
 									placeholder="Select Category"
-									onChange={handleDropdownChange}
-									className="w-full "
+									onChange={(e) => setCategory(e.target.value)}
+									className="w-full"
 								/>
 							</label>
 						</div>
-						{/* <div className="text-white">
-              <label className="w-full">
-                <span className="text-base lg:text-xl mb-3 block">
-                  Sub - Category
-                </span>
-                <Dropdown
-                  options={options2}
-                  placeholder="Select Sub - Category"
-                  onChange={handleDropdownChange2}
-                  className="w-full "
-                />
-              </label>
-            </div> */}
 						<div className="text-white">
 							<label className="w-full">
 								<span className="text-base lg:text-xl mb-3 block">
@@ -144,6 +132,7 @@ const MarketplaceCreateListing = () => {
 								<TextAreaInput
 									placeholder="Add Description"
 									textAreaClassName="placeholder:text-white/60 h-[190px]"
+									onChange={(value) => setDescription(value)}
 								/>
 							</label>
 						</div>
@@ -152,26 +141,26 @@ const MarketplaceCreateListing = () => {
 					<div className="w-full flex flex-col gap-6">
 						<div>
 							<UploadInput
-								onFileSelect={(file) => console.log("Selected file:", file)}
+								onFileSelect={(file) => addImage(file)}
 								className="custom-upload-class !h-[220px] lg:!h-[420px]"
 							/>
 							<div className="grid grid-cols-3 gap-4 mt-6">
 								<UploadInput
-									onFileSelect={(file) => console.log("Selected file:", file)}
+									onFileSelect={(file) => addImage(file)}
 									className="custom-upload-class !h-[100px] lg:!h-[170px] border-style-decoration"
 									titleClassName="hidden"
 									subtitleClassName="hidden"
 									placeholderIcon="/assets/icons/icon-add.svg"
 								/>
 								<UploadInput
-									onFileSelect={(file) => console.log("Selected file:", file)}
+									onFileSelect={(file) => addImage(file)}
 									className="custom-upload-class !h-[100px] lg:!h-[170px] border-style-decoration"
 									titleClassName="hidden"
 									subtitleClassName="hidden"
 									placeholderIcon="/assets/icons/icon-add.svg"
 								/>
 								<UploadInput
-									onFileSelect={(file) => console.log("Selected file:", file)}
+									onFileSelect={(file) => addImage(file)}
 									className="custom-upload-class !h-[100px] lg:!h-[170px] border-style-decoration"
 									titleClassName="hidden"
 									subtitleClassName="hidden"
@@ -184,11 +173,10 @@ const MarketplaceCreateListing = () => {
 							<button className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
 								Preview
 							</button>
-							<Button isActive divClassName="w-full" onClick={createListing}>
+							<Button isActive divClassName="w-full" onClick={onCreateListing}>
 								Create
 							</Button>
 						</div>
-						{/*  */}
 					</div>
 				</div>
 			</div>

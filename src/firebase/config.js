@@ -7,15 +7,27 @@ import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// const firebaseConfig = {
+//     apiKey: "AIzaSyC7o_5RH74WelE8fl1yrQUfVtOZCJNz6hU",
+//     authDomain: "card-market-place-a2684.firebaseapp.com",
+//     projectId: "card-market-place-a2684",
+//     storageBucket: "card-market-place-a2684.firebasestorage.app",
+//     messagingSenderId: "318010899420",
+//     appId: "1:318010899420:web:730fc65b39b34cf9452d19",
+//     measurementId: "G-7GHXC3VD0J"
+// }
+
+console.log("process.env.REACT_APP_FIREBASE_API_KEY:", process.env.REACT_APP_FIREBASE_API_KEY)
 const firebaseConfig = {
-    apiKey: "AIzaSyC7o_5RH74WelE8fl1yrQUfVtOZCJNz6hU",
-    authDomain: "card-market-place-a2684.firebaseapp.com",
-    projectId: "card-market-place-a2684",
-    storageBucket: "card-market-place-a2684.firebasestorage.app",
-    messagingSenderId: "318010899420",
-    appId: "1:318010899420:web:730fc65b39b34cf9452d19",
-    measurementId: "G-7GHXC3VD0J"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 }
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

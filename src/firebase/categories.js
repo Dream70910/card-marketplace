@@ -6,13 +6,17 @@ export const createCategory = async (image, name, description) => {
     try {
         // Reference to the "categories" collection
         const categoriesRef = collection(db, "categories")
-        const storageRef = ref(storage, `images/categories/${name}`)
-        await uploadBytes(storageRef, image)
-        const imageURL = await getDownloadURL(storageRef)
+        let imageURL
+
+        if (image !== null) {
+            const storageRef = ref(storage, `images/categories/${name}`)
+            await uploadBytes(storageRef, image)
+            imageURL = await getDownloadURL(storageRef)
+        }
 
         // Add a new document with a generated ID
         const docRef = await addDoc(categoriesRef, {
-            image: imageURL,
+            image: image ? imageURL : null,
             name: name,
             description: description,
             state: 'pending'

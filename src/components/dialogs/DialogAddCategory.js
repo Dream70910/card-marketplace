@@ -21,10 +21,11 @@ export default function DialogAddCategory({ open, onClose }) {
 
 	const onCreateCategory = async () => {
 		if (name === null || (name !== null && name.length === 0)) {
+			toast.error("Please provide a valid name!")
 			return
 		}
 
-		if (description === null || (description !== null && description.length === 0)) {
+		if (description === null || (description !== null && description.length < 10)) {
 			toast.error("Description is too short. Please provide at least 10 characters.")
 			return
 		}
