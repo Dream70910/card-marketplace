@@ -8,12 +8,14 @@ import DialogMarketplaceFilterCategories from "../../components/dialogs/DialogMa
 import { getAllListings, getListingsByCategories } from "../../firebase/listings"
 import { useLocation, useNavigate } from "react-router-dom"
 import { getAllCategories } from "../../firebase/categories"
+import DialogConfirmation from "../../components/dialogs/DialogConfirmation";
 
 const MarketplaceCategories = () => {
 	const [openDialog, setOpenDialog] = useState(null)
 	const [listings, setListings] = useState([])
 	const [categories, setCategories] = useState([])
 	const queries = new URLSearchParams(useLocation().search)
+	const [loading, setLoading] = useState(true)
 	const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
 	const navigate = useNavigate()
 
@@ -30,6 +32,7 @@ const MarketplaceCategories = () => {
 		} else {
 			getAllListings().then((items) => {
 				setListings(items)
+				setLoading(false)
 			})
 		}
 	}, [queries])
@@ -59,6 +62,16 @@ const MarketplaceCategories = () => {
 
 	return (
 		<div>
+			<DialogConfirmation
+				open={loading}
+				onClose={() => { }}
+				type="loading"
+				title="Please wait"
+				message="We are processing your booking request. Please wait and don’t close this page"
+				buttonText="Cancel"
+				onButtonClick={() => setOpenDialog(null)}
+			/>
+
 			<Header isLogin />
 			<DialogMarketplaceFilterCategories
 				open={openDialog === "filter"}
@@ -116,6 +129,7 @@ const MarketplaceCategories = () => {
 										title={item.title}
 										price={item.price}
 										description={item.description}
+										cardId={item.id}
 										buttonText="Buy Now"
 										isRare
 									/>

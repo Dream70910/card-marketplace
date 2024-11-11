@@ -2,14 +2,13 @@ import React from "react";
 import Button from "./commons/Button";
 import DropdownMenu from "./commons/DropdownMenu";
 import { Link, useLocation } from "react-router-dom";
-import { useAtom } from "jotai";
-import { userAtom } from "../store";
+import { useAuth } from "../context/authContext";
 
 const Header = ({ isLogin = false }) => {
   const menuItems = ["AI Tools", "History", "Settings", "Log out"];
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
-  const [user, setUser] = useAtom(userAtom)
+  const { user } = useAuth()
 
   return (
     <div className="relative after:content-['']  after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">

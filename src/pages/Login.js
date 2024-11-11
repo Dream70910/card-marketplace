@@ -4,24 +4,19 @@ import Button from "../components/commons/Button"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext"
 import { toast } from 'react-toastify';
-import { useAtom } from "jotai"
-import { userAtom } from "../store"
 
 const Login = () => {
   const { login, loginWithGoogle, resetPassword } = useAuth()
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
-  const [, setUser] = useAtom(userAtom)
   const navigate = useNavigate()
 
   const handleGoogleSignin = async () => {
     try {
-      const userCredential = await loginWithGoogle()
-      const user = userCredential.user
+      await loginWithGoogle()
 
       toast.success("Successfully logged in!");
       navigate("/")
-      setUser(user)
     } catch (error) {
       console.log(error.code)
     }

@@ -1,5 +1,5 @@
 import { db, storage } from "./config"
-import { collection, addDoc, getDocs, query, where, doc, updateDoc } from "firebase/firestore"
+import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 export const createListing = async (images, title, condition, price, category, description) => {
@@ -71,5 +71,26 @@ export const getListingsByCategories = async (categories) => {
     } catch (e) {
         console.error("Error getting documents: ", e)
         return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingByID = async (id) => {
+    try {
+        // Reference to the specific document in the "listings" collection
+        const listingRef = doc(db, "listings", id);
+
+        // Retrieve the document snapshot
+        const docSnapshot = await getDoc(listingRef);
+
+        // Check if the document exists
+        if (docSnapshot.exists()) {
+            return { id: docSnapshot.id, ...docSnapshot.data() }; // Return the listing data
+        } else {
+            console.error("No such document!");
+            return null; // Return null if the document does not exist
+        }
+    } catch (e) {
+        console.error("Error getting document: ", e);
+        return null; // Return null in case of error
     }
 }

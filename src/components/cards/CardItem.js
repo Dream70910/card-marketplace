@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../commons/Button";
+import { Link } from "react-router-dom";
 
 const CardItem = ({
   imageSrc,
@@ -16,9 +17,11 @@ const CardItem = ({
   buttonClassName = "",
   onButtonClick,
   isRare = false,
+  cardId = ""
 }) => (
-  <div
+  <Link
     className={`p-3 lg:p-5 flex flex-col card-item w-full min-w-[160px] lg:min-h-[500px] bg-white/5 backdrop-blur-sm ${cardClassName}`}
+    to={`/marketplace/${cardId}`}
   >
     <div className="relative">
       <img
@@ -64,7 +67,7 @@ const CardItem = ({
         {buttonText}
       </Button>
     </div>
-  </div>
+  </Link>
 );
 
 export default CardItem;

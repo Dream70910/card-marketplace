@@ -21,6 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -47,19 +48,20 @@ function App() {
               element={<MarketplaceCategories />}
             />
             <Route
-              path="/marketplace/:itemId"
+              path="/marketplace/:cardId"
               element={<MarketplaceItemDetails />}
             />
+            <Route path="/support" element={<Support />} />
+            <Route path="/tickets" element={<Tickets />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+
+            <Route path="/user-profile" element={<UserProfile />} />
             <Route
               path="/marketplace/create-listing"
               element={<MarketplaceCreateListing />}
             />
             <Route path="/marketplace/chat" element={<MarketplaceChat />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/tickets" element={<Tickets />} />
-            <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/faq" element={<Faq />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>
