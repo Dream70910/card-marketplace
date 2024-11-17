@@ -1,16 +1,14 @@
 import React from "react";
-import Button from "../commons/Button";
 
 const CardUser = ({
   status = "In-Process",
-  joiningDate,
-  location,
-  numberId,
   tickets,
   onDelete,
   onView,
   userProfile,
   username,
+  role,
+  phoneNumber
 }) => {
   const getStatusStyles = () => {
     switch (status) {
@@ -41,24 +39,24 @@ const CardUser = ({
       <div className="grid grid-cols-2 gap-4 mt-8 mb-4">
         <div>
           <span className="block text-white/60 uppercase text-xs">
-            ID Number
+            User Name
           </span>
-          <span className="block text-white text-xs mt-1">{numberId}</span>
+          <span className="block text-white text-xs mt-1">{username}</span>
         </div>
         <div>
           <span className="block text-white/60 uppercase text-xs">
-            Joining Date
+            Role
           </span>
-          <span className="block text-white text-xs mt-1">{joiningDate}</span>
+          <span className="block text-white text-xs mt-1">{role}</span>
         </div>
         <div>
           <span className="block text-white/60 uppercase text-xs">
-            Location
+            Phone
           </span>
-          <span className="block text-white text-xs mt-1">{location}</span>
+          <span className="block text-white text-xs mt-1">{phoneNumber}</span>
         </div>
         <div>
-          <span className="block text-white/60 uppercase text-xs">Tickets</span>
+          <span className="block text-white/60 uppercase text-xs">tickets</span>
           <span className="block text-white text-xs mt-1">{tickets}</span>
         </div>
       </div>

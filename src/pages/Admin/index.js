@@ -4,8 +4,6 @@ import Footer from "../../components/Footer";
 import TableUsers from "../../components/tabels/TableUsers";
 import TableUsersTicket from "../../components/tabels/TableUsersTicket";
 import TextInput from "../../components/commons/TextInput";
-import Button from "../../components/commons/Button";
-import TextAreaInput from "../../components/commons/TextAreaInput";
 import CardUser from "../../components/cards/CardUser";
 import DialogUserOverview from "../../components/dialogs/DialogUserOverview";
 import DialogSupport from "../../components/dialogs/DialogSupport";
@@ -31,128 +29,7 @@ const Admin = () => {
           DASHBOARD
         </h1>
 
-        <div className="flex items-start gap-8 mt-14">
-          <div className="product-ask-section w-full">
-            <h4 className="uppercase font-aero w-full bg-white/5 backdrop-blur-sm p-5 px-10 text-white text-base lg:text-xl">
-              Users
-            </h4>
-            <div className="px-8 pb-1 hidden lg:block">
-              <TableUsers />
-            </div>
-            <div className="p-5 space-y-4 lg:hidden">
-              <CardUser
-                numberId="647622"
-                joiningDate={"28 Jan, 2024"}
-                location={"Hamburg"}
-                tickets={"3"}
-                onDelete={() => console.log("Delete clicked")}
-                onView={() => setOpenDialog("view-user")}
-                userProfile="/assets/avatars/avatar_2.png"
-                username={"Oliver Jones"}
-              />
-              <CardUser
-                numberId="642383"
-                joiningDate={"28 Jan, 2024"}
-                location={"Bremen"}
-                tickets={"5"}
-                onDelete={() => console.log("Delete clicked")}
-                onView={() => setOpenDialog("view-user")}
-                userProfile="/assets/avatars/avatar.png"
-                username={"Emily Johnson"}
-              />
-              <CardUser
-                numberId="167827"
-                joiningDate={"02 Mar, 2024"}
-                location={"Lazzier"}
-                tickets={"8"}
-                onDelete={() => console.log("Delete clicked")}
-                onView={() => setOpenDialog("view-user")}
-                userProfile="/assets/avatars/avatar_4.png"
-                username={"Sophia Ren"}
-              />
-              <CardUser
-                numberId="647622"
-                joiningDate={"14 Jan, 2024"}
-                location={"Bremen"}
-                tickets={"12"}
-                onDelete={() => console.log("Delete clicked")}
-                onView={() => setOpenDialog("view-user")}
-                userProfile="/assets/avatars/avatar_3.png"
-                username={"    Joshua Mer"}
-              />
-            </div>
-          </div>
-          <div className="hidden lg:block product-ask-section w-full max-w-[431px]">
-            <h4 className="uppercase font-aero w-full bg-white/5 backdrop-blur-sm p-5 px-10 text-white text-base lg:text-xl">
-              User Overview
-            </h4>
-            <div className="p-5">
-              <div className="flex items-start justify-between w-full">
-                <div className="flex items-center space-x-2 lg:space-x-4">
-                  <img
-                    src="/assets/avatars/avatar.png"
-                    className=" max-w-[32px] lg:max-w-[74px] border-style-decoration object-cover"
-                  />
-                  <div className="flex flex-col items-start">
-                    <span className="text-sm lg:text-xl text-white">
-                      Emily Johnson
-                    </span>
-                    <div className="text-[10px] lg:text-base flex items-center text-primary">
-                      <img
-                        src="/assets/icons/icon-verified.svg"
-                        className="max-w-[12px] lg:max-w-[unset] mr-1 lg:mr-2"
-                      />{" "}
-                      Verified
-                    </div>
-                  </div>
-                </div>
-
-                <img
-                  src="/assets/icons/icon-more-vert.svg"
-                  className="invert group-hover:invert-0 cursor-pointer mt-2"
-                />
-              </div>
-
-              <div className="mt-6">
-                <h4 className="uppercase text-white/60 text-sm">
-                  Key statistics
-                </h4>
-
-                <div className="">
-                  <div className="flex items-center gap-4 py-4">
-                    <div className="bg-primary-gradient border-style-decoration p-4 w-fit">
-                      <img src="/assets/icons/icon-rows.svg" />
-                    </div>
-                    <div>
-                      <h4 className="text-white/60 text-sm">Total Listings</h4>
-                      <span className="text-xl text-white block mt-1">24</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 py-4 border-y border-y-white/20">
-                    <div className="bg-primary-gradient border-style-decoration p-4 w-fit">
-                      <img src="/assets/icons/icon-shopping-bag.svg" />
-                    </div>
-                    <div>
-                      <h4 className="text-white/60 text-sm">Total Purchases</h4>
-                      <span className="text-xl text-white block mt-1">45</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 py-4">
-                    <div className="bg-primary-gradient border-style-decoration p-4 w-fit">
-                      <img src="/assets/icons/icon-rows.svg" />
-                    </div>
-                    <div>
-                      <h4 className="text-white/60 text-sm">Total Sales</h4>
-                      <span className="text-xl text-white block mt-1">
-                        $2300
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TableUsers />
 
         <div className="flex items-start gap-8 mt-14">
           <div className="product-ask-section w-full lg:max-w-[560px]">

@@ -11,6 +11,7 @@ import { getAllCategories } from "../../firebase/categories"
 import { toast } from "react-toastify"
 import { createListing } from "../../firebase/listings"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../context/authContext"
 
 const MarketplaceCreateListing = () => {
 	const [categories, setCategories] = useState([])
@@ -20,6 +21,7 @@ const MarketplaceCreateListing = () => {
 	const [category, setCategory] = useState("")
 	const [description, setDescription] = useState("")
 	const [images, setImages] = useState([])
+	const { user } = useAuth()
 	const naviate = useNavigate()
 
 	useEffect(() => {
@@ -58,7 +60,7 @@ const MarketplaceCreateListing = () => {
 			return
 		}
 
-		createListing(images, title, condition, price, category, description)
+		createListing(user.uid, images, title, condition, price, category, description)
 		toast.success("Listing has been created successfully!")
 		naviate("/marketplace/categories")
 	}

@@ -1,24 +1,54 @@
-import React, { useState } from "react";
-import UploadInput from "../../components/commons/UploadInput";
-import TextInput from "../../components/commons/TextInput";
-import Dropdown from "../../components/commons/Dropdown";
-import Button from "../../components/commons/Button";
-import DialogConfirmation from "../../components/dialogs/DialogConfirmation";
+import React, { useEffect, useState } from "react"
+import UploadInput from "../../components/commons/UploadInput"
+import TextInput from "../../components/commons/TextInput"
+import Dropdown from "../../components/commons/Dropdown"
+import Button from "../../components/commons/Button"
+import DialogConfirmation from "../../components/dialogs/DialogConfirmation"
+import { useAuth } from "../../context/authContext"
+import { checkUserExists, getUserData, updateUserProfile } from "../../firebase/users"
+import { toast } from "react-toastify"
 
 const PersonalInformation = () => {
-  const [openDialog, setOpenDialog] = useState(null);
-  const options = [
-    { value: "", label: "Select your gender" },
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-  ];
+  const [openDialog, setOpenDialog] = useState(null)
+  const { user } = useAuth()
+  const [initialData, setUserInitialData] = useState()
+  const [loading, setLoading] = useState(true)
 
-  const handleDropdownChange = (event) => {
-    console.log(event.target.value);
-  };
+  const options = [
+    { value: "man", label: "Man" },
+    { value: "woman", label: "Woman" }
+  ]
+  let userData = {
+    displayName: null,
+    gender: null,
+    phoneNumber: null,
+    dateOfBirth: null,
+    picture: null
+  }
+
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid).then((data) => {
+        userData = { ...userData, ...data }
+
+        setUserInitialData(userData)
+
+        setLoading(false)
+      })
+    }
+  }, [user])
+
+  const onSubmitUserProfile = () => {
+    updateUserProfile(user.uid, userData)
+    toast.success("User data successfully updated !")
+  }
+
+  const onPictureChange = (file) => {
+    userData['picture'] = file
+  }
 
   return (
+    !loading &&
     <div>
       <br />
       <DialogConfirmation
@@ -32,7 +62,8 @@ const PersonalInformation = () => {
       />
       <div className="flex items-center gap-6 lg:gap-8">
         <UploadInput
-          onFileSelect={(file) => console.log("Selected file:", file)}
+          defaultPreview={initialData.picture}
+          onFileSelect={onPictureChange}
           className="custom-upload-class !h-[140px] !w-[140px] lg:!h-[220px] lg:!w-[220px] "
           titleClassName="hidden"
           subtitleClassName="hidden"
@@ -56,6 +87,8 @@ const PersonalInformation = () => {
           <TextInput
             placeholder="Enter your name"
             inputClassName="placeholder:text-white/60"
+            onChange={(value) => userData['displayName'] = value}
+            defaultValue={initialData.displayName}
           />
         </label>
         <label className="w-full text-white">
@@ -63,6 +96,8 @@ const PersonalInformation = () => {
           <TextInput
             placeholder="Enter your name"
             inputClassName="placeholder:text-white/60"
+            disabled
+            defaultValue={initialData.username}
           />
         </label>
       </div>
@@ -72,32 +107,38 @@ const PersonalInformation = () => {
           <Dropdown
             options={options}
             placeholder="Select your gender"
-            onChange={handleDropdownChange}
-            className="w-full "
+            onChange={(e) => userData['gender'] = e.currentTarget.value}
+            className="w-full"
           />
         </label>
-        <label className="w-full text-white">
+        <label className="w-full text-white date-input">
           <span className="text-base lg:text-xl mb-3 block">Date of birth</span>
           <TextInput
             placeholder="00 / 00 / 00"
             inputClassName="placeholder:text-white/60"
-            endIcon={<img src="/assets/icons/icon-date.svg" />}
+            defaultType="date"
+            defaultValue={initialData.dateOfBirth}
+            onChange={(value) => userData['dateOfBirth'] = value}
           />
         </label>
       </div>
       <div className="flex flex-col lg:flex-row gap-5 w-full mt-5 lg:mt-8">
         <label className="w-full  text-white">
           <span className="text-base lg:text-xl mb-3 block">Email</span>
-          <TextInput
+          {user && user.email && <TextInput
             placeholder="Enter your email"
             inputClassName="placeholder:text-white/60"
-          />
+            disabled
+            defaultValue={user.email}
+          />}
         </label>
         <label className="w-full text-white">
           <span className="text-base lg:text-xl mb-3 block">Phone number</span>
           <TextInput
             placeholder="Enter your phone number"
             inputClassName="placeholder:text-white/60"
+            onChange={(value) => userData['phoneNumber'] = value}
+            defaultValue={initialData.phoneNumber}
           />
         </label>
       </div>
@@ -106,13 +147,13 @@ const PersonalInformation = () => {
         <Button
           isActive
           divClassName="w-full lg:max-w-[300px]"
-          onClick={() => setOpenDialog("error")}
+          onClick={onSubmitUserProfile}
         >
-          Create
+          Update
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PersonalInformation;
+export default PersonalInformation

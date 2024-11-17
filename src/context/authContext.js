@@ -10,6 +10,8 @@ import {
   sendEmailVerification
 } from "firebase/auth"
 import { auth } from "../firebase/config"
+import { createUserProfile } from "../firebase/users"
+import { useNavigate } from "react-router-dom"
 
 export const authContext = createContext()
 
@@ -27,6 +29,7 @@ export function AuthProvider({ children }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const user = userCredential.user
+      await createUserProfile(user.uid, user.email)
       alert("User signed up successfully")
 
       if (user) {
@@ -55,7 +58,9 @@ export function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password)
   }
 
-  const logout = () => signOut(auth)
+  const logout = () => {
+    signOut(auth)
+  }
 
   const loginWithGoogle = () => {
     const googleProvider = new GoogleAuthProvider()

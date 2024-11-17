@@ -1,5 +1,5 @@
 import { db, storage } from "./config"
-import { collection, addDoc, getDocs, query, where, doc, updateDoc } from "firebase/firestore"
+import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 export const createCategory = async (image, name, description) => {
@@ -29,6 +29,22 @@ export const createCategory = async (image, name, description) => {
 }
 
 export const updateCategory = async (categoryId, updatedData) => {
+    try {
+        // Reference to the specific category document
+        const categoryRef = doc(db, "categories", categoryId)
+        const categorySnapshot = await getDoc(usersRef)
+        const categoryData = categorySnapshot.data()
+
+        // Update the document with new data
+        await updateDoc(categoryRef, updatedData)
+
+        console.log("Document updated with ID: ", categoryId)
+    } catch (e) {
+        console.error("Error updating document: ", e)
+    }
+}
+
+export const createCategoryWithImage = async (categoryId, updatedData) => {
     try {
         // Reference to the specific category document
         const categoryRef = doc(db, "categories", categoryId)

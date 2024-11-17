@@ -2,7 +2,7 @@ import { db, storage } from "./config"
 import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
-export const createListing = async (images, title, condition, price, category, description) => {
+export const createListing = async (userId, images, title, condition, price, category, description) => {
     try {
         // Reference to the "listings" collection
         const listingRef = collection(db, "listings")
@@ -17,6 +17,7 @@ export const createListing = async (images, title, condition, price, category, d
 
         // Add a new document with a generated ID
         const docRef = await addDoc(listingRef, {
+            seller: userId,
             images: imageURLs,
             title: title,
             condition: condition,

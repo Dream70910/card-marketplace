@@ -13,8 +13,9 @@ const TextInput = ({
   const [value, setValue] = useState(null)
 
   useEffect(() => {
-    if (props.onChange)
+    if (props.onChange) {
       props.onChange(value)
+    }
   }, [value])
 
   useEffect(() => {
@@ -26,7 +27,11 @@ const TextInput = ({
   }, [defaultType])
 
   const toggleType = () => {
-    setType(type === 'password' ? 'text' : 'password')
+    if (type === "password")
+      setType('text')
+
+    if (type === "text")
+      setType('password')
   }
 
   return (

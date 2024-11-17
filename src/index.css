@@ -390,3 +390,25 @@ border: 1px solid rgba(255, 255, 255, 1);
   }
 }
 
+
+.date-input {
+  position: relative;
+  display: inline-block;
+}
+
+.date-input input[type="date"] {
+  padding-left: 30px; /* Add space for the icon */
+  color: white; /* Change text color */
+  background-color: #333; /* Dark background */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Optional: rounded corners */
+}
+
+.date-input .icon {
+  position: absolute;
+  left: 10px; /* Space from the left */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%);
+  color: white; /* Icon color */
+  pointer-events: none; /* Prevent clicking on the icon */
+}

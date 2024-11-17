@@ -5,6 +5,7 @@ import TextAreaInput from "../../components/commons/TextAreaInput"
 import DialogEditCategory from "../../components/dialogs/DialogEditCategory"
 import DialogAddCategory from "../../components/dialogs/DialogAddCategory"
 import { getAllCategories, updateCategory } from "../../firebase/categories"
+import UploadInput from "../../components/commons/UploadInput"
 
 const CategoriesSection = () => {
     const [openDialog, setOpenDialog] = useState(null)
@@ -19,6 +20,7 @@ const CategoriesSection = () => {
     const updateCategories = () => {
         getAllCategories(["active", "pending"]).then((cats) => {
             setCategories(cats)
+            setSelectedCategory(cats[0])
         })
 
         getAllCategories(["active"]).then((cats) => {
@@ -38,6 +40,11 @@ const CategoriesSection = () => {
 
     const makeCategoryPending = (cat) => {
         updateCategory(cat.id, { ...cat, state: "pending" })
+        updateCategories()
+    }
+
+    const onUpdateCategory = () => {
+        updateCategory(selectedCategory.id, { ...selectedCategory })
         updateCategories()
     }
 
@@ -65,55 +72,13 @@ const CategoriesSection = () => {
                         <div className="flex flex-wrap gap-5 ">
                             {
                                 activeCategories.map((cat) =>
-                                    <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
+                                    <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]" key={cat.name}>
                                         {cat.name}{" "}
                                         <button className="p-2 bg-primary-gradient" onClick={() => makeCategoryPending(cat)}>
                                             <img src="/assets/icons/icon-close.svg" />
                                         </button>
                                     </button>
                                 )}
-                            {/* <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                Formula 1{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button>
-                            <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                Naruto{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button>
-                            <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                One Piece{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button>
-                            <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                Football{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button>
-                            <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                AOT{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button>
-                            <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                Pokemon{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button>
-                            <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]">
-                                WWE{" "}
-                                <button className="p-2 bg-primary-gradient">
-                                    <img src="/assets/icons/icon-close.svg" />
-                                </button>
-                            </button> */}
                         </div>
 
                         <Button isActive divClassName="!mt-5 lg:max-w-[580px]">
@@ -163,24 +128,14 @@ const CategoriesSection = () => {
                         selectedCategory ?
                             <div className="border-style-decoration p-5 w-full hidden lg:block" key={selectedCategory.cat}>
                                 <div className="flex items-end gap-6">
-                                    {
-                                        selectedCategory.image ?
-                                            <>
-                                                <img src={selectedCategory.image} alt="selected-category" width={200} height={200} />
-                                                <div>
-                                                    <button className="p-2 mt-4 text-white px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                                                        Edit Image
-                                                    </button>
-                                                </div>
-                                            </>
-                                            :
-                                            <div>
-                                                <button className="p-2 mt-4 text-white px-6 border-style-decoration hover:bg-white hover:text-[#141414]">
-                                                    Upload Image
-                                                </button>
-                                            </div>
-                                    }
-
+                                    <UploadInput
+                                        defaultPreview={selectedCategory.image}
+                                        onFileSelect={onPictureChange}
+                                        className="custom-upload-class !h-[140px] !w-[140px] lg:!h-[220px] lg:!w-[220px] "
+                                        titleClassName="hidden"
+                                        subtitleClassName="hidden"
+                                        iconClassName="max-w-[36px] lg:max-w-[36px]"
+                                    />
                                 </div>
 
                                 <div className="mt-6 flex flex-col gap-8">
@@ -197,6 +152,7 @@ const CategoriesSection = () => {
                                             placeholder="Pokerman"
                                             defaultValue={selectedCategory.name}
                                             inputClassName="placeholder:text-white/60"
+                                            onChange={(value) => setSelectedCategory(...selectedCategory, ...{ name: value })}
                                         />
                                     </label>
                                     <label className="w-full  text-white">
@@ -212,13 +168,21 @@ const CategoriesSection = () => {
                                             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
                                             textAreaClassName="placeholder:text-white/60 h-[110px]"
                                             defaultValue={selectedCategory.description}
+                                            onChange={(value) => setSelectedCategory(...selectedCategory, ...{ description: value })}
                                         />
                                     </label>
+
+                                    <Button
+                                        isActive
+                                        onClick={onUpdateCategory}
+                                    >
+                                        Update category
+                                    </Button>
                                 </div>
                             </div> : ""
                     }
                 </div>
-            </div>
+            </div >
         </>
     )
 }

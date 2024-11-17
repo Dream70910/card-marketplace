@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react"
 
 const UploadInput = ({
   className = "",
@@ -11,28 +11,29 @@ const UploadInput = ({
   subtitleClassName = "",
   iconClassName = "",
   editTimes = 0,
+  defaultPreview = null,
   ...props
 }) => {
-  const [preview, setPreview] = useState(null);
-  const fileInputRef = useRef(null);
+  const [preview, setPreview] = useState(defaultPreview)
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     if (editTimes > 0 && fileInputRef.current) {
-      fileInputRef.current.click(); // Programmatically trigger the file input click
+      fileInputRef.current.click() // Programmatically trigger the file input click
     }
   }, [editTimes])
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]
     if (file) {
-      setPreview(URL.createObjectURL(file));
-      if (onFileSelect) onFileSelect(file);
+      setPreview(URL.createObjectURL(file))
+      if (onFileSelect) onFileSelect(file)
     }
-  };
+  }
 
   return (
     <div
-      className={`product-ask-section bg-white/5 backdrop-blur-sm p-8 h-[420px] flex flex-col justify-center items-center text-center cursor-pointer ${className}`}
+      className={`relative product-ask-section bg-white/5 backdrop-blur-sm p-8 h-[420px] flex flex-col justify-center items-center text-center cursor-pointer ${className}`}
       {...props}
     >
       <input
@@ -49,29 +50,27 @@ const UploadInput = ({
           alt="Preview"
           className="w-full h-full object-cover"
         />
-      ) : (
-        <>
-          <label htmlFor="upload-input" className="flex flex-col items-center">
-            <img
-              src={placeholderIcon}
-              alt="Add icon"
-              className={`max-w-[36px] lg:max-w-[unset] ${iconClassName}`}
-            />
-            <span
-              className={`text-base lg:text-[24px] text-white block mt-2 ${titleClassName}`}
-            >
-              {placeholderTitle}
-            </span>
-            <span
-              className={`text-xs lg:text-sm text-white/60 block mt-1 ${subtitleClassName}`}
-            >
-              {placeholderText}
-            </span>
-          </label>
-        </>
-      )}
-    </div>
-  );
-};
+      ) : ""}
 
-export default UploadInput;
+      <label htmlFor="upload-input" className="absolute flex flex-col items-center justify-center z-10 w-full h-full cursor-pointer">
+        <img
+          src={placeholderIcon}
+          alt="Add icon"
+          className={`max-w-[36px] lg:max-w-[unset] ${iconClassName}`}
+        />
+        <span
+          className={`text-base lg:text-[24px] text-white block mt-2 ${titleClassName}`}
+        >
+          {placeholderTitle}
+        </span>
+        <span
+          className={`text-xs lg:text-sm text-white/60 block mt-1 ${subtitleClassName}`}
+        >
+          {placeholderText}
+        </span>
+      </label>
+    </div>
+  )
+}
+
+export default UploadInput

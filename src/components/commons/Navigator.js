@@ -1,19 +1,35 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import DialogConfirmation from "../dialogs/DialogConfirmation"
 import { useAuth } from "../../context/authContext"
+import { getUserData } from "../../firebase/users"
 
 const Navigator = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [openDialog, setOpenDialog] = useState(null)
+  const [userData, setUserData] = useState([])
+  const [loading, setLoading] = useState(true)
   const { user } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid).then((data) => {
+        setUserData(data)
+        setLoading(false)
+
+        // if (userData.role !== 'admin')
+        //   navigate('/')
+      })
+    }
+  }, [user])
 
   const toggleNavigator = () => {
     setIsVisible(!isVisible)
   }
 
   return (
-    <div>
+    !loading && <div>
       <DialogConfirmation
         open={openDialog === "error"}
         onClose={() => setOpenDialog(null)}
@@ -54,11 +70,9 @@ const Navigator = () => {
         <div>
           <Link to="/marketplace/KgkmQaHPnetSAnJTiGR9">Listing</Link>
         </div>
-        {
-          user && <div>
-            <Link to="/marketplace/create-listing">Create Listing</Link>
-          </div>
-        }
+        <div>
+          <Link to="/marketplace/create-listing">Create Listing</Link>
+        </div>
         <div>
           <Link to="/marketplace/chat">Chat</Link>
         </div>
@@ -68,19 +82,14 @@ const Navigator = () => {
         <div>
           <Link to="/tickets">Tickets</Link>
         </div>
-        {
-          user && <div>
-            <Link to="/user-profile">User Profile</Link>
-          </div>
-        }
+        <div>
+          <Link to="/user-profile">User Profile</Link>
+        </div>
         <div>
           <Link to="/faq">Faqs</Link>
         </div>
-        <div>
-          <Link to="/admin/login">Admin Login</Link>
-        </div>
         {
-          user && <div>
+          userData.role === 'admin' && <div>
             <Link to="/admin">Admin</Link>
           </div>
         }
@@ -105,7 +114,7 @@ const Navigator = () => {
             }`}
         />
       </button>
-    </div>
+    </div >
   )
 }
 

@@ -6,6 +6,7 @@ const Dropdown = ({
   className = "",
   onChange,
   value,
+  defaultValue,
 }) => {
   return (
     <div
@@ -15,6 +16,7 @@ const Dropdown = ({
         className={`!bg-transparent text-white p-4 px-6 w-full appearance-none placeholder:text-white focus:outline-none cursor-pointer`}
         onChange={onChange}
         value={value}
+        defaultValue={defaultValue}
       >
         <option value="" disabled hidden>
           {placeholder}
