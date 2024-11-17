@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import PurchaseSalesHistory from "../sections/user-profile/PurchaseSalesHistory"
 import { Link } from "react-router-dom"
+import PaymentSetting from "../sections/user-profile/PaymentSetting"
 
-const UserProfile = () => {
+const PaymentSettingsPage = () => {
     const tabs = [
         {
             title: "Personal Information",
@@ -28,12 +28,13 @@ const UserProfile = () => {
         }
     ]
 
+
     return (
         <div>
             <Header isLogin />
             <div className="container mx-auto px-5 py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
                 <h1 className="font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[48px]">
-                    Purchase / Sale History
+                    Payment Settings
                 </h1>
 
                 <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 lg:gap-6 my-12">
@@ -42,7 +43,7 @@ const UserProfile = () => {
                             key={tab.title}
                             to={tab.link}
                             className={`relative w-fit justify-center text-sm lg:text-base flex items-center p-4 px-6 whitespace-nowrap border-style-decoration after:bottom-[-.5px] right-[-.5px]
-                ${tab.title === "Purchase/Sale history"
+                ${tab.title === "Payment Settings"
                                     ? "bg-white text-black"
                                     : "text-white hover:bg-white hover:text-[#141414]"
                                 }`}
@@ -52,11 +53,11 @@ const UserProfile = () => {
                     ))}
                 </div>
 
-                <PurchaseSalesHistory />
+                <PaymentSetting />
             </div>
             <Footer />
         </div>
     )
 }
 
-export default UserProfile
+export default PaymentSettingsPage

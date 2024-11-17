@@ -81,6 +81,28 @@ export const getAllCategories = async (states = ["active"]) => {
     }
 }
 
+export const getCategoryById = async (categoryId) => {
+    try {
+        // Reference to the "categories" collection
+        const categoriesRef = collection(db, "categories")
+
+        // Create a query to find the category by categoryId
+        const q = query(categoriesRef, where("id", "==", categoryId)) // Assuming "id" is the field name in Firestore
+        const querySnapshot = await getDocs(q)
+
+        // Check if any category was found
+        if (!querySnapshot.empty) {
+            const category = querySnapshot.docs[0].data()
+            return { id: querySnapshot.docs[0].id, ...category } // Return the category object with its ID
+        } else {
+            return null // Return null if no category was found
+        }
+    } catch (e) {
+        console.error("Error getting category: ", e)
+        return null // Return null in case of error
+    }
+}
+
 export const checkCategoryExists = async (categoryName) => {
     try {
         const categoriesRef = collection(db, "categories")

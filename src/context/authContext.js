@@ -9,9 +9,10 @@ import {
   sendPasswordResetEmail,
   sendEmailVerification
 } from "firebase/auth"
-import { auth } from "../firebase/config"
+import { auth, db } from "../firebase/config"
 import { createUserProfile } from "../firebase/users"
 import { useNavigate } from "react-router-dom"
+import { doc, onSnapshot } from "firebase/firestore"
 
 export const authContext = createContext()
 
@@ -77,8 +78,11 @@ export function AuthProvider({ children }) {
       setLoading(false)
     })
 
-    return () => unsubscribe()
+    return () => {
+      unsubscribe()
+    }
   }, [])
+
 
   return (
     <authContext.Provider

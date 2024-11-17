@@ -48,6 +48,10 @@ const CategoriesSection = () => {
         updateCategories()
     }
 
+    const onPictureChange = () => {
+
+    }
+
     return (
         <>
             <DialogEditCategory
@@ -130,7 +134,7 @@ const CategoriesSection = () => {
                                 <div className="flex items-end gap-6">
                                     <UploadInput
                                         defaultPreview={selectedCategory.image}
-                                        onFileSelect={onPictureChange}
+                                        // onFileSelect={onPictureChange}
                                         className="custom-upload-class !h-[140px] !w-[140px] lg:!h-[220px] lg:!w-[220px] "
                                         titleClassName="hidden"
                                         subtitleClassName="hidden"
@@ -152,7 +156,7 @@ const CategoriesSection = () => {
                                             placeholder="Pokerman"
                                             defaultValue={selectedCategory.name}
                                             inputClassName="placeholder:text-white/60"
-                                            onChange={(value) => setSelectedCategory(...selectedCategory, ...{ name: value })}
+                                        // onChange={(value) => setSelectedCategory(...selectedCategory, ...{ name: value })}
                                         />
                                     </label>
                                     <label className="w-full  text-white">
@@ -168,7 +172,7 @@ const CategoriesSection = () => {
                                             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
                                             textAreaClassName="placeholder:text-white/60 h-[110px]"
                                             defaultValue={selectedCategory.description}
-                                            onChange={(value) => setSelectedCategory(...selectedCategory, ...{ description: value })}
+                                        // onChange={(value) => setSelectedCategory(...selectedCategory, ...{ description: value })}
                                         />
                                     </label>
 

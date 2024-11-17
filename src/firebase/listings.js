@@ -18,7 +18,7 @@ export const createListing = async (userId, images, title, condition, price, cat
         // Add a new document with a generated ID
         const docRef = await addDoc(listingRef, {
             seller: userId,
-            images: imageURLs,
+            pictures: imageURLs,
             title: title,
             condition: condition,
             price: parseInt(price),
@@ -50,6 +50,28 @@ export const getAllListings = async () => {
     } catch (e) {
         console.error("Error getting documents: ", e)
         return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByUserId = async (userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings");
+
+        const listings = [];
+
+        // Create a query to filter listings by sellerId
+        const q = query(listingsRef, where("seller", "==", userId));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+            listings.push({ id: doc.id, ...doc.data() });
+        });
+
+        return listings; // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e);
+        return []; // Return an empty array in case of error
     }
 }
 
@@ -93,5 +115,78 @@ export const getListingByID = async (id) => {
     } catch (e) {
         console.error("Error getting document: ", e);
         return null; // Return null in case of error
+    }
+}
+
+export const addToCart = async (userId, cartedItem) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", userId)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+        const oldCart = userData.cartList ? userData.cartList : []
+        if (oldCart.findIndex(item => item.id === cartedItem.id) === -1) {
+            const newUserData = { ...userData, cartList: [...oldCart, cartedItem] }
+            await updateDoc(usersRef, newUserData)
+        }
+    } catch (e) {
+        console.error("Error getting document: ", e)
+    }
+}
+
+export const removeFromCart = async (userId, cartId) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", userId)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+        const oldCart = userData.cartList ? userData.cartList : []
+        const newCart = oldCart.reduce((acc, cur) => {
+            if (cur.id !== cartId)
+                acc.push(cur)
+            return acc
+        }, [])
+
+        const newUserData = { ...userData, cartList: newCart }
+
+        await updateDoc(usersRef, newUserData)
+    } catch (e) {
+        console.error("Error getting document: ", e)
+    }
+}
+
+export const isListingInCart = async (userId, listingId) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", userId)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+        const oldCart = userData.cartList ? userData.cartList : []
+        if (oldCart.findIndex(item => item.id === listingId) > -1) {
+            return true
+        } else {
+            return false
+        }
+    } catch (e) {
+        console.error("Error getting document: ", e)
+    }
+}
+
+export const buyListing = async (userId, card) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", userId)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+
+        const listingsRef = doc(db, "listings", card.id)
+        const listingSnapshot = await getDoc(listingsRef)
+        const listingData = listingSnapshot.data()
+
+        const newUserData = { ...userData, balance: userData.balance - card.price }
+        await updateDoc(listingsRef, { ...listingData, state: "pending", buyer: userId })
+        await updateDoc(usersRef, newUserData)
+    } catch (e) {
+        console.error("Error getting document: ", e)
     }
 }

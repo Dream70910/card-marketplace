@@ -8,6 +8,7 @@ import MarketplaceCategories from "./pages/Marketplace/MarketplaceCategories";
 import MarketplaceItemDetails from "./pages/Marketplace/MarketplaceItemDetails";
 import MarketplaceCreateListing from "./pages/Marketplace/MarketplaceCreateListing";
 import UserProfile from "./pages/UserProfile";
+import Cart from "./pages/Cart";
 import MarketplaceChat from "./pages/Marketplace/MarketplaceChat";
 import Faq from "./pages/Faq";
 import Support from "./pages/Support";
@@ -22,6 +23,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PrivateRoute from "./components/PrivateRoute";
+import PaymentSettings from "./pages/PaymentSettings";
+import MyListingsPage from "./pages/MyListingsPage";
 
 function App() {
   return (
@@ -57,6 +60,11 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
 
             <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/payment-settings" element={<PaymentSettings />} />
+
+            <Route path="/my-listings" element={<MyListingsPage />} />
+
+            <Route path="/purchase-sale" element={<Cart />} />
             <Route
               path="/marketplace/create-listing"
               element={<MarketplaceCreateListing />}

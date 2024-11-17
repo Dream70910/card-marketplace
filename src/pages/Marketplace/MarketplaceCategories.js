@@ -125,12 +125,15 @@ const MarketplaceCategories = () => {
 							{
 								listings.map((item) =>
 									<CardItem
-										imageSrc={item.images[0]}
+										imageSrc={item.pictures[0]}
 										title={item.title}
 										price={item.price}
 										description={item.description}
 										cardId={item.id}
-										buttonText="Buy Now"
+										sellerId={item.sellerId}
+										sellerName={item.sellerName}
+										buttonText="Add to cart"
+										sellerUserName={item.sellerUserName}
 										isRare
 									/>
 								)

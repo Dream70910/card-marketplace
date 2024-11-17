@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../commons/Button";
+import { Link } from "react-router-dom";
 
 const CardItemListing = ({
   imageSrc,
@@ -16,6 +17,7 @@ const CardItemListing = ({
   buttonClassName = "",
   onButtonClick,
   isRare = false,
+  id = ""
 }) => (
   <div
     className={`p-3 lg:p-5 flex flex-col card-item w-full min-w-[160px] lg:min-h-[500px] bg-white/5 backdrop-blur-sm ${cardClassName}`}
@@ -42,24 +44,22 @@ const CardItemListing = ({
             {title} {quantity}
           </h4>
           <span
-            className={`text-[10px] lg:text-base text-primary uppercase font-aero ${priceClassName}`}
+            className={`text-[10px] lg:text-base text-primary uppercase font-aero whitespace-nowrap ${priceClassName}`}
           >
             {price}
           </span>
         </div>
+        <h4
+          className={`mt-3 text-sm text-white leading-[1.4] ${descriptionClassName}`}
+        >
+          {description}
+        </h4>
       </div>
 
       <div className="gap-4 flex flex-col">
-        <button className="hover:bg-primary relative w-full hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
+        <Link to={`/marketplace/${id}`} className="hover:bg-primary relative w-full hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
           View Product
-        </button>
-        <Button
-          divClassName={`text-sm lg:text-base ${buttonClassName}`}
-          onClick={onButtonClick}
-          isActive
-        >
-          {buttonText}
-        </Button>
+        </Link>
       </div>
     </div>
   </div>

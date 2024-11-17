@@ -5,21 +5,21 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { getUserData } from "../firebase/users"
+import { useAtom } from "jotai"
+import { userAtom } from "../store"
 
 const Header = ({ isLogin = false }) => {
-  const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useAtom(userAtom)
   const [loading, setLoading] = useState(true)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const menuItems = ["AI Tools", "History", "Settings", "Log out"]
   const isActive = (path) => location.pathname === path
-  console.log("user date is", user)
 
   useEffect(() => {
     if (user) {
       getUserData(user.uid).then((data) => {
-        setUserData(data)
+        setUserData({ ...data, id: user.uid })
         setLoading(false)
       })
     }
@@ -104,9 +104,14 @@ const Header = ({ isLogin = false }) => {
                         }
                       </div>
                       <div className="ml-4 hidden lg:flex items-center whitespace-nowrap">
-                        <span className="text-base text-white">
-                          {userData.displayName}
-                        </span>
+                        <div>
+                          <div className="text-base text-white">
+                            {userData.displayName}
+                          </div>
+                          <div className="text-base text-left text-white">
+                            $ {userData.balance.toFixed(2)}
+                          </div>
+                        </div>
                         <img
                           src="/assets/icons/icon-arrow-drop-down.svg"
                           className="rotate-[180deg] ml-2"
@@ -146,12 +151,16 @@ const Header = ({ isLogin = false }) => {
             )}
 
             {/*  */}
-            <button className="relative">
+            <Link to="/purchase-sale" className="relative" >
               <span className="text-[8px] font-bold rounded-full flex items-center justify-center bg-primary text-white absolute  w-[14px] h-[14px] right-[-.25rem]  bottom-[-.25rem]">
-                2
+                {userData.cartList ? userData.cartList.length : 0}
               </span>
               <img src="/assets/icons/icon-bag.svg" alt="icon" />
-            </button>
+            </Link>
+
+            {/* <span className="text-[16px] justify-center text-white">
+              $ {userData.balance}
+            </span> */}
           </div>
 
           {/*  */}

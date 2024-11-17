@@ -6,11 +6,11 @@ const PaymentSetting = () => {
   const [activeOption, setActiveOption] = useState("Credit Card");
 
   const options = [
-    {
-      id: "Credit Card",
-      icon: "/assets/icons/icon-credit-card-2.svg",
-      label: "Credit Card",
-    },
+    // {
+    //   id: "Credit Card",
+    //   icon: "/assets/icons/icon-credit-card-2.svg",
+    //   label: "Credit Card",
+    // },
     { id: "Paypal", icon: "/assets/logos/paypal.svg", label: "Paypal" },
     { id: "Stax", icon: "/assets/logos/stax.svg", label: "Stax" },
   ];
@@ -22,14 +22,12 @@ const PaymentSetting = () => {
           <div
             key={option.id}
             onClick={() => setActiveOption(option.id)}
-            className={`border-style-decoration p-5 w-full max-w-[200px] h-[120px] flex flex-col items-center justify-center cursor-pointer ${
-              option.id === "Stax" && "hidden lg:flex"
-            }
-            ${
-              activeOption === option.id
+            className={`border-style-decoration p-5 w-full max-w-[200px] h-[120px] flex flex-col items-center justify-center cursor-pointer ${option.id === "Stax" && "hidden lg:flex"
+              }
+            ${activeOption === option.id
                 ? "bg-white/5 backdrop-blur-sm !border-primary after:!border-l-primary after:!border-t-primary before:!border-r-primary before:!border-b-primary"
                 : "bg-transparent border-white/20"
-            }`}
+              }`}
           >
             <img
               src={option.icon}

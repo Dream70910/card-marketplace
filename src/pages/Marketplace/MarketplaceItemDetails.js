@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from 'react-router-dom'
+import { Link, useActionData, useParams } from 'react-router-dom'
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import Button from "../../components/commons/Button"
 import CardItem from "../../components/cards/CardItem"
 import Slider from "react-slick"
-import { getListingByID } from "../../firebase/listings"
+import { addToCart, buyListing, getListingByID, getListingsByUserId, removeFromCart } from "../../firebase/listings"
 import DialogConfirmation from "../../components/dialogs/DialogConfirmation"
+import { getUserData } from "../../firebase/users"
+import { getCategoryById } from "../../firebase/categories"
+import { toast } from "react-toastify"
+import { useAtom } from "jotai"
+import { userAtom } from "../../store"
 
 const MarketplaceItemDetails = () => {
   const [openDetails, setOpenDetails] = useState(true)
@@ -14,16 +19,85 @@ const MarketplaceItemDetails = () => {
   const [openPayments, setOpenPayments] = useState(false)
   const { cardId } = useParams()
   const [card, setCard] = useState(null)
-  const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [seller, setSeller] = useState(null)
+  const [categoryName, setCategoryName] = useState(null)
+  const [userData, setUserData] = useAtom(userAtom)
+  const [isInCart, setIsInCart] = useState(false)
+  const [otherCards, setOtherCards] = useState([])
 
   useEffect(() => {
     getListingByID(cardId).then((item) => {
       setCard(item)
-      setImages(item.images)
-      setLoading(false)
+    })
+
+    scrollTo({
+      top: 0
     })
   }, [cardId])
+
+  useEffect(() => {
+    if (card && card.seller) {
+      getUserData(card.seller).then((item) => {
+        setSeller(item)
+      })
+
+      getCategoryById(card.category).then((item) => {
+        setCategoryName(item.name)
+      })
+
+      getListingsByUserId(card.seller).then((items) => {
+        setOtherCards(items)
+        setLoading(false)
+      })
+    }
+  }, [card])
+
+  useEffect(() => {
+    userData && userData.cartList && isListingInCart()
+  }, [userData])
+
+  const isListingInCart = () => {
+    if (userData.cartList.findIndex(item => item.id === cardId) > -1) setIsInCart(true)
+    else setIsInCart(false)
+  }
+
+  const handleAddtoCart = (item) => {
+    toast.success(`${item.title} was successfully added to cart !`)
+
+    const cartedItem = { title: item.title, price: item.price, picture: item.imageSrc, sellerId: item.sellerId, sellerUserName: item.sellerUserName, id: item.id }
+
+    addToCart(userData.id, cartedItem)
+
+    setUserData({ ...userData, cartList: [...userData.cartList, cartedItem] })
+    setIsInCart(true)
+  }
+
+  const removeItemFromCart = (card) => {
+    removeFromCart(userData.id, card.id)
+    const oldCart = userData.cartList.reduce((acc, cur) => {
+      if (cur.id !== card.id) acc.push(cur)
+      return acc
+    }, [])
+
+    setUserData({ ...userData, cartList: oldCart })
+  }
+
+  const handleRemoveFromCart = () => {
+    removeItemFromCart(card)
+    toast.success(`${card.title} was removed from cart !`)
+  }
+
+  const handleBuyCard = () => {
+    if (userData.balance < card.price) {
+      toast.error(`Your balance is not enough !`)
+    } else {
+      toast.success(`${card.title} is on pending !`)
+      setUserData({ ...userData, balance: userData.balance - card.price })
+      removeItemFromCart(card)
+      buyListing(userData.id, card)
+    }
+  }
 
   // State to track the active image ID, initialized to the first image ID
   // const [activeImageId, setActiveImageId] = useState(images[0].id)
@@ -36,7 +110,6 @@ const MarketplaceItemDetails = () => {
   // Find the currently active image object
   // const activeImage = images.find((image) => image.id === activeImageId)
   const activeImageId = 1
-
 
   const settings = {
     dots: false,
@@ -63,7 +136,7 @@ const MarketplaceItemDetails = () => {
       />
 
       {
-        card ?
+        !loading ?
           <div className="container mx-auto px-5  py-24 lg:py-48 lg:pb-24 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[60%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
             <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-12">
               <div className="w-full max-w-[620px] 2xl:max-w-[700px]">
@@ -96,7 +169,7 @@ const MarketplaceItemDetails = () => {
                     </div>
                   ))}
                 </Slider> */}
-                <img src={card.images[0]} className="w-full" />
+                <img src={card.pictures[0]} className="w-full" />
               </div>
 
               <div className="w-full lg:space-y-8">
@@ -211,12 +284,12 @@ const MarketplaceItemDetails = () => {
                   <div className="pt-5 flex items-center justify-between">
                     <div className="flex items-center space-x-2 lg:space-x-4">
                       <img
-                        src="/assets/avatars/avatar.png"
+                        src={seller.picture}
                         className=" max-w-[32px] lg:max-w-[48px] border-style-decoration object-cover"
                       />
                       <div className="flex flex-col items-start">
                         <span className="text-sm lg:text-base text-white">
-                          Emily Johnson
+                          {seller.displayName}
                         </span>
                         <div className="text-[10px] lg:text-base flex items-center text-primary">
                           <img
@@ -228,19 +301,35 @@ const MarketplaceItemDetails = () => {
                       </div>
                     </div>
 
-                    <button className="w-full !border !border-primary text-primary text-[10px] lg:text-base flex justify-center items-center p-1.5 px-3 lg:p-3 lg:px-6 border-style-decoration max-w-[130px] lg:max-w-[185px] after:!border-l-primary after:!border-t-primary before:!border-b-primary before:border-r-primary">
+                    <Link
+                      to="/marketplace/chat"
+                      className="w-full !border !border-primary text-primary text-[10px] lg:text-base flex justify-center items-center p-1.5 px-3 lg:p-3 lg:px-6 border-style-decoration max-w-[130px] lg:max-w-[185px] after:!border-l-primary after:!border-t-primary before:!border-b-primary before:border-r-primary"
+                    >
                       <img
                         src="/assets/icons/icon-chat.svg"
                         className="max-w-[14px] lg:max-w-[unset] mr-1 lg:mr-2 mt-1"
                       />{" "}
                       Send message
-                    </button>
+                    </Link>
                   </div>
                 </div>
-                <button className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
-                  Add to cart
-                </button>
-                <Button isActive divClassName="!mt-3 lg:!mt-5">
+                {
+                  isInCart ?
+                    <button
+                      className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
+                      onClick={handleRemoveFromCart}
+                    >
+                      Remove from Cart
+                    </button>
+                    :
+                    <button
+                      className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
+                      onClick={() => handleAddtoCart(card)}
+                    >
+                      Add to Cart
+                    </button>
+                }
+                <Button isActive divClassName="!mt-3 lg:!mt-5" onClick={handleBuyCard}>
                   Buy Now
                 </Button>
 
@@ -283,14 +372,14 @@ const MarketplaceItemDetails = () => {
                           <span className="text-primary w-full max-w-[140px] lg:max-w-[210px] block">
                             Category
                           </span>
-                          <span>Anime</span>
+                          <span>{categoryName}</span>
                         </div>
-                        <div className="w-full flex  text-xs lg:text-sm">
+                        {/* <div className="w-full flex  text-xs lg:text-sm">
                           <span className="text-primary w-full max-w-[140px] lg:max-w-[210px] block">
                             Sub-category
                           </span>
                           <span>Pokemon</span>
-                        </div>
+                        </div> */}
                         <div className="w-full flex  text-xs lg:text-sm">
                           <span className="text-primary w-full max-w-[140px] lg:max-w-[210px] block">
                             Dimensions
@@ -442,64 +531,19 @@ const MarketplaceItemDetails = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mt-8">
-              <CardItem
-                imageSrc="/assets/images/image_item_2.png"
-                title="pokemon pecharunt x 2"
-                price="$29.99"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_1.png"
-                title="Cubone x 3"
-                price="$180.00"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-                isRare
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_3.png"
-                title="WIXOSS Wi-Cross Ele..."
-                price="$12.99"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_4.png"
-                title="world of arcraft"
-                price="$120.00"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-                isRare
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_5.png"
-                title="pokemon pecharunt x 2"
-                price="$29.99"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_6.png"
-                title="Cubone x 3"
-                price="$180.00"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_7.png"
-                title="WIXOSS Wi-Cross Ele..."
-                price="$12.99"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-              />
-              <CardItem
-                imageSrc="/assets/images/image_item_8.png"
-                title="world of arcraft"
-                price="$120.00"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-                buttonText="Buy Now"
-              />
+              { }
+              {
+                otherCards.map(item =>
+                  <CardItem
+                    imageSrc={item.pictures[0]}
+                    title={item.title}
+                    price={`$ ${item.price}`}
+                    description={item.description}
+                    key={item.id}
+                    cardId={item.id}
+                  />
+                )
+              }
             </div>
             <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
               <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">

@@ -35,7 +35,8 @@ export async function createUserProfile(userId, email) {
             username: username,
             role: 'customer',
             gender: 'man',
-            displayName: username
+            displayName: username,
+            balance: 0
         });
 
         console.log("User profile created successfully");

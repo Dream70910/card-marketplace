@@ -12,19 +12,19 @@ const UserProfile = () => {
     },
     {
       title: "Purchase/Sale history",
-      link: "/cart"
+      link: "/purchase-sale"
     },
-    {
-      title: "Ratings and reviews",
-      link: "/user-profile"
-    },
+    // {
+    //   title: "Ratings and reviews",
+    //   link: "/user-profile"
+    // },
     {
       title: "Your Listings",
-      link: "/user-profile"
+      link: "/my-listings"
     },
     {
-      title: "Payment settings",
-      link: "/user-profile"
+      title: "Payment Settings",
+      link: "/payment-settings"
     }
   ]
 
