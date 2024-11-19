@@ -7,24 +7,21 @@ import DialogConfirmation from "../../components/dialogs/DialogConfirmation"
 import { useAuth } from "../../context/authContext"
 import { checkUserExists, getUserData, updateUserProfile } from "../../firebase/users"
 import { toast } from "react-toastify"
+import { useAtom } from "jotai"
+import { userAtom } from "../../store"
 
 const PersonalInformation = () => {
   const [openDialog, setOpenDialog] = useState(null)
   const { user } = useAuth()
   const [initialData, setUserInitialData] = useState()
   const [loading, setLoading] = useState(true)
+  const [, setUserData] = useAtom(userAtom)
 
   const options = [
     { value: "man", label: "Man" },
     { value: "woman", label: "Woman" }
   ]
-  let userData = {
-    displayName: null,
-    gender: null,
-    phoneNumber: null,
-    dateOfBirth: null,
-    picture: null
-  }
+  let userData = {}
 
   useEffect(() => {
     if (user) {
@@ -33,13 +30,21 @@ const PersonalInformation = () => {
 
         setUserInitialData(userData)
 
-        setLoading(false)
+        setTimeout(() => {
+          setLoading(false)
+        }, 200);
       })
     }
   }, [user])
 
-  const onSubmitUserProfile = () => {
+  const onSubmitUserProfile = async () => {
     updateUserProfile(user.uid, userData)
+
+    await getUserData(user.uid).then((data) => {
+      setUserData({ ...data, id: user.uid })
+      localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
+    })
+
     toast.success("User data successfully updated !")
   }
 

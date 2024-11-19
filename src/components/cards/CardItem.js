@@ -38,16 +38,16 @@ const CardItem = ({
     else setIsInCart(false)
   }
 
-  const handleAddtoCart = (e) => {
+  const handleAddtoCart = async (e) => {
     e.preventDefault()
-    toast.success(`${title} was successfully added to cart !`)
 
     const cartedItem = { title: title, price: price, picture: imageSrc, sellerId: sellerId, sellerUserName: sellerUserName, id: cardId }
 
-    addToCart(user.uid, cartedItem)
+    await addToCart(user.uid, cartedItem)
 
     setUserData({ ...userData, cartList: [...userData.cartList, cartedItem] })
     setIsInCart(true)
+    toast.success(`${title} was successfully added to cart !`)
   }
 
   return (

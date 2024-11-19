@@ -16,6 +16,7 @@ const Login = () => {
       await loginWithGoogle()
 
       toast.success("Successfully logged in!");
+
       navigate("/")
     } catch (error) {
       console.log(error.code)

@@ -16,22 +16,12 @@ const Header = ({ isLogin = false }) => {
   const location = useLocation()
   const isActive = (path) => location.pathname === path
 
-  useEffect(() => {
-    if (user) {
-      getUserData(user.uid).then((data) => {
-        setUserData({ ...data, id: user.uid })
-        setLoading(false)
-      })
-    }
-  }, [user])
-
   const onLogout = () => {
     logout()
     navigate('/login')
   }
 
   return (
-    !loading &&
     <div className="relative after:content-['']  after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">
       <div className="container mx-auto px-4 py-8 w-full absolute top-0 inset-0 bg-transparent z-10 h-fit">
         <div className="flex items-center justify-between w-full">
@@ -59,7 +49,7 @@ const Header = ({ isLogin = false }) => {
               <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Categories</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
-              <a href="/#">Buy Cards</a>
+              <Link href="/chat">Messages</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
               <a href="/#">Sell Cards</a>
@@ -69,12 +59,12 @@ const Header = ({ isLogin = false }) => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-6">
+          {userData && <div className="flex items-center space-x-6">
             {/*  */}
             <button className="lg:hidden">
               <img src="/assets/icons/icon-person.svg" alt="" />
             </button>
-            {!user ? (
+            {!userData ? (
               <Link to="/login">
                 <Button isActive divClassName="hidden lg:block">
                   <img
@@ -133,9 +123,9 @@ const Header = ({ isLogin = false }) => {
                       </Link>
                     </MenuItem>
                     <MenuItem>
-                      <button className="group border-style-decoration flex w-full items-center gap-2 !border-0 hover:!border-1 py-2.5 px-4 data-[focus]:bg-white hover:text-black font-semibold text-sm lg:text-base">
+                      <Link to="/my-listings" className="group border-style-decoration flex w-full items-center gap-2 !border-0 hover:!border-1 py-2.5 px-4 data-[focus]:bg-white hover:text-black font-semibold text-sm lg:text-base">
                         Your Listing
-                      </button>
+                      </Link>
                     </MenuItem>
                     <MenuItem>
                       <button
@@ -161,7 +151,7 @@ const Header = ({ isLogin = false }) => {
             {/* <span className="text-[16px] justify-center text-white">
               $ {userData.balance}
             </span> */}
-          </div>
+          </div>}
 
           {/*  */}
         </div>

@@ -302,7 +302,7 @@ const MarketplaceItemDetails = () => {
                     </div>
 
                     <Link
-                      to="/marketplace/chat"
+                      to={`/marketplace/chat/${card.seller}`}
                       className="w-full !border !border-primary text-primary text-[10px] lg:text-base flex justify-center items-center p-1.5 px-3 lg:p-3 lg:px-6 border-style-decoration max-w-[130px] lg:max-w-[185px] after:!border-l-primary after:!border-t-primary before:!border-b-primary before:border-r-primary"
                     >
                       <img

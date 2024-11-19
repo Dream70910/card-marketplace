@@ -74,7 +74,7 @@ const Navigator = () => {
           <Link to="/marketplace/create-listing">Create Listing</Link>
         </div>
         <div>
-          <Link to="/marketplace/chat">Chat</Link>
+          <Link to="/marketplace/chat/cLl3mlk45qgwa1yuustQygeEeYD2">Chat</Link>
         </div>
         <div>
           <Link to="/support">Support</Link>

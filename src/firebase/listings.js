@@ -9,11 +9,11 @@ export const createListing = async (userId, images, title, condition, price, cat
         const imageURLs = []
 
         await Promise.all(images.map(async (image, index) => {
-            const storageRef = ref(storage, `images/listings/${title}-${index + 1}`);
-            await uploadBytes(storageRef, image);
-            const imageURL = await getDownloadURL(storageRef);
-            imageURLs.push(imageURL);
-        }));
+            const storageRef = ref(storage, `images/listings/${title}-${index + 1}`)
+            await uploadBytes(storageRef, image)
+            const imageURL = await getDownloadURL(storageRef)
+            imageURLs.push(imageURL)
+        }))
 
         // Add a new document with a generated ID
         const docRef = await addDoc(listingRef, {
@@ -56,22 +56,22 @@ export const getAllListings = async () => {
 export const getListingsByUserId = async (userId) => {
     try {
         // Reference to the "listings" collection
-        const listingsRef = collection(db, "listings");
+        const listingsRef = collection(db, "listings")
 
-        const listings = [];
+        const listings = []
 
         // Create a query to filter listings by sellerId
-        const q = query(listingsRef, where("seller", "==", userId));
-        const querySnapshot = await getDocs(q);
+        const q = query(listingsRef, where("seller", "==", userId))
+        const querySnapshot = await getDocs(q)
 
         querySnapshot.forEach((doc) => {
-            listings.push({ id: doc.id, ...doc.data() });
-        });
+            listings.push({ id: doc.id, ...doc.data() })
+        })
 
-        return listings; // Return the array of listings
+        return listings // Return the array of listings
     } catch (e) {
-        console.error("Error getting documents: ", e);
-        return []; // Return an empty array in case of error
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
     }
 }
 
@@ -100,21 +100,70 @@ export const getListingsByCategories = async (categories) => {
 export const getListingByID = async (id) => {
     try {
         // Reference to the specific document in the "listings" collection
-        const listingRef = doc(db, "listings", id);
+        const listingRef = doc(db, "listings", id)
 
         // Retrieve the document snapshot
-        const docSnapshot = await getDoc(listingRef);
+        const docSnapshot = await getDoc(listingRef)
 
         // Check if the document exists
         if (docSnapshot.exists()) {
-            return { id: docSnapshot.id, ...docSnapshot.data() }; // Return the listing data
+            return { id: docSnapshot.id, ...docSnapshot.data() } // Return the listing data
         } else {
-            console.error("No such document!");
-            return null; // Return null if the document does not exist
+            console.error("No such document!")
+            return null // Return null if the document does not exist
         }
     } catch (e) {
-        console.error("Error getting document: ", e);
-        return null; // Return null in case of error
+        console.error("Error getting document: ", e)
+        return null // Return null in case of error
+    }
+}
+
+export const getPurchasedListings = async (userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        // Create a query to filter listings by sellerId
+        const q = query(listingsRef, where("buyer", "==", userId))
+        const querySnapshot = await getDocs(q)
+
+        querySnapshot.forEach((doc) => {
+            listings.push({ id: doc.id, ...doc.data() })
+        })
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getSoldListings = async (userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        // Create a query to filter listings by sellerId
+        const q = query(
+            listingsRef,
+            where("seller", "==", userId),
+            where("buyer", ">=", "")
+        )
+
+        const querySnapshot = await getDocs(q)
+
+        querySnapshot.forEach((doc) => {
+            listings.push({ id: doc.id, ...doc.data() })
+        })
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
     }
 }
 
@@ -185,6 +234,25 @@ export const buyListing = async (userId, card) => {
 
         const newUserData = { ...userData, balance: userData.balance - card.price }
         await updateDoc(listingsRef, { ...listingData, state: "pending", buyer: userId })
+        await updateDoc(usersRef, newUserData)
+    } catch (e) {
+        console.error("Error getting document: ", e)
+    }
+}
+
+export const cancelBuyListing = async (userId, card) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", userId)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+
+        const listingsRef = doc(db, "listings", card.id)
+        const listingSnapshot = await getDoc(listingsRef)
+        const listingData = listingSnapshot.data()
+
+        const newUserData = { ...userData, balance: userData.balance + card.price }
+        await updateDoc(listingsRef, { ...listingData, state: "active", buyer: null })
         await updateDoc(usersRef, newUserData)
     } catch (e) {
         console.error("Error getting document: ", e)

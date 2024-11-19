@@ -54,7 +54,7 @@ export const updateUserProfile = async (userId, updatedData) => {
         const docSnap = await getDoc(usersRef)
         const querySnapshot = docSnap.data()
         if (updatedData.picture !== null && updatedData.picture !== undefined) {
-            const storageRef = ref(storage, `images/users/${updatedData.username}`)
+            const storageRef = ref(storage, `images/users/${querySnapshot.username}`)
             await uploadBytes(storageRef, updatedData.picture)
             pictureURL = await getDownloadURL(storageRef)
         }
@@ -122,5 +122,24 @@ export const getAllUserData = async () => {
         return usersList;
     } catch (e) {
         console.error("Error getting documents: ", e);
+    }
+}
+
+export const addRecipient = async (userId, recipientId) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", userId)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+        let recipients = userData.recipients ? userData.recipients : []
+        const getRecipientData = await getUserData(recipientId)
+
+        if (recipients.findIndex(item => item.id === recipientId) === -1) {
+            recipients.push({ id: recipientId, displayName: getRecipientData.displayName, picture: getRecipientData.picture })
+        }
+
+        await updateDoc(usersRef, { ...userData, recipients: recipients })
+    } catch (e) {
+        console.error("Error getting document: ", e)
     }
 }

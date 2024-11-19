@@ -10,9 +10,12 @@ import {
   sendEmailVerification
 } from "firebase/auth"
 import { auth, db } from "../firebase/config"
-import { createUserProfile } from "../firebase/users"
+import { createUserProfile, getUserData } from "../firebase/users"
 import { useNavigate } from "react-router-dom"
 import { doc, onSnapshot } from "firebase/firestore"
+import { useAtom } from "jotai"
+import { userAtom } from "../store"
+
 
 export const authContext = createContext()
 
@@ -25,6 +28,7 @@ export const useAuth = () => {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userData, setUserData] = useAtom(userAtom)
 
   const signup = async (email, password) => {
     try {
@@ -73,9 +77,30 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+
+    if ((!storedUserData && !user) && !window.location.pathname.includes('/login')) {
+      window.location.href = window.location.protocol + '//' + window.location.host + '/login'
+    }
+  }, [window.location.href])
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       setLoading(false)
+
+      if (currentUser) {
+        getUserData(currentUser.uid).then((data) => {
+          setUserData({ ...data, id: currentUser.uid })
+          localStorage.setItem('userData', JSON.stringify({ ...data, id: currentUser.uid }))
+        })
+      } else {
+        // Clear user data from localStorage if no user is signed in
+        localStorage.removeItem('userData')
+      }
     })
 
     return () => {

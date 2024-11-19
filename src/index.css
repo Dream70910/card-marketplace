@@ -1,37 +1,45 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Aeonik-Bold'; /* The name of the custom font */
-  src: url('./assets/fonts/Aeonik-Bold.otf') format('opentype'); /* Path to your .otf file */
+  font-family: 'Aeonik-Bold';
+  /* The name of the custom font */
+  src: url('./assets/fonts/Aeonik-Bold.otf') format('opentype');
+  /* Path to your .otf file */
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Aeonik-Light'; /* The name of the custom font */
-  src: url('./assets/fonts/Aeonik-Light.otf') format('opentype'); /* Path to your .otf file */
-  font-weight: 300; /* Light weight */
+  font-family: 'Aeonik-Light';
+  /* The name of the custom font */
+  src: url('./assets/fonts/Aeonik-Light.otf') format('opentype');
+  /* Path to your .otf file */
+  font-weight: 300;
+  /* Light weight */
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Aeonik-Regular'; /* The name of the custom font */
-  src: url('./assets/fonts/Aeonik-Regular.otf') format('opentype'); /* Path to your .otf file */
+  font-family: 'Aeonik-Regular';
+  /* The name of the custom font */
+  src: url('./assets/fonts/Aeonik-Regular.otf') format('opentype');
+  /* Path to your .otf file */
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Aero'; /* The name of the custom font */
-  src: url('./assets/fonts/Aero.ttf') format('truetype'); /* Path to your .ttf file */
+  font-family: 'Aero';
+  /* The name of the custom font */
+  src: url('./assets/fonts/Aero.ttf') format('truetype');
+  /* Path to your .ttf file */
 }
 
 * {
   font-family: 'Aeonik-Regular', 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
 
@@ -43,7 +51,7 @@ html {
 
 body {
   margin: 0;
-overflow-x: hidden;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #141414;
@@ -68,14 +76,18 @@ input:focus {
 }
 
 @layer utilities {
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 
@@ -92,67 +104,62 @@ input:focus {
   position: relative;
   outline: none;
   transition: .25s;
- 
+
 }
+
 .border-style-decoration-container::before {
- content: "";
- position: absolute;
- bottom: -2px;
- background: white;
- width: 100%;
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  background: white;
+  width: 100%;
   height: 100%;
   transition: .25s;
   right: -5px;
   opacity: 0;
- /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
- /* overflow: hidden; */
- clip-path: polygon(
-   0 8px, 8px 8px, 8px 0,
-   calc(100% - 8px) 0, 100% 0, 100% 8px,
-   100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
-   calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
- );
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+      calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px));
 }
 
 
 .border-style-decoration-container.active::before {
- content: "";
- position: absolute;
- bottom: -2px;
- background: white;
- width: 100%;
-  height: 100%;
-  transition: .25s;
-  right: -5px;
-  opacity: 1;
- /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
- /* overflow: hidden; */
- clip-path: polygon(
-   0 8px, 8px 8px, 8px 0,
-   calc(100% - 8px) 0, 100% 0, 100% 8px,
-   100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
-   calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
- );
-}
-
-.border-style-decoration-container:hover::before {
- content: "";
- position: absolute;
- bottom: -2px;
- background: white;
- width: 100%;
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  background: white;
+  width: 100%;
   height: 100%;
   transition: .25s;
   right: -5px;
   opacity: 1;
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
- /* overflow: hidden; */
- clip-path: polygon(
-   0 8px, 8px 8px, 8px 0,
-   calc(100% - 8px) 0, 100% 0, 100% 8px,
-   100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
-   calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
- );
+  /* overflow: hidden; */
+  clip-path: polygon(0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+      calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px));
+}
+
+.border-style-decoration-container:hover::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  background: white;
+  width: 100%;
+  height: 100%;
+  transition: .25s;
+  right: -5px;
+  opacity: 1;
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+      calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px));
 }
 
 
@@ -160,8 +167,9 @@ input:focus {
 .card-category {
   position: relative;
   outline: none;
-cursor: pointer;  
+  cursor: pointer;
 }
+
 /* 
 .border-style-decoration-white:hover {
   top: -2px;
@@ -172,12 +180,10 @@ cursor: pointer;
   border: 2px solid rgba(255, 255, 255, 1);
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   /* overflow: hidden; */
-  clip-path: polygon(
-    0 15px, 15px 15px, 15px 0,
-    calc(100% - 15px) 0, 100% 0, 100% 15px,
-    100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
-    calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px)
-  );
+  clip-path: polygon(0 15px, 15px 15px, 15px 0,
+      calc(100% - 15px) 0, 100% 0, 100% 15px,
+      100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
+      calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px));
 }
 
 
@@ -191,8 +197,10 @@ cursor: pointer;
   width: 15px;
   height: 15px;
   /* background-color: #141414; */
-  border-bottom: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
-  border-right: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-bottom: 2px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
+  border-right: 2px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -204,8 +212,10 @@ cursor: pointer;
   width: 15px;
   height: 15px;
   background-color: #141414;
-  border-top: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
-  border-left: 2px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-top: 2px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
+  border-left: 2px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -215,12 +225,10 @@ cursor: pointer;
   border: 2px solid rgba(255, 255, 255, .2);
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   /* overflow: hidden; */
-  clip-path: polygon(
-    0 15px, 15px 15px, 15px 0,
-    calc(100% - 15px) 0, 100% 0, 100% 15px,
-    100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
-    calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px)
-  );
+  clip-path: polygon(0 15px, 15px 15px, 15px 0,
+      calc(100% - 15px) 0, 100% 0, 100% 15px,
+      100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
+      calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px));
 }
 
 
@@ -232,8 +240,10 @@ cursor: pointer;
   width: 15px;
   height: 15px;
   /* background-color: #141414; */
-  border-bottom: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
-  border-right: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
+  border-bottom: 2px solid rgba(255, 255, 255, .2);
+  /* Outer border color */
+  border-right: 2px solid rgba(255, 255, 255, .2);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -245,8 +255,10 @@ cursor: pointer;
   width: 15px;
   height: 15px;
   background-color: #141414;
-  border-top: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
-  border-left: 2px solid rgba(255, 255, 255, .2); /* Outer border color */
+  border-top: 2px solid rgba(255, 255, 255, .2);
+  /* Outer border color */
+  border-left: 2px solid rgba(255, 255, 255, .2);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -257,16 +269,15 @@ cursor: pointer;
 .card-item {
   position: relative;
   outline: none;
-border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 1);
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   /* overflow: hidden; */
-  clip-path: polygon(
-    0 10px, 10px 10px, 10px 0,
-    calc(100% - 10px) 0, 100% 0, 100% 10px,
-    100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
-    calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px)
-  );
+  clip-path: polygon(0 10px, 10px 10px, 10px 0,
+      calc(100% - 10px) 0, 100% 0, 100% 10px,
+      100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+      calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px));
 }
+
 /* 
 .border-style-decoration-white:hover {
   top: -1px;
@@ -277,12 +288,10 @@ border: 1px solid rgba(255, 255, 255, 1);
   border: 1px solid rgba(26, 182, 249, 1);
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   /* overflow: hidden; */
-  clip-path: polygon(
-    0 10px, 10px 10px, 10px 0,
-    calc(100% - 10px) 0, 100% 0, 100% 10px,
-    100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
-    calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px)
-  );
+  clip-path: polygon(0 10px, 10px 10px, 10px 0,
+      calc(100% - 10px) 0, 100% 0, 100% 10px,
+      100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+      calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px));
 }
 
 
@@ -293,14 +302,13 @@ border: 1px solid rgba(255, 255, 255, 1);
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   transition: .25s;
   /* overflow: hidden; */
-  clip-path: polygon(
-    0 8px, 8px 8px, 8px 0,
-    calc(100% - 8px) 0, 100% 0, 100% 8px,
-    100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
-    calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px)
-  );
-  
+  clip-path: polygon(0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, 100% 0, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+      calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 calc(100% - 8px));
+
 }
+
 /* 
 .border-style-decoration:hover {
   top: -2px;
@@ -318,8 +326,10 @@ border: 1px solid rgba(255, 255, 255, 1);
   width: 8px;
   height: 8px;
   /* background-color: #141414; */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
-  border-right: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  /* Outer border color */
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -331,8 +341,10 @@ border: 1px solid rgba(255, 255, 255, 1);
   width: 8px;
   height: 8px;
   /* background-color: #141414; */
-  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
-  border-left: 1px solid rgba(255, 255, 255, 0.2); /* Outer border color */
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  /* Outer border color */
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -348,8 +360,10 @@ border: 1px solid rgba(255, 255, 255, 1);
   width: 10px;
   height: 10px;
   /* background-color: #141414; */
-  border-bottom: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
-  border-right: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
+  border-right: 1px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
   pointer-events: none;
 }
 
@@ -361,18 +375,25 @@ border: 1px solid rgba(255, 255, 255, 1);
   width: 10px;
   height: 10px;
   background-color: #141414;
-  border-top: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
-  border-left: 1px solid rgba(255, 255, 255, 1); /* Outer border color */
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
+  border-left: 1px solid rgba(255, 255, 255, 1);
+  /* Outer border color */
   pointer-events: none;
 }
+
 .card-item:hover::before {
-  border-bottom: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
-  border-right: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
+  border-bottom: 1px solid rgba(26, 182, 249, 1);
+  /* Outer border color */
+  border-right: 1px solid rgba(26, 182, 249, 1);
+  /* Outer border color */
 }
 
 .card-item:hover::after {
-  border-top: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
-  border-left: 1px solid rgba(26, 182, 249, 1); /* Outer border color */
+  border-top: 1px solid rgba(26, 182, 249, 1);
+  /* Outer border color */
+  border-left: 1px solid rgba(26, 182, 249, 1);
+  /* Outer border color */
 }
 
 .animate-marquee {
@@ -385,6 +406,7 @@ border: 1px solid rgba(255, 255, 255, 1);
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -397,18 +419,76 @@ border: 1px solid rgba(255, 255, 255, 1);
 }
 
 .date-input input[type="date"] {
-  padding-left: 30px; /* Add space for the icon */
-  color: white; /* Change text color */
-  background-color: #333; /* Dark background */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Optional: rounded corners */
+  padding-left: 30px;
+  /* Add space for the icon */
+  color: white;
+  /* Change text color */
+  background-color: #333;
+  /* Dark background */
+  border: none;
+  /* Remove border */
+  border-radius: 5px;
+  /* Optional: rounded corners */
 }
 
 .date-input .icon {
   position: absolute;
-  left: 10px; /* Space from the left */
-  top: 50%; /* Center vertically */
+  left: 10px;
+  /* Space from the left */
+  top: 50%;
+  /* Center vertically */
   transform: translateY(-50%);
-  color: white; /* Icon color */
-  pointer-events: none; /* Prevent clicking on the icon */
+  color: white;
+  /* Icon color */
+  pointer-events: none;
+  /* Prevent clicking on the icon */
+}
+
+.nice-scrollbar {
+  /* Define the height and overflow properties */
+  height: 700px;
+  /* Set to your desired height */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  scrollbar-width: thin;
+  /* For Firefox */
+  scrollbar-color: #888 #f1f1f1;
+  /* For Firefox: thumb color and track color */
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.nice-scrollbar::-webkit-scrollbar {
+  width: 7px !important;
+  /* Width of the scrollbar */
+}
+
+.nice-scrollbar::-webkit-scrollbar-track {
+  background: #222 !important;
+  /* Color of the track */
+  border-radius: 10px !important;
+  /* Rounded corners for the track */
+}
+
+.nice-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888 !important;
+  /* Color of the scrollbar thumb */
+  border-radius: 10px !important;
+  /* Rounded corners for the thumb */
+}
+
+.nice-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+  /* Darker color on hover */
+}
+
+.border-default {
+  position: relative;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, .2);
+  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
+  /* overflow: hidden; */
+  clip-path: polygon(0 15px, 15px 15px, 15px 0,
+      calc(100% - 15px) 0, 100% 0, 100% 15px,
+      100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
+      calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px));
 }

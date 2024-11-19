@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CardPurchaseHistory = ({
+const CardSoldHistory = ({
   imageSrc,
   title,
   status,
@@ -12,6 +12,7 @@ const CardPurchaseHistory = ({
   onContactSeller,
   sellerId,
   onCancelBuy,
+  onAcceptBuy,
   onReview,
 }) => (
   <div className="border-style-decoration p-5">
@@ -58,12 +59,12 @@ const CardPurchaseHistory = ({
       </div>
 
       <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:max-w-[300px] 2xl:max-w-[420px] justify-end mt-4 lg:mt-0">
-        <Link
-          to={`/marketplace/chat/${sellerId}`}
+        <button
+          onClick={onAcceptBuy}
           className="hover:bg-primary relative w-full lg:max-w-[152px] hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
         >
-          Contact Seller
-        </Link>
+          Accept
+        </button>
 
         <button
           onClick={onCancelBuy}
@@ -76,4 +77,4 @@ const CardPurchaseHistory = ({
   </div>
 );
 
-export default CardPurchaseHistory;
+export default CardSoldHistory;
