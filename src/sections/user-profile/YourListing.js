@@ -33,11 +33,11 @@ const YourListing = () => {
           )
         }
       </div>
-      <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
+      {/* <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
         <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
           Load More
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

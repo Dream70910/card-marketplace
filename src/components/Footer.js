@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -26,9 +27,23 @@ const Footer = () => {
                 Navigation
               </h4>
               <ul className="text-xs 2xl:text-base space-y-6 leading-[1.8]">
-                <li>Home</li>
-                <li>Categories</li>
-                <li>Sell Cards</li>
+                <li>
+                  <Link to="/">
+                    Home
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/marketplace/categories">
+                    Categories
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/marketplace/create-listing">
+                    Sell Cards
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className="w-full ">
@@ -36,9 +51,18 @@ const Footer = () => {
                 Resources
               </h4>
               <ul className="text-xs 2xl:text-base space-y-6 leading-[1.8]">
-                <li>FAQs</li>
-                <li>Contact</li>
-                <li>Log In</li>
+                <li>
+                  <Link to="/faqs">FAQs
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1">Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/login">Log In
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className="w-full hidden lg:block">

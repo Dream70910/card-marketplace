@@ -36,7 +36,9 @@ export async function createUserProfile(userId, email) {
             role: 'customer',
             gender: 'man',
             displayName: username,
-            balance: 0
+            picture: "https://firebasestorage.googleapis.com/v0/b/card-market-place-a2684.firebasestorage.app/o/images%2Fusers%2Fdefault.png?alt=media&token=3da906c9-a825-4f0b-b47c-ab6d10eefe89",
+            balance: 0,
+            cartList: []
         });
 
         console.log("User profile created successfully");

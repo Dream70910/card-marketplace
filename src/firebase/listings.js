@@ -32,7 +32,7 @@ export const createListing = async (userId, images, title, condition, price, cat
     }
 }
 
-export const getAllListings = async () => {
+export const getAllListings = async (userId) => {
     try {
         // Reference to the "listings" collection
         const listingsRef = collection(db, "listings")
@@ -40,11 +40,40 @@ export const getAllListings = async () => {
         const listings = []
 
         // Create a query to filter listings by state
-        const q = query(listingsRef)
+        const q = query(
+            listingsRef,
+            where('seller', '!=', userId)
+        )
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((doc) => {
             listings.push({ id: doc.id, ...doc.data() })
         })
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByCategories = async (categories, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        for (let category of categories) {
+            const q = query(
+                listingsRef,
+                where("category", "==", category),
+                where("seller", '!=', userId)
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() })
+            })
+        }
 
         return listings // Return the array of listings
     } catch (e) {
@@ -67,28 +96,6 @@ export const getListingsByUserId = async (userId) => {
         querySnapshot.forEach((doc) => {
             listings.push({ id: doc.id, ...doc.data() })
         })
-
-        return listings // Return the array of listings
-    } catch (e) {
-        console.error("Error getting documents: ", e)
-        return [] // Return an empty array in case of error
-    }
-}
-
-export const getListingsByCategories = async (categories) => {
-    try {
-        // Reference to the "listings" collection
-        const listingsRef = collection(db, "listings")
-
-        const listings = []
-
-        for (let category of categories) {
-            const q = query(listingsRef, where("category", "==", category))
-            const querySnapshot = await getDocs(q)
-            querySnapshot.forEach((doc) => {
-                listings.push({ id: doc.id, ...doc.data() })
-            })
-        }
 
         return listings // Return the array of listings
     } catch (e) {
@@ -240,10 +247,10 @@ export const buyListing = async (userId, card) => {
     }
 }
 
-export const cancelBuyListing = async (userId, card) => {
+export const cancelBuyListing = async (card) => {
     try {
         // Reference to the specific user document
-        const usersRef = doc(db, "users", userId)
+        const usersRef = doc(db, "users", card.buyer)
         const userSnapshot = await getDoc(usersRef)
         const userData = userSnapshot.data()
 
@@ -253,6 +260,25 @@ export const cancelBuyListing = async (userId, card) => {
 
         const newUserData = { ...userData, balance: userData.balance + card.price }
         await updateDoc(listingsRef, { ...listingData, state: "active", buyer: null })
+        await updateDoc(usersRef, newUserData)
+    } catch (e) {
+        console.error("Error getting document: ", e)
+    }
+}
+
+export const acceptBuyListing = async (card) => {
+    try {
+        // Reference to the specific user document
+        const usersRef = doc(db, "users", card.seller)
+        const userSnapshot = await getDoc(usersRef)
+        const userData = userSnapshot.data()
+
+        const listingsRef = doc(db, "listings", card.id)
+        const listingSnapshot = await getDoc(listingsRef)
+        const listingData = listingSnapshot.data()
+
+        const newUserData = { ...userData, balance: userData.balance + card.price }
+        await updateDoc(listingsRef, { ...listingData, state: "active", buyer: null, seller: card.buyer })
         await updateDoc(usersRef, newUserData)
     } catch (e) {
         console.error("Error getting document: ", e)

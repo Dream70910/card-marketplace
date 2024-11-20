@@ -14,7 +14,9 @@ const Header = ({ isLogin = false }) => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname.includes(path)
+  const isExactActive = (path) => location.pathname === path
+
 
   const onLogout = () => {
     logout()
@@ -43,19 +45,22 @@ const Header = ({ isLogin = false }) => {
 
           <div className="hidden lg:flex gap-[2rem] text-[1.1rem] uppercase  text-white ">
             <div className="flex items-center text-[#484F52]">
-              <Link to="/" className={isActive('/') ? 'text-white' : ''}>Home</Link>
+              <Link to="/" className={isExactActive('/') ? 'text-white' : ''}>Home</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Categories</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
-              <Link href="/chat">Messages</Link>
+              <Link to="/marketplace/chat/all" className={isActive('/marketplace/chat') && !isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Messages</Link>
             </div>
             <div className="flex items-center text-[#484F52]">
-              <a href="/#">Sell Cards</a>
+              <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-white' : ''}>Sell Cards</Link>
             </div>
             <div className="flex items-center  text-[#484F52]">
-              <a href="/#">Contact</a>
+              <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Contact</Link>
+            </div>
+            <div className="flex items-center  text-[#484F52]">
+              <Link to="/faqs" className={isActive('/faqs') ? 'text-white' : ''}>FAQ</Link>
             </div>
           </div>
 

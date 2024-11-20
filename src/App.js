@@ -41,8 +41,7 @@ function App() {
       />
 
       <Router>
-
-        <Navigator />
+        {/* <Navigator /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -58,7 +57,7 @@ function App() {
           />
           <Route path="/support" element={<Support />} />
           <Route path="/tickets" element={<Tickets />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/faqs" element={<Faq />} />
           <Route path="/admin/login" element={<AdminLogin />} />
 
           <Route path="/user-profile" element={<UserProfile />} />

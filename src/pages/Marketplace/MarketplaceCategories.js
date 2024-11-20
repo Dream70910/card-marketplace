@@ -9,33 +9,40 @@ import { getAllListings, getListingsByCategories } from "../../firebase/listings
 import { useLocation, useNavigate } from "react-router-dom"
 import { getAllCategories } from "../../firebase/categories"
 import DialogConfirmation from "../../components/dialogs/DialogConfirmation";
+import { useAtom } from "jotai"
+import { userAtom } from "../../store"
 
 const MarketplaceCategories = () => {
 	const [openDialog, setOpenDialog] = useState(null)
 	const [listings, setListings] = useState([])
+	const [userData, setUserData] = useAtom(userAtom)
 	const [categories, setCategories] = useState([])
 	const queries = new URLSearchParams(useLocation().search)
 	const [loading, setLoading] = useState(true)
+	const [itemsToShow, setItemsToShow] = useState(6)
 	const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		getAllCategories().then((items) => {
-			const temp = items.filter((item) => selectedCategories.includes(item.id))
-			setCategories(temp)
-		})
+		if (userData && userData.id) {
+			getAllCategories().then((items) => {
+				const temp = items.filter((item) => selectedCategories.includes(item.id))
+				setCategories(temp)
+			})
 
-		if (selectedCategories.length > 0) {
-			getListingsByCategories(selectedCategories).then((items) => {
-				setListings(items)
-			})
-		} else {
-			getAllListings().then((items) => {
-				setListings(items)
-				setLoading(false)
-			})
+			if (selectedCategories.length > 0) {
+				getListingsByCategories(selectedCategories, userData.id).then((items) => {
+					setListings(items)
+					setLoading(false)
+				})
+			} else {
+				getAllListings(userData.id).then((items) => {
+					setListings(items)
+					setLoading(false)
+				})
+			}
 		}
-	}, [queries])
+	}, [queries, userData])
 
 	const options = [
 		{ value: "popular", label: "Popular" },
@@ -87,7 +94,7 @@ const MarketplaceCategories = () => {
 						<div className="flex flex-col lg:flex-row items-center justify-between">
 							<div className="flex items-center gap-2 mt-5 lg:mt-0 lg:gap-4 overflow-x-auto w-full no-scrollbar">
 								{
-									categories.map((item) =>
+									categories.length > 0 && categories.map((item) =>
 										<button
 											className="hover:bg-white relative w-full lg:w-fit hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
 											key={item.id}
@@ -123,7 +130,7 @@ const MarketplaceCategories = () => {
 
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6 mt-8">
 							{
-								listings.map((item) =>
+								listings.slice(0, itemsToShow).map((item) =>
 									<CardItem
 										imageSrc={item.pictures[0]}
 										title={item.title}
@@ -135,15 +142,22 @@ const MarketplaceCategories = () => {
 										buttonText="Add to cart"
 										sellerUserName={item.sellerUserName}
 										isRare
+										key={item.id}
 									/>
 								)
 							}
 						</div>
 
 						<div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
-							<button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
-								Load More
-							</button>
+							{
+								itemsToShow < listings.length &&
+								<button
+									className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]"
+									onClick={() => setItemsToShow(itemsToShow + 6)}
+								>
+									Load More
+								</button>
+							}
 						</div>
 					</div>
 				</div>
