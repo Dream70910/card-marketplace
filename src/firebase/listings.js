@@ -56,6 +56,30 @@ export const getAllListings = async (userId) => {
     }
 }
 
+export const getSearchedListings = async (userId, search) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        // Create a query to filter listings by state
+        const q = query(
+            listingsRef,
+            where('seller', '!=', userId)
+        )
+        const querySnapshot = await getDocs(q)
+        querySnapshot.forEach((doc) => {
+            doc.data().title.includes(search) && listings.push({ id: doc.id, ...doc.data() })
+        })
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
 export const getListingsByCategories = async (categories, userId) => {
     try {
         // Reference to the "listings" collection

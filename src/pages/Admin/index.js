@@ -31,7 +31,7 @@ const Admin = () => {
 
         <TableUsers />
 
-        <div className="flex items-start gap-8 mt-14">
+        {/* <div className="flex items-start gap-8 mt-14">
           <div className="product-ask-section w-full lg:max-w-[560px]">
             <h4 className="uppercase font-aero w-full bg-white/5 backdrop-blur-sm p-5 px-10 text-white text-base lg:text-xl">
               User tickets
@@ -88,7 +88,7 @@ const Admin = () => {
                   </div>
                 </div>
               </div>
-              {/*  */}
+
               <div className="flex flex-col lg:flex-row items-center pt-8 gap-4">
                 <TextInput
                   divClassName="bg-white/5 backdrop-blur-sm"
@@ -103,7 +103,7 @@ const Admin = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <CategoriesSection />
       </div>

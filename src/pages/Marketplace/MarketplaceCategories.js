@@ -21,6 +21,7 @@ const MarketplaceCategories = () => {
 	const [loading, setLoading] = useState(true)
 	const [itemsToShow, setItemsToShow] = useState(6)
 	const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
+	const searchText = queries.get('search') ? queries.get('search') : ''
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -32,12 +33,16 @@ const MarketplaceCategories = () => {
 
 			if (selectedCategories.length > 0) {
 				getListingsByCategories(selectedCategories, userData.id).then((items) => {
-					setListings(items)
+					let temp = [...items]
+					temp = temp.filter(item => item.title.includes(searchText))
+					setListings(temp)
 					setLoading(false)
 				})
 			} else {
 				getAllListings(userData.id).then((items) => {
-					setListings(items)
+					let temp = [...items]
+					temp = temp.filter(item => item.title.includes(searchText))
+					setListings(temp)
 					setLoading(false)
 				})
 			}

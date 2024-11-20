@@ -23,6 +23,10 @@ const UploadInput = ({
     }
   }, [editTimes])
 
+  useEffect(() => {
+    setPreview(defaultPreview)
+  }, [defaultPreview])
+
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     if (file) {

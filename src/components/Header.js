@@ -62,6 +62,12 @@ const Header = ({ isLogin = false }) => {
             <div className="flex items-center  text-[#484F52]">
               <Link to="/faqs" className={isActive('/faqs') ? 'text-white' : ''}>FAQ</Link>
             </div>
+            {
+              userData && userData.role === 'admin' &&
+              <div className="flex items-center  text-[#484F52]">
+                <Link to="/admin" className={isActive('/faqs') ? 'text-white' : ''}>Admin</Link>
+              </div>
+            }
           </div>
 
           {userData && <div className="flex items-center space-x-6">
