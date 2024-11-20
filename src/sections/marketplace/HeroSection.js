@@ -11,10 +11,6 @@ const HeroSection = () => {
     { value: "option3", label: "Option 3" },
   ];
 
-  const handleDropdownChange = (event) => {
-    console.log(event.target.value);
-  };
-
   return (
     <div className="py-24 lg:py-48 lg:pb-24">
       <div className="container px-5 lg:px-20 mx-auto relative after:content-[''] after:w-[360px] after:left-[100%] after:h-[360px] after:bottom-[90%] after:blur-[200px] after:bg-primary after:rounded-full after:absolute after:z-[1]">

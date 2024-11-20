@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import TextInput from "../../components/commons/TextInput";
 import Button from "../../components/commons/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const [searchText, setSearchText] = useState("")
+  const navigate = useNavigate()
+
   return (
     // <div className="relative h-screen w-full text-white  pt-[15rem] lg:pt-[8em] px-5">
     <div className="relative w-full text-white  pt-[15rem] lg:pt-[10rem] px-5">
@@ -59,8 +63,8 @@ const HeroSection = () => {
             className="absolute top-[-2rem] pointer-events-none w-[700px]"
           /> */}
           {/* <div className="absolute pointer-events-none w-[360px] h-[360px] bg-primary blur-[300px] rounded-full left-[50%] translate-x-[-50%] bottom-[100%]" /> */}
-          <TextInput placeholder="Search for cards" />
-          <Button isActive>Explore</Button>
+          <TextInput placeholder="Search for cards" onChange={(value) => setSearchText(value)} />
+          <Button isActive onClick={() => navigate(`/marketplace/categories?search=${searchText}`)}>Explore</Button>
         </div>
 
         <div className="flex items-start justify-center gap-3 w-full mt-12 lg:mt-20">

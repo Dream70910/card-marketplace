@@ -39,7 +39,7 @@ export default function DialogConfirmation({
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4 sm:p-0">
-        <DialogPanel
+          <DialogPanel
             transition
             className="relative transform overflow-hidden product-ask-section rounded-lg bg-[#141414] backdrop-blur-sm shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in w-full max-w-[604px]"
           >
@@ -62,19 +62,19 @@ export default function DialogConfirmation({
                       {title}
                     </span>
                   )}
-                  {message && (
+                  {/* {message && (
                     <span className="text-xs lg:text-sm text-white/60 max-w-[350px] text-center mt-2">
                       {message}
                     </span>
-                  )}
+                  )} */}
                 </div>
-                <Button
+                {/* <Button
                   onClick={onButtonClick || onClose}
                   isActive
                   divClassName="w-full mt-8 max-w-[90%]"
                 >
                   {buttonText}
-                </Button>
+                </Button> */}
               </div>
             </div>
           </DialogPanel>

@@ -28,17 +28,32 @@ export const createCategory = async (image, name, description) => {
     }
 }
 
-export const updateCategory = async (categoryId, updatedData) => {
+export const updateCategory = async (updatedData) => {
     try {
         // Reference to the specific category document
-        const categoryRef = doc(db, "categories", categoryId)
-        const categorySnapshot = await getDoc(usersRef)
+        const categoryRef = doc(db, "categories", updatedData.id)
+        const categorySnapshot = await getDoc(categoryRef)
         const categoryData = categorySnapshot.data()
+        let imageURL = categoryData.image
+
+        if (!(updatedData.picture === undefined || updatedData.picture === null)) {
+            const storageRef = ref(storage, `images/categories/${updatedData.name}`)
+            await uploadBytes(storageRef, updatedData.picture)
+            imageURL = await getDownloadURL(storageRef)
+        }
+
+        const newData = {
+            name: updatedData.name,
+            description: updatedData.description,
+            image: imageURL,
+            state: updatedData.state ? updatedData.state : categoryData.state,
+            id: categoryData.id
+        }
 
         // Update the document with new data
-        await updateDoc(categoryRef, updatedData)
+        await updateDoc(categoryRef, newData)
 
-        console.log("Document updated with ID: ", categoryId)
+        console.log("Document updated with ID: ", updatedData.id)
     } catch (e) {
         console.error("Error updating document: ", e)
     }

@@ -8,7 +8,7 @@ import TextInput from "../../components/commons/TextInput"
 import TableSalesHistory from "../../components/tabels/TableSalesHistory"
 import { useAuth } from "../../context/authContext"
 import { getUserData } from "../../firebase/users"
-import { buyListing, cancelBuyListing, getPurchasedListings, getSoldListings, removeFromCart } from "../../firebase/listings"
+import { acceptBuyListing, buyListing, cancelBuyListing, getPurchasedListings, getSoldListings, removeFromCart } from "../../firebase/listings"
 import { toast } from "react-toastify"
 import { useAtom } from "jotai"
 import { userAtom } from "../../store"
@@ -76,9 +76,23 @@ const CartList = () => {
     }, [])
 
     setUserAtom({ ...userData, cartList: oldCart })
+
+    return true
   }
 
-  const handleCancleCard = async (card) => {
+  const buyCart = async (card) => {
+    await removeFromCart(userData.id, card.id)
+    const oldCart = userData.cartList.reduce((acc, cur) => {
+      if (cur.id !== card.id) acc.push(cur)
+      return acc
+    }, [])
+
+    setUserAtom({ ...userData, cartList: oldCart, balance: userData.balance - card.price })
+
+    return true
+  }
+
+  const handleCancelCard = async (card) => {
     removeItemFromCart(card)
     toast.success(`${card.title} was removed from cart !`)
   }
@@ -87,8 +101,7 @@ const CartList = () => {
     if (userData.balance < card.price) {
       toast.error(`Your balance is not enough !`)
     } else {
-      setUserAtom({ ...userData, balance: userData.balance - card.price })
-      await removeItemFromCart(card)
+      await buyCart(card)
       await buyListing(userData.id, card)
       toast.success(`${card.title} is on pending !`)
     }
@@ -102,14 +115,21 @@ const CartList = () => {
       {/*  */}
       <div className="mt-12 space-y-6">
         {
-          userData && userData.cartList.map((item) =>
-            <CartItem
-              item={item}
-              handleCancleCard={handleCancleCard}
-              handleBuyCard={handleBuyCard}
-              key={item.id}
-            />
-          )
+          userData ?
+            userData.cartList.length > 0 ?
+              userData.cartList.map((item) =>
+                <CartItem
+                  item={item}
+                  handleCancelCard={handleCancelCard}
+                  handleBuyCard={handleBuyCard}
+                  key={`cart-${item.id}`}
+                />
+              )
+              :
+              <h4 className="text-lg text-white text-center">
+                No cards in your cart list
+              </h4> :
+            ""
         }
       </div>
       {/* <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
@@ -132,42 +152,47 @@ const SaleHistory = () => {
   })
 
   const onCancelBuy = async (card) => {
-    await cancelBuyListing(userData.id, card)
-    toast.success(`${card.title} was cancelled`)
-    setUserData({ ...userData, balance: userData.balance + card.price })
+    await cancelBuyListing(card)
+    toast.success(`${card.title} was cancelled !`)
+    // setUserData({ ...userData, balance: userData.balance + card.price })
   }
 
   const onAcceptBuy = async (card) => {
-    await cancelBuyListing(userData.id, card)
-    toast.success(`${card.title} was cancelled`)
+    await acceptBuyListing(card)
+    toast.success(`${card.title} was sold !`)
     setUserData({ ...userData, balance: userData.balance + card.price })
   }
 
   return (
     <div className="mt-12 space-y-6">
       {
-        soldItems.map((item) =>
-          <CardSoldHistory
-            imageSrc={item.pictures[0]}
-            title="pokemon pecharunt x 2"
-            status="Pending"
-            // date="17 Sept, 2023"
-            avatarSrc="/assets/avatars/avatar.png"
-            userName="Emily Johnson"
-            price={`$ ${item.price}`}
-            sellerId={item.seller}
-            onCancelBuy={() => onCancelBuy(item)}
-            onAcceptBuy={() => onAcceptBuy(item)}
-            key={item.uid}
-          />
-        )
+        soldItems.length > 0 ?
+          soldItems.map((item) =>
+            <CardSoldHistory
+              imageSrc={item.pictures[0]}
+              title="pokemon pecharunt x 2"
+              status="Pending"
+              // date="17 Sept, 2023"
+              avatarSrc="/assets/avatars/avatar.png"
+              userName="Emily Johnson"
+              price={`$ ${item.price}`}
+              sellerId={item.seller}
+              onCancelBuy={() => onCancelBuy(item)}
+              onAcceptBuy={() => onAcceptBuy(item)}
+              key={`sale-${item.uid}`}
+            />
+          )
+          :
+          <h4 className="text-lg text-white text-center">
+            No cards in your sale list
+          </h4>
       }
 
-      <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
+      {/* <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
         <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
           Load More
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -183,7 +208,7 @@ const PurchaseHistory = () => {
   })
 
   const onCancelBuy = async (card) => {
-    await cancelBuyListing(userData.id, card)
+    await cancelBuyListing(card)
     toast.success(`${card.title} was cancelled`)
     setUserData({ ...userData, balance: userData.balance + card.price })
   }
@@ -191,27 +216,32 @@ const PurchaseHistory = () => {
   return (
     <div className="mt-12 space-y-6">
       {
-        purchasedItems.map((item) =>
-          <CardPurchaseHistory
-            imageSrc={item.pictures[0]}
-            title="pokemon pecharunt x 2"
-            status="Pending"
-            // date="17 Sept, 2023"
-            avatarSrc="/assets/avatars/avatar.png"
-            userName="Emily Johnson"
-            price={`$ ${item.price}`}
-            sellerId={item.seller}
-            onCancelBuy={() => onCancelBuy(item)}
-            key={item.uid}
-          />
-        )
+        purchasedItems.length > 0 ?
+          purchasedItems.map((item) =>
+            <CardPurchaseHistory
+              imageSrc={item.pictures[0]}
+              title={item.title}
+              status="Pending"
+              // date="17 Sept, 2023"
+              avatarSrc="/assets/avatars/avatar.png"
+              userName="Emily Johnson"
+              price={`$ ${item.price}`}
+              sellerId={item.seller}
+              onCancelBuy={() => onCancelBuy(item)}
+              key={`purchase-${item.id}`}
+            />
+          )
+          :
+          <h4 className="text-lg text-white text-center">
+            No cards in your purchase list
+          </h4>
       }
 
-      <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
+      {/* <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
         <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
           Load More
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

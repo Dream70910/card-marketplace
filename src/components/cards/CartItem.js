@@ -1,6 +1,6 @@
 const CartItem = ({
     item,
-    handleCancleCard,
+    handleCancelCard,
     handleBuyCard
 }) => {
     return (
@@ -59,7 +59,7 @@ const CartItem = ({
                         Buy
                     </button>
                     <button
-                        onClick={() => handleCancleCard(item)}
+                        onClick={() => handleCancelCard(item)}
                         className="hover:bg-primary relative w-full lg:max-w-[152px] hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
                     >
                         Cancel

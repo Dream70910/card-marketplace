@@ -1,9 +1,8 @@
-import React from "react";
-import CategoryCard from "../../components/cards/CardCategory";
-import Button from "../../components/commons/Button";
-import CardItem from "../../components/cards/CardItem";
+import React from "react"
+import CardItem from "../../components/cards/CardItem"
+import { Link } from "react-router-dom"
 
-const MostPopularSection = () => {
+const MostPopularSection = ({ cards }) => {
   return (
     <div className="container px-5 mx-auto pb-24 lg:pb-48">
       <div className="flex items-end md:items-center  justify-between">
@@ -12,45 +11,30 @@ const MostPopularSection = () => {
         </h2>
 
         <div className="flex items-center gap-4">
-          <button className="hover:bg-white w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
+          <Link
+            className="hover:bg-white w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]"
+            to='/marketplace/categories'
+          >
             View All
-          </button>
+          </Link>
         </div>
       </div>
 
       <div className="flex gap-4 lg:gap-6 mt-8">
-        <CardItem
-          imageSrc="/assets/images/image_item_2.png"
-          title="pokemon pecharunt x 2"
-          price="$29.99"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-          buttonText="Buy Now"
-        />
-        <CardItem
-          imageSrc="/assets/images/image_item_1.png"
-          title="Cubone x 3"
-          price="$180.00"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-          buttonText="Buy Now"
-          isRare
-        />
-        <CardItem
-          imageSrc="/assets/images/image_item_3.png"
-          title="WIXOSS Wi-Cross Ele..."
-          price="$12.99"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-          buttonText="Buy Now"
-          cardClassName="hidden lg:flex"
-        />
-        <CardItem
-          imageSrc="/assets/images/image_item_4.png"
-          title="world of arcraft"
-          price="$120.00"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.."
-          buttonText="Buy Now"
-          isRare
-          cardClassName="hidden lg:flex"
-        />
+        {
+          cards && cards.slice(-4).map(item =>
+            <CardItem
+              imageSrc={item.pictures[0]}
+              title={item.title}
+              price={item.price}
+              description={item.description}
+              sellerId={item.seller}
+              cardId={item.id}
+              key={`popular-card-${item.id}`}
+              isRare
+            />
+          )
+        }
       </div>
 
       <div className="w-fit mx-auto mt-12 lg:mt-16">
@@ -61,7 +45,7 @@ const MostPopularSection = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MostPopularSection;
+export default MostPopularSection

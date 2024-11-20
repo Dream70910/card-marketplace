@@ -6,12 +6,16 @@ import DialogEditCategory from "../../components/dialogs/DialogEditCategory"
 import DialogAddCategory from "../../components/dialogs/DialogAddCategory"
 import { getAllCategories, updateCategory } from "../../firebase/categories"
 import UploadInput from "../../components/commons/UploadInput"
+import { toast } from "react-toastify"
+
+let updatedData = { picture: null }
 
 const CategoriesSection = () => {
     const [openDialog, setOpenDialog] = useState(null)
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [activeCategories, setActiveCategories] = useState([])
+    const [updatedTimes, setUpdatedTimes] = useState(0)
 
     useEffect(() => {
         updateCategories()
@@ -20,12 +24,18 @@ const CategoriesSection = () => {
     const updateCategories = () => {
         getAllCategories(["active", "pending"]).then((cats) => {
             setCategories(cats)
-            setSelectedCategory(cats[0])
+
+            if (selectedCategory === null) {
+                setSelectedCategory(cats[0])
+                updatedData = cats[0]
+            }
         })
 
         getAllCategories(["active"]).then((cats) => {
             setActiveCategories(cats)
         })
+
+        setUpdatedTimes(updatedTimes + 1)
     }
 
     const closeDialog = () => {
@@ -33,23 +43,27 @@ const CategoriesSection = () => {
         updateCategories()
     }
 
-    const makeCategoryActive = (cat) => {
-        updateCategory(cat.id, { ...cat, state: "active" })
+    const makeCategoryActive = async (cat) => {
+        await updateCategory({ ...cat, state: "active" })
+        await updateCategories()
+        toast.success(`${cat.name} was active !`)
+    }
+
+    const makeCategoryPending = async (cat) => {
+        await updateCategory({ ...cat, state: "pending" })
+        toast.success(`${cat.name} was pending !`)
         updateCategories()
     }
 
-    const makeCategoryPending = (cat) => {
-        updateCategory(cat.id, { ...cat, state: "pending" })
+    const onUpdateCategory = async () => {
+        await updateCategory(updatedData)
+        updatedData = { picture: null }
+        toast.success(`${selectedCategory.name} was updated !`)
         updateCategories()
     }
 
-    const onUpdateCategory = () => {
-        updateCategory(selectedCategory.id, { ...selectedCategory })
-        updateCategories()
-    }
-
-    const onPictureChange = () => {
-
+    const onPictureChange = (file) => {
+        newImage = file
     }
 
     return (
@@ -76,7 +90,10 @@ const CategoriesSection = () => {
                         <div className="flex flex-wrap gap-5 ">
                             {
                                 activeCategories.map((cat) =>
-                                    <button className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]" key={cat.name}>
+                                    <button
+                                        className="border-style-decoration flex items-center justify-between text-white p-5 py-3 w-full lg:max-w-[200px]"
+                                        key={`active-category-${updatedTimes}-${cat.name}`}
+                                    >
                                         {cat.name}{" "}
                                         <button className="p-2 bg-primary-gradient" onClick={() => makeCategoryPending(cat)}>
                                             <img src="/assets/icons/icon-close.svg" />
@@ -104,7 +121,8 @@ const CategoriesSection = () => {
                                 categories.map((cat) => (
                                     <button
                                         className="border-style-decoration hover hover:!border-primary hover:after:!border-l-primary hover:after:!border-t-primary hover:before:!border-b-primary hover:!border-r-primary flex items-center justify-between text-white p-5 pr-3 py-3 w-full"
-                                        onClick={() => setSelectedCategory(cat)}
+                                        onClick={() => { setSelectedCategory(cat), updatedData = cat }}
+                                        key={`category-${updatedTimes}-${cat.id}`}
                                     >
                                         {cat.name}{" "}
 
@@ -130,11 +148,11 @@ const CategoriesSection = () => {
 
                     {
                         selectedCategory ?
-                            <div className="border-style-decoration p-5 w-full hidden lg:block" key={selectedCategory.cat}>
+                            <div className="border-style-decoration p-5 w-full hidden lg:block" key={selectedCategory.id}>
                                 <div className="flex items-end gap-6">
                                     <UploadInput
                                         defaultPreview={selectedCategory.image}
-                                        // onFileSelect={onPictureChange}
+                                        onFileSelect={(file) => updatedData['picture'] = file}
                                         className="custom-upload-class !h-[140px] !w-[140px] lg:!h-[220px] lg:!w-[220px] "
                                         titleClassName="hidden"
                                         subtitleClassName="hidden"
@@ -156,7 +174,7 @@ const CategoriesSection = () => {
                                             placeholder="Pokerman"
                                             defaultValue={selectedCategory.name}
                                             inputClassName="placeholder:text-white/60"
-                                        // onChange={(value) => setSelectedCategory(...selectedCategory, ...{ name: value })}
+                                            onChange={(value) => updatedData['name'] = value}
                                         />
                                     </label>
                                     <label className="w-full  text-white">
@@ -172,7 +190,7 @@ const CategoriesSection = () => {
                                             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
                                             textAreaClassName="placeholder:text-white/60 h-[110px]"
                                             defaultValue={selectedCategory.description}
-                                        // onChange={(value) => setSelectedCategory(...selectedCategory, ...{ description: value })}
+                                            onChange={(value) => updatedData['description'] = value}
                                         />
                                     </label>
 

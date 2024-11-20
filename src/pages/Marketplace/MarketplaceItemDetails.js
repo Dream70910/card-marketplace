@@ -62,29 +62,29 @@ const MarketplaceItemDetails = () => {
     else setIsInCart(false)
   }
 
-  const handleAddtoCart = (item) => {
-    toast.success(`${item.title} was successfully added to cart !`)
-
+  const handleAddtoCart = async (item) => {
     const cartedItem = { title: item.title, price: item.price, picture: item.imageSrc, sellerId: item.sellerId, sellerUserName: item.sellerUserName, id: item.id }
+    await addToCart(userData.id, cartedItem)
 
-    addToCart(userData.id, cartedItem)
+    toast.success(`${item.title} was successfully added to cart !`)
 
     setUserData({ ...userData, cartList: [...userData.cartList, cartedItem] })
     setIsInCart(true)
   }
 
-  const removeItemFromCart = (card) => {
-    removeFromCart(userData.id, card.id)
+  const removeItemFromCart = async (card) => {
+    await removeFromCart(userData.id, card.id)
     const oldCart = userData.cartList.reduce((acc, cur) => {
       if (cur.id !== card.id) acc.push(cur)
       return acc
     }, [])
 
     setUserData({ ...userData, cartList: oldCart })
+    setIsInCart(false)
   }
 
-  const handleRemoveFromCart = () => {
-    removeItemFromCart(card)
+  const handleRemoveFromCart = async () => {
+    await removeItemFromCart(card)
     toast.success(`${card.title} was removed from cart !`)
   }
 
@@ -314,24 +314,29 @@ const MarketplaceItemDetails = () => {
                   </div>
                 </div>
                 {
-                  isInCart ?
-                    <button
-                      className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
-                      onClick={handleRemoveFromCart}
-                    >
-                      Remove from Cart
-                    </button>
-                    :
-                    <button
-                      className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
-                      onClick={() => handleAddtoCart(card)}
-                    >
-                      Add to Cart
-                    </button>
+                  card.seller !== userData.id &&
+                  <>
+                    {
+                      isInCart ?
+                        <button
+                          className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
+                          onClick={handleRemoveFromCart}
+                        >
+                          Remove from Cart
+                        </button>
+                        :
+                        <button
+                          className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
+                          onClick={() => handleAddtoCart(card)}
+                        >
+                          Add to Cart
+                        </button>
+                    }
+                    <Button isActive divClassName="!mt-3 lg:!mt-5" onClick={handleBuyCard}>
+                      Buy Now
+                    </Button>
+                  </>
                 }
-                <Button isActive divClassName="!mt-3 lg:!mt-5" onClick={handleBuyCard}>
-                  Buy Now
-                </Button>
 
                 <div className="mt-6">
                   <div
@@ -526,12 +531,11 @@ const MarketplaceItemDetails = () => {
               {/* <div className="flex items-center gap-4">
           <button className="hover:bg-white w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
             View All
-          </button>
+        </button>
         </div> */}
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mt-8">
-              { }
               {
                 otherCards.map(item =>
                   <CardItem
@@ -545,11 +549,11 @@ const MarketplaceItemDetails = () => {
                 )
               }
             </div>
-            <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
+            {/* <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-16">
               <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
                 Load More
               </button>
-            </div>
+            </div> */}
           </div> : ""
       }
       <Footer />

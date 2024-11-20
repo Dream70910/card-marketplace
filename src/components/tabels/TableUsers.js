@@ -74,7 +74,7 @@ const TableUsers = () => {
                     <td className="p-4 border-l border-l-white/20 border-y border-y-white/20">
                       <div className="flex items-center space-x-4 ">
                         <img
-                          src="/assets/avatars/avatar_2.png"
+                          src={user.picture}
                           className="max-w-[48px] lg:max-w-[48px] border-style-decoration object-cover"
                           alt="User Avatar"
                         />
@@ -120,8 +120,8 @@ const TableUsers = () => {
                 tickets={user.tickets}
                 onDelete={() => console.log("Delete clicked")}
                 onView={() => setOpenDialog("view-user")}
-                userProfile="/assets/avatars/avatar_2.png"
-                key={user.name}
+                userProfile={user.picture}
+                key={`user-2-${user.name}`}
               />
             )
           }
@@ -187,9 +187,9 @@ const TableUsers = () => {
                   <img src="/assets/icons/icon-rows.svg" />
                 </div>
                 <div>
-                  <h4 className="text-white/60 text-sm">Total Sales</h4>
+                  <h4 className="text-white/60 text-sm">Balance</h4>
                   <span className="text-xl text-white block mt-1">
-                    $2300
+                    $ {activeUser.balance}
                   </span>
                 </div>
               </div>

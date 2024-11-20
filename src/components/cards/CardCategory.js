@@ -1,17 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CategoryCard = ({
   title = "Category",
   description = "Description goes here.",
   imageSrc,
   iconSrc,
+  categoryId,
   cardClassName = "",
   buttonClassName = "",
   titleClassName = "",
   descriptionClassName = "",
 }) => (
-  <div
+  <Link
     className={`w-full min-w-[140px] max-w-[380px] flex flex-col justify-between card-category relative group ${cardClassName}`}
+    to={`/marketplace/categories?categories=${categoryId}`}
   >
     <button
       className={`absolute top-0 right-0 bg-white p-2 lg:p-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition ${buttonClassName}`}
@@ -39,7 +42,7 @@ const CategoryCard = ({
       alt={title}
       className="max-h-[335px] object-cover w-full"
     />
-  </div>
+  </Link>
 );
 
 export default CategoryCard;
