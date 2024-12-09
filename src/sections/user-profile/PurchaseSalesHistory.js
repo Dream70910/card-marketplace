@@ -69,13 +69,15 @@ const CartList = () => {
   const [userData, setUserAtom] = useAtom(userAtom)
 
   const removeItemFromCart = async (card) => {
-    await removeFromCart(userData.id, card.id)
     const oldCart = userData.cartList.reduce((acc, cur) => {
       if (cur.id !== card.id) acc.push(cur)
       return acc
     }, [])
 
-    setUserAtom({ ...userData, cartList: oldCart })
+    const newData = { ...userData, cartList: oldCart }
+    setUserAtom(newData)
+
+    await removeFromCart(userData.id, card.id)
 
     return true
   }
@@ -87,13 +89,14 @@ const CartList = () => {
       return acc
     }, [])
 
-    setUserAtom({ ...userData, cartList: oldCart, balance: userData.balance - card.price })
+    const newData = { ...userData, cartList: oldCart, balance: userData.balance - card.price }
+    setUserAtom(newData)
 
     return true
   }
 
   const handleCancelCard = async (card) => {
-    removeItemFromCart(card)
+    await removeItemFromCart(card)
     toast.success(`${card.title} was removed from cart !`)
   }
 

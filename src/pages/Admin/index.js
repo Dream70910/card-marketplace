@@ -106,6 +106,7 @@ const Admin = () => {
         </div> */}
 
         <CategoriesSection />
+
       </div>
 
       <Footer />

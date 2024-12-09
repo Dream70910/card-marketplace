@@ -12,6 +12,7 @@ import { getCategoryById } from "../../firebase/categories"
 import { toast } from "react-toastify"
 import { useAtom } from "jotai"
 import { userAtom } from "../../store"
+import { brands } from "../../utils/data"
 
 const MarketplaceItemDetails = () => {
   const [openDetails, setOpenDetails] = useState(true)
@@ -25,6 +26,7 @@ const MarketplaceItemDetails = () => {
   const [userData, setUserData] = useAtom(userAtom)
   const [isInCart, setIsInCart] = useState(false)
   const [otherCards, setOtherCards] = useState([])
+  const [brand, setBrand] = useState(null)
 
   useEffect(() => {
     getListingByID(cardId).then((item) => {
@@ -38,8 +40,17 @@ const MarketplaceItemDetails = () => {
 
   useEffect(() => {
     if (card && card.seller) {
+      if (card.brand) {
+        const temp = brands.find(item => item.value === card.brand)
+        setBrand(temp.label)
+      }
+
       getUserData(card.seller).then((item) => {
         setSeller(item)
+      })
+
+      getCategoryById(card.category).then((item) => {
+        setCategoryName(item.name)
       })
 
       getCategoryById(card.category).then((item) => {
@@ -301,16 +312,19 @@ const MarketplaceItemDetails = () => {
                       </div>
                     </div>
 
-                    <Link
-                      to={`/marketplace/chat/${card.seller}`}
-                      className="w-full !border !border-primary text-primary text-[10px] lg:text-base flex justify-center items-center p-1.5 px-3 lg:p-3 lg:px-6 border-style-decoration max-w-[130px] lg:max-w-[185px] after:!border-l-primary after:!border-t-primary before:!border-b-primary before:border-r-primary"
-                    >
-                      <img
-                        src="/assets/icons/icon-chat.svg"
-                        className="max-w-[14px] lg:max-w-[unset] mr-1 lg:mr-2 mt-1"
-                      />{" "}
-                      Send message
-                    </Link>
+                    {
+                      card.seller !== userData.id ?
+                        <Link
+                          to={`/marketplace/chat/${card.seller}`}
+                          className="w-full !border !border-primary text-primary text-[10px] lg:text-base flex justify-center items-center p-1.5 px-3 lg:p-3 lg:px-6 border-style-decoration max-w-[130px] lg:max-w-[185px] after:!border-l-primary after:!border-t-primary before:!border-b-primary before:border-r-primary"
+                        >
+                          <img
+                            src="/assets/icons/icon-chat.svg"
+                            className="max-w-[14px] lg:max-w-[unset] mr-1 lg:mr-2 mt-1"
+                          />{" "}
+                          Send message
+                        </Link> : ""
+                    }
                   </div>
                 </div>
                 {
@@ -379,6 +393,15 @@ const MarketplaceItemDetails = () => {
                           </span>
                           <span>{categoryName}</span>
                         </div>
+                        {
+                          brand &&
+                          <div className="w-full flex  text-xs lg:text-sm">
+                            <span className="text-primary w-full max-w-[140px] lg:max-w-[210px] block">
+                              Brand
+                            </span>
+                            <span>{brand}</span>
+                          </div>
+                        }
                         {/* <div className="w-full flex  text-xs lg:text-sm">
                           <span className="text-primary w-full max-w-[140px] lg:max-w-[210px] block">
                             Sub-category

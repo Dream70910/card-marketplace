@@ -2,7 +2,7 @@ import { db, storage } from "./config"
 import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
-export const createListing = async (userId, images, title, condition, price, category, description) => {
+export const createListing = async ({ userId, username, images, title, condition, price, category, description, brand }) => {
     try {
         // Reference to the "listings" collection
         const listingRef = collection(db, "listings")
@@ -18,12 +18,16 @@ export const createListing = async (userId, images, title, condition, price, cat
         // Add a new document with a generated ID
         const docRef = await addDoc(listingRef, {
             seller: userId,
+            sellerUserName: username,
             pictures: imageURLs,
             title: title,
             condition: condition,
             price: parseInt(price),
+            brand: brand,
+            condition: condition,
             category: category,
-            description: description
+            description: description,
+            creatd_at: new Date()
         })
 
         console.log("Document written with ID: ", docRef.id)
@@ -98,6 +102,83 @@ export const getListingsByCategories = async (categories, userId) => {
                 listings.push({ id: doc.id, ...doc.data() })
             })
         }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByBrands = async (brands, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        for (let brand of brands) {
+            const q = query(
+                listingsRef,
+                where("brand", "==", brand),
+                where("seller", '!=', userId)
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() })
+            })
+        }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByConditions = async (conditions, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        for (let condition of conditions) {
+            const q = query(
+                listingsRef,
+                where("condition", "==", condition),
+                where("seller", '!=', userId)
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() })
+            })
+        }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByPrice = async (value, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        const q = query(
+            listingsRef,
+            where("price", ">=", value.min),
+            where("price", "<=", value.max),
+            where("seller", '!=', userId)
+        )
+        const querySnapshot = await getDocs(q)
+        querySnapshot.forEach((doc) => {
+            listings.push({ id: doc.id, ...doc.data() })
+        })
 
         return listings // Return the array of listings
     } catch (e) {

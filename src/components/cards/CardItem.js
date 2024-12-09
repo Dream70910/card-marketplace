@@ -33,6 +33,10 @@ const CardItem = ({
     userData && userData.cartList && isListingInCart()
   }, [userData])
 
+  useEffect(() => {
+    console.log(`${title} was in ${isInCart}`)
+  }, [isInCart])
+
   const isListingInCart = () => {
     if (userData.cartList.findIndex(item => item.id === cardId) > -1) setIsInCart(true)
     else setIsInCart(false)
@@ -43,10 +47,11 @@ const CardItem = ({
 
     const cartedItem = { title: title, price: price, picture: imageSrc, sellerId: sellerId, sellerUserName: sellerUserName, id: cardId }
 
-    await addToCart(user.uid, cartedItem)
-
-    setUserData({ ...userData, cartList: [...userData.cartList, cartedItem] })
+    const newData = { ...userData, cartList: [...userData.cartList, cartedItem] }
+    setUserData(newData)
     setIsInCart(true)
+
+    await addToCart(user.uid, cartedItem)
     toast.success(`${title} was successfully added to cart !`)
   }
 

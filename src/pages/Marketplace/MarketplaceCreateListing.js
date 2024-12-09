@@ -12,17 +12,22 @@ import { toast } from "react-toastify"
 import { createListing } from "../../firebase/listings"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/authContext"
+import { useAtom } from "jotai"
+import { userAtom } from "../../store"
+import { brands, conditions } from "../../utils/data"
 
 const MarketplaceCreateListing = () => {
 	const [categories, setCategories] = useState([])
 	const [title, setTitle] = useState("")
-	const [condition, setCondition] = useState("")
+	const [brand, setBrand] = useState(brands[0].value)
+	const [condition, setCondition] = useState(conditions[0].value)
 	const [price, setPrice] = useState(null)
 	const [category, setCategory] = useState("")
 	const [description, setDescription] = useState("")
 	const [images, setImages] = useState([])
 	const { user } = useAuth()
-	const naviate = useNavigate()
+	const [userData, setUserData] = useAtom(userAtom)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		getAllCategories().then((cats) => {
@@ -39,7 +44,7 @@ const MarketplaceCreateListing = () => {
 		})
 	}, [])
 
-	const onCreateListing = () => {
+	const onCreateListing = async () => {
 		if (title.length === 0) {
 			toast.error("Title cannot be empty. Please provide a title.")
 			return
@@ -60,9 +65,9 @@ const MarketplaceCreateListing = () => {
 			return
 		}
 
-		createListing(user.uid, images, title, condition, price, category, description)
+		await createListing({ userId: user.uid, username: userData.username, images: images, title, condition, price, category, description, brand })
 		toast.success("Listing has been created successfully!")
-		naviate("/marketplace/categories")
+		navigate("/my-listings")
 	}
 
 	const addImage = (file) => {
@@ -90,7 +95,7 @@ const MarketplaceCreateListing = () => {
 								/>
 							</label>
 						</div>
-						<div className="text-white">
+						{/* <div className="text-white">
 							<label className="w-full">
 								<span className="text-base lg:text-xl mb-3 block">
 									Condition & edition details
@@ -101,7 +106,7 @@ const MarketplaceCreateListing = () => {
 									onChange={(value) => setCondition(value)}
 								/>
 							</label>
-						</div>
+						</div> */}
 						<div className="text-white">
 							<label className="w-full">
 								<span className="text-base lg:text-xl mb-3 block">Price</span>
@@ -129,6 +134,32 @@ const MarketplaceCreateListing = () => {
 						<div className="text-white">
 							<label className="w-full">
 								<span className="text-base lg:text-xl mb-3 block">
+									Brand
+								</span>
+								<Dropdown
+									options={brands}
+									placeholder="Select Category"
+									onChange={(e) => setBrand(e.target.value)}
+									className="w-full"
+								/>
+							</label>
+						</div>
+						<div className="text-white">
+							<label className="w-full">
+								<span className="text-base lg:text-xl mb-3 block">
+									Condition
+								</span>
+								<Dropdown
+									options={conditions}
+									placeholder="Select Category"
+									onChange={(e) => setCondition(e.target.value)}
+									className="w-full"
+								/>
+							</label>
+						</div>
+						<div className="text-white">
+							<label className="w-full">
+								<span className="text-base lg:text-xl mb-3 block">
 									Description
 								</span>
 								<TextAreaInput
@@ -146,7 +177,7 @@ const MarketplaceCreateListing = () => {
 								onFileSelect={(file) => addImage(file)}
 								className="custom-upload-class !h-[220px] lg:!h-[420px]"
 							/>
-							<div className="grid grid-cols-3 gap-4 mt-6">
+							{/* <div className="grid grid-cols-3 gap-4 mt-6">
 								<UploadInput
 									onFileSelect={(file) => addImage(file)}
 									className="custom-upload-class !h-[100px] lg:!h-[170px] border-style-decoration"
@@ -168,7 +199,7 @@ const MarketplaceCreateListing = () => {
 									subtitleClassName="hidden"
 									placeholderIcon="/assets/icons/icon-add.svg"
 								/>
-							</div>
+							</div> */}
 						</div>
 
 						<div className="flex mt-auto flex-col lg:flex-row gap-4">
