@@ -190,7 +190,7 @@ const MarketplaceChat = () => {
             <div className="flex mt-10 lg:mt-16">
               {
                 userData.recipients && userData.recipients.length > 0 ?
-                  <div className="mr-10 border-default min-w-[190px]">
+                  <div className="mr-10 border-default min-w-[250px]">
                     {
                       userData.recipients.map((item) =>
                         <Link

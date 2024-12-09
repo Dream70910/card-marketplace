@@ -21,6 +21,7 @@ const MarketplaceCategories = () => {
 	const [categories, setCategories] = useState([])
 	const [selectedBrands, setSelectedBrands] = useState([])
 	const [selectedConditions, setSelectedConditions] = useState([])
+	const [sortBy, setSortBy] = useState('price-low')
 	const queries = new URLSearchParams(useLocation().search)
 	const [loading, setLoading] = useState(true)
 	const [itemsToShow, setItemsToShow] = useState(6)
@@ -47,6 +48,15 @@ const MarketplaceCategories = () => {
 				getListingsByCategories(selectedCategories, userData.id).then((items) => {
 					let temp = [...items]
 					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
+
+					if (sortBy === 'price-low') {
+						temp.sort((a, b) => a.price - b.price)
+					}
+
+					if (sortBy === 'price-high') {
+						temp.sort((a, b) => b.price - a.price)
+					}
+
 					setListings(temp)
 					setLoading(false)
 				})
@@ -56,6 +66,14 @@ const MarketplaceCategories = () => {
 				getListingsByBrands(selectedBrandValues, userData.id).then((items) => {
 					let temp = [...items]
 					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
+
+					if (sortBy === 'price-low') {
+						temp.sort((a, b) => a.price - b.price)
+					}
+
+					if (sortBy === 'price-high') {
+						temp.sort((a, b) => b.price - a.price)
+					}
 					setListings(temp)
 					setLoading(false)
 				})
@@ -65,6 +83,14 @@ const MarketplaceCategories = () => {
 				getListingsByConditions(selectedConditionValues, userData.id).then((items) => {
 					let temp = [...items]
 					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
+
+					if (sortBy === 'price-low') {
+						temp.sort((a, b) => a.price - b.price)
+					}
+
+					if (sortBy === 'price-high') {
+						temp.sort((a, b) => b.price - a.price)
+					}
 					setListings(temp)
 					setLoading(false)
 				})
@@ -74,6 +100,14 @@ const MarketplaceCategories = () => {
 				getAllListings(userData.id).then((items) => {
 					let temp = [...items]
 					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
+
+					if (sortBy === 'price-low') {
+						temp.sort((a, b) => a.price - b.price)
+					}
+
+					if (sortBy === 'price-high') {
+						temp.sort((a, b) => b.price - a.price)
+					}
 					setListings(temp)
 					setLoading(false)
 				})
@@ -81,14 +115,12 @@ const MarketplaceCategories = () => {
 	}, [queries, userData])
 
 	const options = [
-		{ value: "popular", label: "Popular" },
-		{ value: "latest", label: "Latest" },
 		{ value: "price-high", label: "Price High" },
 		{ value: "price-low", label: "Price Low" },
 	]
 
 	const handleDropdownChange = (event) => {
-		console.log(event.target.value)
+		setSortBy(event.target.value)
 	}
 
 	const removeCategory = (categoryId) => {
