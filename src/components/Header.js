@@ -57,16 +57,16 @@ const Header = ({ isLogin = false }) => {
               <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-white' : ''}>Sell Cards</Link>
             </div>
             <div className="flex items-center  text-[#484F52]">
-              <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Contact</Link>
-            </div>
-            <div className="flex items-center  text-[#484F52]">
               <Link to="/faqs" className={isActive('/faqs') ? 'text-white' : ''}>FAQ</Link>
             </div>
             {
-              userData && userData.role === 'admin' &&
-              <div className="flex items-center  text-[#484F52]">
-                <Link to="/admin" className={isActive('/faqs') ? 'text-white' : ''}>Admin</Link>
-              </div>
+              userData && userData.role === 'admin' ?
+                <div className="flex items-center  text-[#484F52]">
+                  <Link to="/admin" className={isActive('/admin') ? 'text-white' : ''}>Admin</Link>
+                </div> :
+                <div className="flex items-center  text-[#484F52]">
+                  <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Contact</Link>
+                </div>
             }
           </div>
 

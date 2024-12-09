@@ -29,6 +29,7 @@ const YourListing = () => {
               description={item.description}
               buttonText="View Product"
               id={item.id}
+              key={`your-listing-${item.id}`}
             />
           )
         }

@@ -14,6 +14,7 @@ const CardSoldHistory = ({
   onCancelBuy,
   onAcceptBuy,
   onReview,
+  buyerId
 }) => (
   <div className="border-style-decoration p-5">
     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-6">
@@ -31,7 +32,7 @@ const CardSoldHistory = ({
           <div className="w-full flex justify-between lg:justify-evenly flex-col-reverse lg:flex-row lg:items-center gap-1 lg:gap-6">
             <div className="flex lg:flex-col gap-1">
               <span className="text-xs lg:text-sm text-primary block whitespace-nowrap">
-                {status}
+                {status[0].toUpperCase() + status.slice(1, status.length)}
               </span>
               <span className="text-xs lg:text-sm text-white block whitespace-nowrap">
                 {date}
@@ -59,12 +60,22 @@ const CardSoldHistory = ({
       </div>
 
       <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:max-w-[300px] 2xl:max-w-[420px] justify-end mt-4 lg:mt-0">
-        <button
-          onClick={onAcceptBuy}
-          className="hover:bg-primary relative w-full lg:max-w-[152px] hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
-        >
-          Accept
-        </button>
+        {
+          status === 'pending' ?
+            <button
+              onClick={onAcceptBuy}
+              className="hover:bg-primary relative w-full lg:max-w-[152px] hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
+            >
+              Accept
+            </button>
+            :
+            <Link
+              to={`/marketplace/chat/${buyerId}`}
+              className="hover:bg-primary relative w-full lg:max-w-[152px] hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
+            >
+              Contact Buyer
+            </Link>
+        }
 
         <button
           onClick={onCancelBuy}

@@ -2,7 +2,7 @@ import { db, storage } from "./config"
 import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
-export const createListing = async (userId, images, title, condition, price, category, description) => {
+export const createListing = async ({ userId, username, images, title, condition, price, category, description, brand }) => {
     try {
         // Reference to the "listings" collection
         const listingRef = collection(db, "listings")
@@ -18,12 +18,16 @@ export const createListing = async (userId, images, title, condition, price, cat
         // Add a new document with a generated ID
         const docRef = await addDoc(listingRef, {
             seller: userId,
+            sellerUserName: username,
             pictures: imageURLs,
             title: title,
             condition: condition,
             price: parseInt(price),
+            brand: brand,
+            condition: condition,
             category: category,
-            description: description
+            description: description,
+            creatd_at: new Date()
         })
 
         console.log("Document written with ID: ", docRef.id)
@@ -98,6 +102,83 @@ export const getListingsByCategories = async (categories, userId) => {
                 listings.push({ id: doc.id, ...doc.data() })
             })
         }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByBrands = async (brands, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        for (let brand of brands) {
+            const q = query(
+                listingsRef,
+                where("brand", "==", brand),
+                where("seller", '!=', userId)
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() })
+            })
+        }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByConditions = async (conditions, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        for (let condition of conditions) {
+            const q = query(
+                listingsRef,
+                where("condition", "==", condition),
+                where("seller", '!=', userId)
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() })
+            })
+        }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByPrice = async (value, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        const q = query(
+            listingsRef,
+            where("price", ">=", value.min),
+            where("price", "<=", value.max),
+            where("seller", '!=', userId)
+        )
+        const querySnapshot = await getDocs(q)
+        querySnapshot.forEach((doc) => {
+            listings.push({ id: doc.id, ...doc.data() })
+        })
 
         return listings // Return the array of listings
     } catch (e) {
@@ -290,20 +371,69 @@ export const cancelBuyListing = async (card) => {
     }
 }
 
-export const acceptBuyListing = async (card) => {
+// export const acceptBuyListing = async (card) => {
+//     try {
+//         // Reference to the specific user document
+//         const usersRef = doc(db, "users", card.seller)
+//         const userSnapshot = await getDoc(usersRef)
+//         const userData = userSnapshot.data()
+
+//         const listingsRef = doc(db, "listings", card.id)
+//         const listingSnapshot = await getDoc(listingsRef)
+//         const listingData = listingSnapshot.data()
+
+//         const newUserData = { ...userData, balance: userData.balance + card.price }
+//         await updateDoc(listingsRef, { ...listingData, state: "active", buyer: null, seller: card.buyer })
+//         await updateDoc(usersRef, newUserData)
+//     } catch (e) {
+//         console.error("Error getting document: ", e)
+//     }
+// }
+
+export const acceptOnSellerSide = async (card) => {
+    try {
+        const listingsRef = doc(db, "listings", card.id)
+        const listingSnapshot = await getDoc(listingsRef)
+        const listingData = listingSnapshot.data()
+
+        await updateDoc(listingsRef, { ...listingData, state: "delivering" })
+    } catch (e) {
+        console.error("Error getting document: ", e)
+    }
+}
+
+export const acceptOnBuyerSide = async (card) => {
     try {
         // Reference to the specific user document
-        const usersRef = doc(db, "users", card.seller)
-        const userSnapshot = await getDoc(usersRef)
-        const userData = userSnapshot.data()
+        const sellerRef = doc(db, "users", card.seller)
+        const sellerSnapshot = await getDoc(sellerRef)
+        const sellerData = sellerSnapshot.data()
 
         const listingsRef = doc(db, "listings", card.id)
         const listingSnapshot = await getDoc(listingsRef)
         const listingData = listingSnapshot.data()
 
-        const newUserData = { ...userData, balance: userData.balance + card.price }
-        await updateDoc(listingsRef, { ...listingData, state: "active", buyer: null, seller: card.buyer })
-        await updateDoc(usersRef, newUserData)
+        const newSellerData = { ...sellerData, balance: sellerData.balance + card.price * 0.95 }
+
+        await updateDoc(listingsRef, { ...listingData, state: "local", buyer: null, seller: card.buyer })
+        await updateDoc(sellerRef, newSellerData)
+
+        const usersCollection = collection(db, "users");
+        const q = query(usersCollection, where("role", "==", 'admin'));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const adminDoc = querySnapshot.docs[0]; // Get the first document
+            const adminData = adminDoc.data(); // Get the data from the document
+
+            // Add balance to the admin user
+            const newAdminData = { ...adminData, balance: adminData.balance + card.price * 0.05 }; // Assuming you want to give the admin 5% of the card price
+            const adminRef = doc(db, "users", adminDoc.id);
+
+            await updateDoc(adminRef, newAdminData);
+        } else {
+            console.log("No admin user found.");
+        }
     } catch (e) {
         console.error("Error getting document: ", e)
     }

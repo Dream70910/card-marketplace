@@ -8,7 +8,7 @@ import TextInput from "../../components/commons/TextInput"
 import TableSalesHistory from "../../components/tabels/TableSalesHistory"
 import { useAuth } from "../../context/authContext"
 import { getUserData } from "../../firebase/users"
-import { acceptBuyListing, buyListing, cancelBuyListing, getPurchasedListings, getSoldListings, removeFromCart } from "../../firebase/listings"
+import { acceptBuyListing, acceptOnBuyerSide, acceptOnSellerSide, buyListing, cancelBuyListing, getPurchasedListings, getSoldListings, removeFromCart } from "../../firebase/listings"
 import { toast } from "react-toastify"
 import { useAtom } from "jotai"
 import { userAtom } from "../../store"
@@ -69,13 +69,15 @@ const CartList = () => {
   const [userData, setUserAtom] = useAtom(userAtom)
 
   const removeItemFromCart = async (card) => {
-    await removeFromCart(userData.id, card.id)
     const oldCart = userData.cartList.reduce((acc, cur) => {
       if (cur.id !== card.id) acc.push(cur)
       return acc
     }, [])
 
-    setUserAtom({ ...userData, cartList: oldCart })
+    const newData = { ...userData, cartList: oldCart }
+    setUserAtom(newData)
+
+    await removeFromCart(userData.id, card.id)
 
     return true
   }
@@ -87,13 +89,14 @@ const CartList = () => {
       return acc
     }, [])
 
-    setUserAtom({ ...userData, cartList: oldCart, balance: userData.balance - card.price })
+    const newData = { ...userData, cartList: oldCart, balance: userData.balance - card.price }
+    setUserAtom(newData)
 
     return true
   }
 
   const handleCancelCard = async (card) => {
-    removeItemFromCart(card)
+    await removeItemFromCart(card)
     toast.success(`${card.title} was removed from cart !`)
   }
 
@@ -158,7 +161,7 @@ const SaleHistory = () => {
   }
 
   const onAcceptBuy = async (card) => {
-    await acceptBuyListing(card)
+    await acceptOnSellerSide(card)
     toast.success(`${card.title} was sold !`)
     setUserData({ ...userData, balance: userData.balance + card.price })
   }
@@ -169,9 +172,10 @@ const SaleHistory = () => {
         soldItems.length > 0 ?
           soldItems.map((item) =>
             <CardSoldHistory
+              buyerId={item.buyer}
+              status={item.state}
               imageSrc={item.pictures[0]}
               title="pokemon pecharunt x 2"
-              status="Pending"
               // date="17 Sept, 2023"
               avatarSrc="/assets/avatars/avatar.png"
               userName="Emily Johnson"
@@ -213,6 +217,11 @@ const PurchaseHistory = () => {
     setUserData({ ...userData, balance: userData.balance + card.price })
   }
 
+  const confirmArrived = async (card) => {
+    await acceptOnBuyerSide(card)
+    toast.success(`${card.title} was confirmed`)
+  }
+
   return (
     <div className="mt-12 space-y-6">
       {
@@ -221,7 +230,7 @@ const PurchaseHistory = () => {
             <CardPurchaseHistory
               imageSrc={item.pictures[0]}
               title={item.title}
-              status="Pending"
+              status={item.state}
               // date="17 Sept, 2023"
               avatarSrc="/assets/avatars/avatar.png"
               userName="Emily Johnson"
@@ -229,6 +238,7 @@ const PurchaseHistory = () => {
               sellerId={item.seller}
               onCancelBuy={() => onCancelBuy(item)}
               key={`purchase-${item.id}`}
+              confirmArrived={() => confirmArrived(item)}
             />
           )
           :
