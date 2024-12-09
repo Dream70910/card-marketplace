@@ -27,6 +27,7 @@ export const createListing = async ({ userId, username, images, title, condition
             condition: condition,
             category: category,
             description: description,
+            state: 'local',
             creatd_at: new Date()
         })
 
@@ -35,6 +36,19 @@ export const createListing = async ({ userId, username, images, title, condition
         console.error("Error adding document: ", e)
     }
 }
+
+export const updateCardState = async (cardId, state) => {
+    try {
+        // Reference to the specific card document in the "listings" collection
+        const cardRef = doc(db, "listings", cardId);
+
+        // Update the state of the card to 'local'
+        await updateDoc(cardRef, { state: state });
+    } catch (e) {
+        console.error("Error updating card state: ", e);
+    }
+};
+
 
 export const getAllListings = async (userId) => {
     try {
@@ -46,7 +60,8 @@ export const getAllListings = async (userId) => {
         // Create a query to filter listings by state
         const q = query(
             listingsRef,
-            where('seller', '!=', userId)
+            where('seller', '!=', userId),
+            where('state', '==', 'market')
         )
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((doc) => {
@@ -70,7 +85,8 @@ export const getSearchedListings = async (userId, search) => {
         // Create a query to filter listings by state
         const q = query(
             listingsRef,
-            where('seller', '!=', userId)
+            where('seller', '!=', userId),
+            where('state', '==', 'market')
         )
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((doc) => {
@@ -95,7 +111,8 @@ export const getListingsByCategories = async (categories, userId) => {
             const q = query(
                 listingsRef,
                 where("category", "==", category),
-                where("seller", '!=', userId)
+                where("seller", '!=', userId),
+                where('state', '==', 'market')
             )
             const querySnapshot = await getDocs(q)
             querySnapshot.forEach((doc) => {
@@ -121,7 +138,8 @@ export const getListingsByBrands = async (brands, userId) => {
             const q = query(
                 listingsRef,
                 where("brand", "==", brand),
-                where("seller", '!=', userId)
+                where("seller", '!=', userId),
+                where('state', '==', 'market')
             )
             const querySnapshot = await getDocs(q)
             querySnapshot.forEach((doc) => {
@@ -147,7 +165,8 @@ export const getListingsByConditions = async (conditions, userId) => {
             const q = query(
                 listingsRef,
                 where("condition", "==", condition),
-                where("seller", '!=', userId)
+                where("seller", '!=', userId),
+                where('state', '==', 'market')
             )
             const querySnapshot = await getDocs(q)
             querySnapshot.forEach((doc) => {
@@ -173,7 +192,8 @@ export const getListingsByPrice = async (value, userId) => {
             listingsRef,
             where("price", ">=", value.min),
             where("price", "<=", value.max),
-            where("seller", '!=', userId)
+            where("seller", '!=', userId),
+            where('state', '==', 'market')
         )
         const querySnapshot = await getDocs(q)
         querySnapshot.forEach((doc) => {

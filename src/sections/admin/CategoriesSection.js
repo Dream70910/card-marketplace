@@ -84,7 +84,7 @@ const CategoriesSection = () => {
                 <div>
                     <div className="p-5 pb-8 border-b-2 border-b-white/20">
                         <h4 className="uppercase font-aero w-full text-white text-base lg:text-xl mt-4 my-8">
-                            live CATEGORIES
+                            Live CATEGORIES
                         </h4>
 
                         <div className="flex flex-wrap gap-5 ">
