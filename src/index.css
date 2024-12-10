@@ -176,6 +176,10 @@ input:focus {
   transition: .25s;
 } */
 
+.card-category {
+  border: 2px dotted rgba(255, 255, 255, 0)
+}
+
 .card-category:hover {
   border: 2px solid rgba(255, 255, 255, 1);
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
@@ -185,8 +189,6 @@ input:focus {
       100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
       calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px));
 }
-
-
 
 
 .card-category:hover::before {
@@ -491,4 +493,16 @@ input:focus {
       calc(100% - 15px) 0, 100% 0, 100% 15px,
       100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
       calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px));
+}
+
+.slick-track {
+  display: flex !important;
+}
+
+.slick-slide {
+  height: auto !important
+}
+
+.slick-slide div {
+  height: 100%;
 }

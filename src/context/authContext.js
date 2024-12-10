@@ -10,7 +10,7 @@ import {
   sendEmailVerification
 } from "firebase/auth"
 import { auth, db } from "../firebase/config"
-import { createUserProfile, getUserData } from "../firebase/users"
+import { checkUserExists, createUserProfile, getUserData } from "../firebase/users"
 import { useNavigate } from "react-router-dom"
 import { doc, onSnapshot } from "firebase/firestore"
 import { useAtom } from "jotai"
@@ -67,9 +67,23 @@ export function AuthProvider({ children }) {
     signOut(auth)
   }
 
-  const loginWithGoogle = () => {
-    const googleProvider = new GoogleAuthProvider()
-    return signInWithPopup(auth, googleProvider)
+  const loginWithGoogle = async () => {
+    const googleProvider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth, googleProvider)
+      .then(async (result) => {
+        // let existing = await checkUserExists(result.user.email)
+        // if (!existing) {
+        await createUserProfile(result.user.uid, result.user.email)
+        // }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.error("Error: ", errorCode, errorMessage);
+      });
   }
 
   const resetPassword = (email) => {

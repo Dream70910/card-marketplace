@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { getAllCategories } from "../../firebase/categories"
 import DialogConfirmation from "../../components/dialogs/DialogConfirmation";
 import { useAtom } from "jotai"
-import { priceRangeAtom, userAtom } from "../../store"
+import { priceRangeAtom, userAtom, yearRangeAtom } from "../../store"
 import { brands, conditions } from "../../utils/data"
 
 const MarketplaceCategories = () => {
@@ -18,6 +18,7 @@ const MarketplaceCategories = () => {
 	const [listings, setListings] = useState([])
 	const [userData, setUserData] = useAtom(userAtom)
 	const [priceRange, setPriceRange] = useAtom(priceRangeAtom)
+	const [yearRange,] = useAtom(yearRangeAtom)
 	const [categories, setCategories] = useState([])
 	const [selectedBrands, setSelectedBrands] = useState([])
 	const [selectedConditions, setSelectedConditions] = useState([])
@@ -46,73 +47,56 @@ const MarketplaceCategories = () => {
 
 			if (selectedCategories.length > 0) {
 				getListingsByCategories(selectedCategories, userData.id).then((items) => {
-					let temp = [...items]
-					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
-
-					if (sortBy === 'price-low') {
-						temp.sort((a, b) => a.price - b.price)
-					}
-
-					if (sortBy === 'price-high') {
-						temp.sort((a, b) => b.price - a.price)
-					}
-
-					setListings(temp)
-					setLoading(false)
+					updateListings(items)
 				})
 			}
 
 			if (selectedBrandValues.length > 0) {
 				getListingsByBrands(selectedBrandValues, userData.id).then((items) => {
-					let temp = [...items]
-					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
-
-					if (sortBy === 'price-low') {
-						temp.sort((a, b) => a.price - b.price)
-					}
-
-					if (sortBy === 'price-high') {
-						temp.sort((a, b) => b.price - a.price)
-					}
-					setListings(temp)
-					setLoading(false)
+					updateListings(items)
 				})
 			}
 
 			if (selectedConditionValues.length > 0) {
 				getListingsByConditions(selectedConditionValues, userData.id).then((items) => {
-					let temp = [...items]
-					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
-
-					if (sortBy === 'price-low') {
-						temp.sort((a, b) => a.price - b.price)
-					}
-
-					if (sortBy === 'price-high') {
-						temp.sort((a, b) => b.price - a.price)
-					}
-					setListings(temp)
-					setLoading(false)
+					updateListings(items)
 				})
 			}
 
 			if (selectedCategories.length === 0 && selectedBrandValues.length === 0 && selectedConditionValues.length === 0)
 				getAllListings(userData.id).then((items) => {
-					let temp = [...items]
-					temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min && item.price <= priceRange.max)
-
-					if (sortBy === 'price-low') {
-						temp.sort((a, b) => a.price - b.price)
-					}
-
-					if (sortBy === 'price-high') {
-						temp.sort((a, b) => b.price - a.price)
-					}
-					setListings(temp)
-					setLoading(false)
+					updateListings(items)
 				})
 		}
 	}, [queries, userData])
+
+	const getYear = (timestamp) => {
+		let date
+		if (timestamp) {
+			date = new Date(timestamp.seconds * 1000)
+		} else {
+			date = new Date()
+		}
+		return date.getFullYear()
+	}
+
+	const updateListings = (items) => {
+		let temp = [...items]
+		console.log("item timestamp is", items[0])
+		temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min
+			&& item.price <= priceRange.max && getYear(item.created_at) >= yearRange.min && getYear(item.created_at) <= yearRange.max)
+
+		if (sortBy === 'price-low') {
+			temp.sort((a, b) => a.price - b.price)
+		}
+
+		if (sortBy === 'price-high') {
+			temp.sort((a, b) => b.price - a.price)
+		}
+
+		setListings(temp)
+		setLoading(false)
+	}
 
 	const options = [
 		{ value: "price-high", label: "Price High" },

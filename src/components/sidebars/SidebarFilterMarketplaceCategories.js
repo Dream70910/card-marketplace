@@ -5,7 +5,7 @@ import { brands, conditions } from "../../utils/data"
 import InputRange from 'react-input-range'
 import "react-input-range/lib/css/index.css"
 import { useAtom } from "jotai"
-import { priceRangeAtom } from "../../store"
+import { priceRangeAtom, yearRangeAtom } from "../../store"
 
 const SidebarFilterMarketplaceCategories = ({ className }) => {
 	// State to control open/close for each category
@@ -19,6 +19,7 @@ const SidebarFilterMarketplaceCategories = ({ className }) => {
 	})
 
 	const [priceValue, setPriceValue] = useAtom(priceRangeAtom)
+	const [yearValue, setYearValue] = useAtom(yearRangeAtom)
 	const [categories, setCategories] = useState([])
 	const queries = new URLSearchParams(useLocation().search)
 	const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
@@ -184,13 +185,36 @@ const SidebarFilterMarketplaceCategories = ({ className }) => {
 				<div>
 					<div
 						className="w-full flex justify-between items-center cursor-pointer"
+						onClick={() => toggleSection("year")}
+					>
+						<span>Year</span>
+					</div>
+
+					<div className="mt-8 mb-4 mx-2">
+						<InputRange
+							maxValue={2024}
+							minValue={2010}
+							step={1}
+							value={yearValue}
+							onChange={(v) => setYearValue(v)}
+						/>
+					</div>
+				</div>
+			</div>
+
+			<div
+				className={`border-style-decoration bg-white/5 backdrop-blur-sm p-5 w-full`}
+			>
+				<div>
+					<div
+						className="w-full flex justify-between items-center cursor-pointer"
 						onClick={() => toggleSection("price")}
 					>
 						<span>Price</span>
-						<img
-							src="/assets/icons/icon-arrow-drop-down.svg"
-							className={`${!openSections.price ? "rotate-180" : ""}`}
-						/>
+						{/* <img
+				src="/assets/icons/icon-arrow-drop-down.svg"
+				className={`${!openSections.price ? "rotate-180" : ""}`}
+			/> */}
 					</div>
 
 					<div className="mt-8 mb-4 mx-2">
@@ -203,23 +227,6 @@ const SidebarFilterMarketplaceCategories = ({ className }) => {
 							onChange={(v) => setPriceValue(v)}
 						/>
 					</div>
-
-					{/* {openSections.price && (
-						<div className="flex flex-col items-center gap-2 mt-5 lg:gap-4">
-							<button className="hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white/40 border-style-decoration">
-								All Price
-							</button>
-							<button className="hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white/40 border-style-decoration">
-								Price 1
-							</button>
-							<button className="hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white/40 border-style-decoration">
-								Price 2
-							</button>
-							<button className="hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white/40 border-style-decoration">
-								Price 3
-							</button>
-						</div>
-					)} */}
 				</div>
 			</div>
 		</div>
