@@ -27,6 +27,7 @@ const MarketplaceCreateListing = () => {
 	const [images, setImages] = useState([])
 	const { user } = useAuth()
 	const [userData, setUserData] = useAtom(userAtom)
+	const [date, setDate] = useState(new Date())
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -65,7 +66,7 @@ const MarketplaceCreateListing = () => {
 			return
 		}
 
-		await createListing({ userId: user.uid, username: userData.username, images: images, title, condition, price, category, description, brand })
+		await createListing({ userId: user.uid, username: userData.username, images: images, title, condition, price, category, description, brand, date })
 		toast.success("Listing has been created successfully!")
 		navigate("/my-listings")
 	}
@@ -157,6 +158,15 @@ const MarketplaceCreateListing = () => {
 								/>
 							</label>
 						</div>
+						<label className="w-full text-white date-input">
+							<span className="text-base lg:text-xl mb-3 block">Issue Date</span>
+							<TextInput
+								inputClassName="placeholder:text-white/60"
+								defaultType="date"
+								value={date}
+								onChange={(value) => setDate(value)}
+							/>
+						</label>
 						<div className="text-white">
 							<label className="w-full">
 								<span className="text-base lg:text-xl mb-3 block">
@@ -169,6 +179,8 @@ const MarketplaceCreateListing = () => {
 								/>
 							</label>
 						</div>
+
+
 					</div>
 
 					<div className="w-full flex flex-col gap-6">

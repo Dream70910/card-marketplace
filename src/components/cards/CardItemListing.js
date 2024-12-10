@@ -19,9 +19,10 @@ const CardItemListing = ({
   onButtonClick,
   isRare = false,
   state = 'local',
+  updateCard,
   id = ""
 }) => {
-  const updateCard = async (e, newState) => {
+  const onUpdateState = async (e, newState) => {
     e.stopPropagation()
     e.preventDefault()
     await updateCardState(id, newState)
@@ -70,14 +71,14 @@ const CardItemListing = ({
             state === 'local' ?
               <button
                 to={`/marketplace/${id}`}
-                onClick={(e) => updateCard(e, 'market')}
+                onClick={(e) => onUpdateState(e, 'market')}
                 className="hover:bg-primary relative w-full hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
                 Live on market
               </button>
               :
               <button
                 to={`/marketplace/${id}`}
-                onClick={(e) => updateCard(e, 'local')}
+                onClick={(e) => onUpdateState(e, 'local')}
                 className="hover:bg-primary relative w-full hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
                 Store on local
               </button>

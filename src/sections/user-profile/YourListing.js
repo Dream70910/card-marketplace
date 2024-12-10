@@ -71,6 +71,7 @@ const YourListing = () => {
                 buttonText="View Product"
                 id={item.id}
                 key={`your-listing-${item.id}`}
+                updateCard={updateCard}
                 state={item.state}
               />
             )

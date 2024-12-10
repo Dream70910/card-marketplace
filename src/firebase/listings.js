@@ -2,7 +2,7 @@ import { db, storage } from "./config"
 import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
-export const createListing = async ({ userId, username, images, title, condition, price, category, description, brand }) => {
+export const createListing = async ({ userId, username, images, title, condition, price, category, description, brand, date }) => {
     try {
         // Reference to the "listings" collection
         const listingRef = collection(db, "listings")
@@ -28,7 +28,7 @@ export const createListing = async ({ userId, username, images, title, condition
             category: category,
             description: description,
             state: 'local',
-            creatd_at: new Date()
+            creatd_at: date
         })
 
         console.log("Document written with ID: ", docRef.id)

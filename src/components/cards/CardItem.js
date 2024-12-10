@@ -33,10 +33,6 @@ const CardItem = ({
     userData && userData.cartList && isListingInCart()
   }, [userData])
 
-  useEffect(() => {
-    console.log(`${title} was in ${isInCart}`)
-  }, [isInCart])
-
   const isListingInCart = () => {
     if (userData.cartList.findIndex(item => item.id === cardId) > -1) setIsInCart(true)
     else setIsInCart(false)

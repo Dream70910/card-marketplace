@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore"
 import { db, storage } from "./config"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -79,10 +79,26 @@ export const updateUserProfile = async (userId, updatedData) => {
     }
 }
 
-export const checkUserExists = async (username) => {
+// export const checkUserExists = async (username) => {
+//     try {
+//         const usersRef = collection(db, "users")
+//         const q = query(usersRef, where("username", "==", username))
+//         const querySnapshot = await getDocs(q)
+
+//         if (!querySnapshot.empty) {
+//             return true // User exists
+//         } else {
+//             return false // User does not exist
+//         }
+//     } catch (e) {
+//         console.error("Error checking user:", e)
+//     }
+// }
+
+export const checkUserExists = async (email) => {
     try {
         const usersRef = collection(db, "users")
-        const q = query(usersRef, where("username", "==", username))
+        const q = query(usersRef, where("email", "==", email))
         const querySnapshot = await getDocs(q)
 
         if (!querySnapshot.empty) {
