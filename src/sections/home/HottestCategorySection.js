@@ -1,36 +1,9 @@
 import React from "react"
 import CategoryCard from "../../components/cards/CardCategory"
 import Slider from "react-slick"
+import { homeSliderSettings } from "../../utils/data"
 
 const HottestCategorySection = ({ categories }) => {
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2
-        }
-      },
-      {
-        breakpoint: 360,
-        settings: {
-          slidesToShow: 1
-        }
-      }
-    ]
-  }
-
   return (
     categories && <div className="container mx-auto px-5 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:translate-y-[50%] after:blur-[300px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
       <div className="flex items-end justify-between">
@@ -46,13 +19,13 @@ const HottestCategorySection = ({ categories }) => {
       </div>
 
       <Slider
-        className="mt-8 flex items-stretch"
-        {...sliderSettings}
+        className="mt-8 flex items-stretch dots-top"
+        {...homeSliderSettings}
       >
         {
           categories.map(item =>
             <div
-              key={`category-${item.id}`}
+              key={`category-${item.id} `}
               className="px-4 h-full"
             >
               <CategoryCard

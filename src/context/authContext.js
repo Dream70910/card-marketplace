@@ -70,20 +70,20 @@ export function AuthProvider({ children }) {
   const loginWithGoogle = async () => {
     const googleProvider = new GoogleAuthProvider();
 
-    await signInWithPopup(auth, googleProvider)
-      .then(async (result) => {
-        // let existing = await checkUserExists(result.user.email)
-        // if (!existing) {
-        await createUserProfile(result.user.uid, result.user.email)
-        // }
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
 
-        console.error("Error: ", errorCode, errorMessage);
-      });
+      // Check if user exists and create profile if necessary
+      let existing = await checkUserExists(user.email);
+
+      console.log("user existing: ", existing)
+      if (!existing) {
+        await createUserProfile(user.uid, user.email);
+      }
+    } catch (error) {
+      console.error("Error during sign-in:", error.code, error.message);
+    }
   }
 
   const resetPassword = (email) => {

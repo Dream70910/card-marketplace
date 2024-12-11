@@ -2,35 +2,9 @@ import React from "react"
 import CardItem from "../../components/cards/CardItem"
 import { Link } from "react-router-dom"
 import Slider from "react-slick"
+import { homeSliderSettings } from "../../utils/data"
 
 const MostPopularSection = ({ cards }) => {
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2
-        }
-      },
-      {
-        breakpoint: 360,
-        settings: {
-          slidesToShow: 1
-        }
-      }
-    ]
-  }
   return (
     <div className="container px-5 mx-auto pb-24 lg:pb-48">
       <div className="flex items-end md:items-center  justify-between">
@@ -49,8 +23,8 @@ const MostPopularSection = ({ cards }) => {
       </div>
 
       <Slider
-        {...sliderSettings}
-        className="mt-8"
+        {...homeSliderSettings}
+        className="mt-8 dots-down"
       >
         {
           cards && cards.slice(-5).map(item =>
@@ -72,14 +46,6 @@ const MostPopularSection = ({ cards }) => {
           )
         }
       </Slider>
-
-      {/* <div className="w-fit mx-auto mt-12 lg:mt-16">
-        <ul className="flex items-center space-x-2">
-          <li className="w-[8px] lg:w-[10px] h-[8px] lg:h-[10px] cursor-pointer bg-white"></li>
-          <li className="w-[8px] lg:w-[10px] h-[8px] lg:h-[10px] cursor-pointer bg-white/30 backdrop-blur-sm"></li>
-          <li className="w-[8px] lg:w-[10px] h-[8px] lg:h-[10px] cursor-pointer bg-white/30 backdrop-blur-sm"></li>
-        </ul>
-      </div> */}
     </div>
   )
 }

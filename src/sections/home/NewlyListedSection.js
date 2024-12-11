@@ -2,36 +2,9 @@ import React from "react"
 import CardItem from "../../components/cards/CardItem"
 import { Link } from "react-router-dom"
 import Slider from "react-slick"
+import { homeSliderSettings } from "../../utils/data"
 
 const NewlyListedSection = ({ categories, cards }) => {
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2
-        }
-      },
-      {
-        breakpoint: 360,
-        settings: {
-          slidesToShow: 1
-        }
-      }
-    ]
-  }
-
   return (
     <div className="container px-5 mx-auto pb-24 lg:pb-48">
       <div className="flex flex-col lg:flex-row lg:items-center  justify-between">
@@ -55,8 +28,8 @@ const NewlyListedSection = ({ categories, cards }) => {
       </div>
 
       <Slider
-        {...sliderSettings}
-        className="mt-8"
+        {...homeSliderSettings}
+        className="mt-8 dots-down"
       >
         {
           cards && cards.slice(0, 5).map(item =>
