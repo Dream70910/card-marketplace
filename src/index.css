@@ -525,7 +525,20 @@ input:focus {
   bottom: -80px;
 }
 
-.slick-dots > li {
+.slick-dots>li {
   width: 10px !important;
   height: 10px !important;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  color: white !important;
+  fill: white !important;
+  border-color: white !important;
+  -webkit-text-stroke-color: white !important;
+  outline-color: white !important;
+  box-shadow: white !important;
+}
+
+.slick-track {
+  margin-left: 0 !important;
 }
