@@ -12,6 +12,7 @@ const UploadInput = ({
   iconClassName = "",
   editTimes = 0,
   defaultPreview = null,
+  uploadId = "upload-input",
   ...props
 }) => {
   const [preview, setPreview] = useState(defaultPreview)
@@ -45,7 +46,7 @@ const UploadInput = ({
         accept={acceptedTypes}
         onChange={handleFileChange}
         style={{ display: "none" }}
-        id="upload-input"
+        id={uploadId}
         ref={fileInputRef}
       />
       {preview ? (
@@ -56,7 +57,7 @@ const UploadInput = ({
         />
       ) : ""}
 
-      <label htmlFor="upload-input" className="absolute flex flex-col items-center justify-center z-10 w-full h-full cursor-pointer">
+      <label htmlFor={uploadId} className="absolute flex flex-col items-center justify-center z-10 w-full h-full cursor-pointer">
         <img
           src={placeholderIcon}
           alt="Add icon"

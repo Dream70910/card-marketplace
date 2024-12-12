@@ -27,10 +27,12 @@ const MarketplaceItemDetails = () => {
   const [isInCart, setIsInCart] = useState(false)
   const [otherCards, setOtherCards] = useState([])
   const [brand, setBrand] = useState(null)
+  const [activeImage, setActiveImage] = useState(null)
 
   useEffect(() => {
     getListingByID(cardId).then((item) => {
       setCard(item)
+      setActiveImage(item.pictures[0])
     })
 
     scrollTo({
@@ -126,7 +128,7 @@ const MarketplaceItemDetails = () => {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
     autoplaySpeed: 3000,
@@ -152,35 +154,34 @@ const MarketplaceItemDetails = () => {
             <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-12">
               <div className="w-full max-w-[620px] 2xl:max-w-[700px]">
                 {/* Main Displayed Image */}
-                {/* <div className="product-ask-section w-full">
-              <img
-                src={activeImage.src}
-                className="w-full h-full object-cover"
-                alt="Main Displayed"
-              />
-            </div> */}
+                <div className="product-ask-section w-full pt-[100%]">
+                  <img
+                    src={activeImage}
+                    className="absolute top-0 w-full h-full object-cover"
+                    alt="Main Displayed"
+                  />
+                </div>
 
                 {/* Thumbnail Slider */}
-                {/* <Slider {...settings} arrows={false} className="mt-5">
-                  {images.map((image) => (
-                    <div key={image.id} className="px-[2px] lg:px-1">
+                <Slider {...settings} arrows={false} className="mt-5">
+                  {card.pictures.map((image) => (
+                    <div key={`thumb-${image}`} className="px-[2px] lg:px-1">
                       <div
-                        className={`cursor-pointer border-style-decoration w-full ${activeImageId === image.id
+                        className={`cursor-pointer border-style-decoration w-full pt-[100%] ${activeImage === image
                           ? "!opacity-100 !border-primary after:!border-l-primary after:!border-t-primary before:!border-r-primary before:!border-b-primary"
                           : "opacity-40"
                           }`}
-                        onClick={() => handleThumbnailClick(image.id)}
+                        onClick={() => setActiveImage(image)}
                       >
                         <img
-                          src={image.src}
-                          className="w-full h-full object-cover"
-                          alt={`Thumbnail ${image.id}`}
+                          src={image}
+                          className="absolute top-0 left-0 w-full h-full object-cover"
+                          alt={`Thumbnail ${image}`}
                         />
                       </div>
                     </div>
                   ))}
-                </Slider> */}
-                <img src={card.pictures[0]} className="w-full" />
+                </Slider>
               </div>
 
               <div className="w-full lg:space-y-8">

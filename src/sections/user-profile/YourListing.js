@@ -3,11 +3,13 @@ import CardItemListing from "../../components/cards/CardItemListing";
 import { useAtom } from "jotai";
 import { userAtom } from "../../store";
 import { getListingsByUserId, updateCardState } from "../../firebase/listings";
+import { toast } from "react-toastify";
 
 const YourListing = () => {
   const [userData,] = useAtom(userAtom)
   const [localCards, setLocalCards] = useState([])
   const [marketCards, setMarketCards] = useState([])
+  const [updatedTime, setUpdatedTime] = useState(0)
 
   useEffect(() => {
     if (userData && userData.id) {
@@ -22,11 +24,14 @@ const YourListing = () => {
 
       temp = data.filter(item => item.state === 'market')
       setMarketCards(temp)
+
+      setUpdatedTime(updatedTime + 1)
     })
   }
 
-  const updateCard = async (id, state) => {
+  const updateCard = async (id, state, title) => {
     await updateCardState(id, state)
+    toast.success(`${title} state was changed to ${state}!`)
     updateData()
   }
 
@@ -46,7 +51,7 @@ const YourListing = () => {
                 description={item.description}
                 buttonText="View Product"
                 id={item.id}
-                key={`your-listing-${item.id}`}
+                key={`your-listing-${updatedTime}-${item.id}`}
                 state={item.state}
                 updateCard={updateCard}
               />
@@ -70,7 +75,7 @@ const YourListing = () => {
                 description={item.description}
                 buttonText="View Product"
                 id={item.id}
-                key={`your-listing-${item.id}`}
+                key={`your-listing-${updatedTime}-${item.id}`}
                 updateCard={updateCard}
                 state={item.state}
               />

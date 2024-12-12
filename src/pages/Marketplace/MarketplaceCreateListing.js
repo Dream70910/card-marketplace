@@ -72,7 +72,12 @@ const MarketplaceCreateListing = () => {
 	}
 
 	const addImage = (file) => {
-		const files = [...images, file]
+		const files = [...images]
+
+		if (files.findIndex(item => item.size === file.size && item.name === file.name) === -1) {
+			files.push(file)
+		}
+
 		setImages(files)
 	}
 
@@ -189,13 +194,14 @@ const MarketplaceCreateListing = () => {
 								onFileSelect={(file) => addImage(file)}
 								className="custom-upload-class !h-[220px] lg:!h-[420px]"
 							/>
-							{/* <div className="grid grid-cols-3 gap-4 mt-6">
+							<div className="grid grid-cols-3 gap-4 mt-6">
 								<UploadInput
 									onFileSelect={(file) => addImage(file)}
 									className="custom-upload-class !h-[100px] lg:!h-[170px] border-style-decoration"
 									titleClassName="hidden"
 									subtitleClassName="hidden"
 									placeholderIcon="/assets/icons/icon-add.svg"
+									uploadId="thumb-1"
 								/>
 								<UploadInput
 									onFileSelect={(file) => addImage(file)}
@@ -203,6 +209,7 @@ const MarketplaceCreateListing = () => {
 									titleClassName="hidden"
 									subtitleClassName="hidden"
 									placeholderIcon="/assets/icons/icon-add.svg"
+									uploadId="thumb-2"
 								/>
 								<UploadInput
 									onFileSelect={(file) => addImage(file)}
@@ -210,8 +217,9 @@ const MarketplaceCreateListing = () => {
 									titleClassName="hidden"
 									subtitleClassName="hidden"
 									placeholderIcon="/assets/icons/icon-add.svg"
+									uploadId="thumb-3"
 								/>
-							</div> */}
+							</div>
 						</div>
 
 						<div className="flex mt-auto flex-col lg:flex-row gap-4">

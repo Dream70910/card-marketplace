@@ -9,10 +9,12 @@ import { addRecipient, getUserData } from "../../firebase/users"
 import { addDoc, collection, onSnapshot, orderBy, query, Timestamp, where } from "firebase/firestore"
 import { db } from "../../firebase/config"
 import DialogConfirmation from "../../components/dialogs/DialogConfirmation"
-
+import { setMessageRead } from "../../firebase/messages"
+import { useAuth } from "../../context/authContext"
 const MarketplaceChat = () => {
   const fileInputRef = useRef(null)
   const { recipientId } = useParams()
+  const { getUpdatedUserData } = useAuth()
   const [userData, setUserData] = useAtom(userAtom)
   const [partyData, setPartyData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -83,28 +85,14 @@ const MarketplaceChat = () => {
     scrollToBottom()
   }, [messages])
 
-  // const getParties = async () => {
-  //   const q1 = query(
-  //     collection(db, "messages"),
-  //     where("recipientId", "==", recipientId),
-  //     where("senderId", "==", userData.id),
-  //     where("timestamp", ">", afterTimestamp),
-  //     orderBy("timestamp")
-  //   )
+  useEffect(() => {
+    userData && userData.unReadMessages &&
+      userData.unReadMessages.filter(item => item.senderId === recipientId).forEach(async (msg) => {
+        await setMessageRead(msg.id)
+      })
 
-  //   const q2 = query(
-  //     collection(db, "messages"),
-  //     where("recipientId", "==", userData.id),
-  //     where("senderId", "==", recipientId),
-  //     where("timestamp", ">", afterTimestamp),
-  //     orderBy("timestamp")
-  //   )
-
-  //   const querySnapshot = await getDocs(q1)
-  //   if (!querySnapshot.empty) {
-  //     querySnapshot.map(item => )
-  //   }
-  // }
+    getUpdatedUserData()
+  }, [loading])
 
   const scrollToBottom = () => {
     const element = document.querySelector("#product-ask-section")
@@ -121,6 +109,7 @@ const MarketplaceChat = () => {
       senderId: userData.id,
       recipientId: recipientId,
       timestamp: new Date(),
+      state: 'unread'
     })
 
     if (!userData.recipients || userData.recipients.findIndex(item => item.id === recipientId) === -1) {
@@ -145,6 +134,10 @@ const MarketplaceChat = () => {
     const dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 
     return `${timeString} ${dateString}`
+  }
+
+  const getUnReadMessagesCount = (senderId) => {
+    return userData.unReadMessages.filter(item => item.senderId === senderId).length
   }
 
   // const handleButtonClick = () => {
@@ -195,7 +188,7 @@ const MarketplaceChat = () => {
                       userData.recipients.map((item) =>
                         <Link
                           to={`/marketplace/chat/${item.id}`}
-                          className={`flex hover:bg-primary p-5 ${item.id === recipientId ? 'bg-primary' : ''}`}
+                          className={`flex items-center hover:bg-primary p-5 ${item.id === recipientId ? 'bg-primary' : ''}`}
                           key={`recipent-${item.id}`}
                         >
                           <img
@@ -206,6 +199,13 @@ const MarketplaceChat = () => {
                           <span className="text-white">
                             {item.displayName}
                           </span>
+
+                          {
+                            getUnReadMessagesCount(item.id) > 0 &&
+                            <div className="relative ml-2 bg-[#f00] rounded-[50%] w-4 h-4">
+                              <span className="absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 text-white text-[12px]">{getUnReadMessagesCount(item.id)}</span>
+                            </div>
+                          }
                         </Link>
                       )
                     }
@@ -265,26 +265,7 @@ const MarketplaceChat = () => {
                     onChange={onChangeMessageText}
                     onKeyDown={onKeyDown}
                     value={messageText}
-                  // endIcon={
-                  //   <button className="flex justify-center items-center bg-primary-gradient p-1.5 mr-[-10px]">
-                  //     <img src="/assets/icons/icon-upward.svg" />
-                  //   </button>
-                  // }
                   />
-
-                  {/* <button
-              className="hover:bg-primary relative w-full lg:max-w-[300px] hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap"
-              onClick={handleButtonClick}
-            >
-              Add attachment
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                className="hidden"
-              />
-              <img src="/assets/icons/icon-plus.svg" className="ml-2" />
-            </button> */}
                 </div>
               </div>
             </div>

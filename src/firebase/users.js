@@ -30,16 +30,21 @@ const getUserCountByUsernamePrefix = async (prefix) => {
 
 export async function createUserProfile(userId, email) {
     try {
-        const username = generateUsername(email)
-        await setDoc(doc(db, "users", userId), {
-            username: username,
-            role: 'customer',
-            gender: 'man',
-            displayName: username,
-            picture: "https://firebasestorage.googleapis.com/v0/b/card-market-place-a2684.firebasestorage.app/o/images%2Fusers%2Fdefault.png?alt=media&token=3da906c9-a825-4f0b-b47c-ab6d10eefe89",
-            balance: 0,
-            cartList: []
-        });
+        const existing = await checkUserExists(userId)
+
+        if (!existing) {
+            const username = generateUsername(email)
+            await setDoc(doc(db, "users", userId), {
+                username: username,
+                role: 'customer',
+                gender: 'man',
+                displayName: username,
+                picture: "https://firebasestorage.googleapis.com/v0/b/card-market-place-a2684.firebasestorage.app/o/images%2Fusers%2Fdefault.png?alt=media&token=3da906c9-a825-4f0b-b47c-ab6d10eefe89",
+                balance: 0,
+                cartList: [],
+                email: email
+            });
+        }
 
         console.log("User profile created successfully");
     } catch (error) {
@@ -95,16 +100,16 @@ export const updateUserProfile = async (userId, updatedData) => {
 //     }
 // }
 
-export const checkUserExists = async (email) => {
+export const checkUserExists = async (userId) => {
     try {
-        const usersRef = collection(db, "users")
-        const q = query(usersRef, where("email", "==", email))
-        const querySnapshot = await getDocs(q)
+        const userRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(userRef);
 
-        if (!querySnapshot.empty) {
-            return true // User exists
+        if (userSnapshot.exists()) {
+            return true; // User exists
         } else {
-            return false // User does not exist
+            console.log("User does not exist");
+            return false; // User does not exist
         }
     } catch (e) {
         console.error("Error checking user:", e)
@@ -118,7 +123,17 @@ export const getUserData = async (userId) => {
         const userSnapshot = await getDoc(usersRef)
         const userData = userSnapshot.data()
 
-        return userData
+        const messagesRef = collection(db, "messages")
+        const unReadMessages = []
+        const q = query(messagesRef,
+            where("recipientId", "==", userId),
+            where("state", "==", 'unread'))
+        const querySnapshot = await getDocs(q)
+        querySnapshot.forEach((doc) => {
+            unReadMessages.push({ id: doc.id, ...doc.data() })
+        })
+
+        return { ...userData, unReadMessages: unReadMessages }
     } catch (e) {
         console.error("Error getting document: ", e)
     }
