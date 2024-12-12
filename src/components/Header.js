@@ -11,12 +11,15 @@ import { userAtom } from "../store"
 const Header = ({ isLogin = false }) => {
   const [userData, setUserData] = useAtom(userAtom)
   const [loading, setLoading] = useState(true)
-  const { user, logout } = useAuth()
+  const { user, logout, getUpdatedUserData } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const isActive = (path) => location.pathname.includes(path)
   const isExactActive = (path) => location.pathname === path
 
+  // useEffect(() => {
+  //   getUpdatedUserData()
+  // }, [])
 
   const onLogout = () => {
     logout()
@@ -52,6 +55,13 @@ const Header = ({ isLogin = false }) => {
             </div>
             <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/chat/all" className={isActive('/marketplace/chat') && !isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Messages</Link>
+
+              {
+                userData && userData.unReadMessages && userData.unReadMessages.length > 0 &&
+                <div className="relative ml-2 bg-[#f00] rounded-[50%] w-4 h-4">
+                  <span className="absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 text-white text-[12px]">{userData.unReadMessages.length}</span>
+                </div>
+              }
             </div>
             <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-white' : ''}>Sell Cards</Link>
@@ -168,6 +178,7 @@ const Header = ({ isLogin = false }) => {
         </div>
       </div>
     </div>
+
   )
 }
 

@@ -6,7 +6,7 @@ import { useAuth } from "../context/authContext"
 import { toast } from 'react-toastify';
 
 const Login = () => {
-  const { login, loginWithGoogle, resetPassword } = useAuth()
+  const { login, loginWithGoogle, resetPassword, getUpdatedUserData } = useAuth()
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const navigate = useNavigate()
@@ -17,7 +17,9 @@ const Login = () => {
 
       toast.success("Successfully logged in!");
 
-      navigate("/")
+      setTimeout(() => {
+        navigate('/')
+      }, 1500);
     } catch (error) {
       console.log(error.code)
     }

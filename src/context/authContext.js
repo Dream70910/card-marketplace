@@ -74,13 +74,7 @@ export function AuthProvider({ children }) {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      // Check if user exists and create profile if necessary
-      let existing = await checkUserExists(user.email);
-
-      console.log("user existing: ", existing)
-      if (!existing) {
-        await createUserProfile(user.uid, user.email);
-      }
+      createUserProfile(user.uid, user.email);
     } catch (error) {
       console.error("Error during sign-in:", error.code, error.message);
     }
@@ -90,38 +84,49 @@ export function AuthProvider({ children }) {
     sendPasswordResetEmail(auth, email)
   }
 
+  const getUpdatedUserData = () => {
+    getUserData(user.uid).then((data) => {
+      setUserData({ ...data, id: userData.id })
+      localStorage.setItem('userData', JSON.stringify({ ...data, id: userData.id }))
+    })
+  }
+
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
+
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
     }
 
-    if ((!storedUserData && !user) && !window.location.pathname.includes('/login')) {
-      window.location.href = window.location.protocol + '//' + window.location.host + '/login'
-    }
+    // if ((!storedUserData && !user) && !window.location.pathname.includes('/login')) {
+    //   window.location.href = window.location.protocol + '//' + window.location.host + '/login'
+    // }
   }, [window.location.href])
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
-      setLoading(false)
+    setTimeout(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser)
+        setLoading(false)
 
-      if (currentUser) {
-        getUserData(currentUser.uid).then((data) => {
-          setUserData({ ...data, id: currentUser.uid })
-          localStorage.setItem('userData', JSON.stringify({ ...data, id: currentUser.uid }))
-        })
-      } else {
-        // Clear user data from localStorage if no user is signed in
-        localStorage.removeItem('userData')
+        if (currentUser) {
+          setTimeout(() => {
+            getUserData(currentUser.uid).then((data) => {
+              setUserData({ ...data, id: currentUser.uid })
+              localStorage.setItem('userData', JSON.stringify({ ...data, id: currentUser.uid }))
+            })
+          }, 1000);
+        } else {
+          // Clear user data from localStorage if no user is signed in
+          localStorage.removeItem('userData')
+        }
+      })
+
+      return () => {
+        unsubscribe()
       }
-    })
-
-    return () => {
-      unsubscribe()
-    }
+    }, 3000);
   }, [])
-
 
   return (
     <authContext.Provider
@@ -133,6 +138,7 @@ export function AuthProvider({ children }) {
         loading,
         loginWithGoogle,
         resetPassword,
+        getUpdatedUserData
       }}
     >
       {children}

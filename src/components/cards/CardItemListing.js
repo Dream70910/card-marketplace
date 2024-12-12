@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../commons/Button";
 import { Link } from "react-router-dom";
-import { updateCardState } from "../../firebase/listings";
 
 const CardItemListing = ({
   imageSrc,
@@ -25,7 +24,7 @@ const CardItemListing = ({
   const onUpdateState = async (e, newState) => {
     e.stopPropagation()
     e.preventDefault()
-    await updateCardState(id, newState)
+    await updateCard(id, newState, title)
   }
 
   return (
