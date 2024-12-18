@@ -35,7 +35,7 @@ const MarketplaceCreateListing = () => {
 			const catOptions = []
 
 			cats.forEach((cat) => {
-				catOptions.push({ value: cat.id, label: cat.name })
+				catOptions.push({ value: cat.id, label: cat.name.toUpperCase() })
 			})
 
 			if (cats.length > 0)
@@ -84,7 +84,7 @@ const MarketplaceCreateListing = () => {
 	return (
 		<div>
 			<Header isLogin />
-			<div className="container mx-auto px-5  py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
+			<div className="container mx-auto px-5 py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
 				<h1 className="font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[48px]">
 					create Listing
 				</h1>

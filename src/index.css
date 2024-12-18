@@ -546,11 +546,58 @@ input[type='date']::-webkit-calendar-picker-indicator {
 /* Hides the number input spinner in Chrome, Safari, and Edge */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Hides the number input spinner in Firefox */
 input[type=number] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.custom-arrows .slick-prev {
+  left: 0 !important;
+}
+
+.custom-arrows .slick-next {
+  right: 0 !important;
+  width: auto;
+}
+
+.custom-arrows .slick-arrow {
+  z-index: 10;
+  transition: all .25s;
+}
+
+.custom-arrows .slick-arrow:hover {
+  filter: brightness(.85);
+}
+
+.custom-arrows.arrows-center .slick-arrow {
+  opacity: 0;
+}
+
+.custom-arrows.arrows-center:hover .slick-arrow {
+  opacity: 1;
+}
+
+.custom-arrows .slick-arrow::before {
+  content: none;
+}
+
+.custom-arrows.arrows-down .slick-arrow {
+  top: auto;
+  bottom: -80px;
+}
+
+.custom-arrows.arrows-down .slick-prev {
+  left: 0 !important;
+}
+
+.custom-arrows.arrows-down .slick-next {
+  left: 50px !important;
+}
+
+.slick-active+.slick-active {
+  padding-left: 30px;
 }

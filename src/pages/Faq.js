@@ -64,11 +64,10 @@ const Faq = () => {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`relative w-full justify-center text-sm lg:text-base flex items-center p-4 px-6 whitespace-nowrap border-style-decoration after:bottom-[-.5px] right-[-.5px]
-                ${
-                  activeTab === tab
-                    ? "bg-white text-black"
-                    : "text-white hover:bg-white hover:text-[#141414]"
-                }`}
+                ${activeTab === tab
+                      ? "bg-white text-black"
+                      : "text-white hover:bg-white hover:text-[#141414]"
+                    }`}
                 >
                   {tab}
                 </button>

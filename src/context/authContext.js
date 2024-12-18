@@ -85,10 +85,12 @@ export function AuthProvider({ children }) {
   }
 
   const getUpdatedUserData = () => {
-    getUserData(user.uid).then((data) => {
-      setUserData({ ...data, id: user.uid })
-      localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
-    })
+    if (user && user.uid) {
+      getUserData(user.uid).then((data) => {
+        setUserData({ ...data, id: user.uid })
+        localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
+      })
+    }
   }
 
   useEffect(() => {

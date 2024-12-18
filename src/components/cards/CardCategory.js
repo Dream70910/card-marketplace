@@ -13,7 +13,7 @@ const CategoryCard = ({
   descriptionClassName = "",
 }) => (
   <Link
-    className={`w-full h-full min-w-[140px] max-w-[380px] flex flex-col justify-between card-category relative group ${cardClassName}`}
+    className={`w-full h-full flex flex-col justify-between card-category relative group ${cardClassName}`}
     to={`/marketplace/categories?categories=${categoryId}`}
   >
     <button

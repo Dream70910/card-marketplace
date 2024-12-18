@@ -160,7 +160,7 @@ const MarketplaceCategories = () => {
 				onClose={() => setOpenDialog(null)}
 			/>
 			<div className="container mx-auto px-5 text-white relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
-				<div className="flex flex-col lg:flex-row py-24 lg:py-48 gap-16">
+				<div className="flex flex-col lg:flex-row pb-24 lg:pb-48 gap-16">
 					<div className="w-full hidden lg:block lg:max-w-[285px] mt-9">
 						<h4 className="text-xl mb-8">Filter By</h4>
 						<SidebarFilterMarketplaceCategories />
