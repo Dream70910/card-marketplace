@@ -35,8 +35,15 @@ const Register = () => {
   const handleGoogleSignin = async () => {
     try {
       await loginWithGoogle()
-      toast.success("Successfully logged in")
-      navigate("/")
+      toast.success("Successfully logged in!")
+      const intervalId = setInterval(() => {
+        getUpdatedUserData()
+
+        if (userData.balance !== undefined) {
+          navigate('/')
+          clearInterval(intervalId)
+        }
+      }, 1000);
     } catch (error) {
       console.log(error.code)
     }

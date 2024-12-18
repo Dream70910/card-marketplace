@@ -80,6 +80,7 @@ export default function DialogAddCategory({ open, onClose }) {
 										titleClassName="hidden"
 										subtitleClassName="hidden"
 										iconClassName="max-w-[28px] lg:max-w-[28px]"
+										uploadId="category-new-image"
 										editTimes={editTimes}
 									/>
 

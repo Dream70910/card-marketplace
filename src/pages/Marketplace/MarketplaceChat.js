@@ -86,12 +86,13 @@ const MarketplaceChat = () => {
   }, [messages])
 
   useEffect(() => {
-    userData && userData.unReadMessages &&
+    if (userData && userData.unReadMessages) {
       userData.unReadMessages.filter(item => item.senderId === recipientId).forEach(async (msg) => {
         await setMessageRead(msg.id)
       })
 
-    getUpdatedUserData()
+      getUpdatedUserData()
+    }
   }, [loading])
 
   const scrollToBottom = () => {

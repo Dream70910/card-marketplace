@@ -82,7 +82,6 @@ const MarketplaceCategories = () => {
 
 	const updateListings = (items) => {
 		let temp = [...items]
-		console.log("item timestamp is", items[0])
 		temp = temp.filter(item => item.title.includes(searchText) && item.price >= priceRange.min
 			&& item.price <= priceRange.max && getYear(item.created_at) >= yearRange.min && getYear(item.created_at) <= yearRange.max)
 
@@ -99,8 +98,8 @@ const MarketplaceCategories = () => {
 	}
 
 	const options = [
-		{ value: "price-high", label: "Price High" },
 		{ value: "price-low", label: "Price Low" },
+		{ value: "price-high", label: "Price High" },
 	]
 
 	const handleDropdownChange = (event) => {

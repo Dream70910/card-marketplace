@@ -55,10 +55,10 @@ const CardUser = ({
           </span>
           <span className="block text-white text-xs mt-1">{phoneNumber}</span>
         </div>
-        <div>
+        {/* <div>
           <span className="block text-white/60 uppercase text-xs">tickets</span>
           <span className="block text-white text-xs mt-1">{tickets}</span>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center gap-4 mt-5 justify-center w-full">

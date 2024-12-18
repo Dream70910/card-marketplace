@@ -7,7 +7,7 @@ import { userAtom } from "../../store"
 import { useAuth } from "../../context/authContext"
 
 const PaymentSetting = () => {
-  const [activeOption, setActiveOption] = useState("Withdraw")
+  const [activeOption, setActiveOption] = useState("Deposit")
   const [amount, setAmount] = useState(0)
   const [message, setMessage] = useState('')
   const [userData,] = useAtom(userAtom)

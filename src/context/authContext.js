@@ -86,8 +86,8 @@ export function AuthProvider({ children }) {
 
   const getUpdatedUserData = () => {
     getUserData(user.uid).then((data) => {
-      setUserData({ ...data, id: userData.id })
-      localStorage.setItem('userData', JSON.stringify({ ...data, id: userData.id }))
+      setUserData({ ...data, id: user.uid })
+      localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
     })
   }
 
@@ -104,28 +104,26 @@ export function AuthProvider({ children }) {
   }, [window.location.href])
 
   useEffect(() => {
-    setTimeout(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser)
-        setLoading(false)
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+      setLoading(false)
 
-        if (currentUser) {
-          setTimeout(() => {
-            getUserData(currentUser.uid).then((data) => {
-              setUserData({ ...data, id: currentUser.uid })
-              localStorage.setItem('userData', JSON.stringify({ ...data, id: currentUser.uid }))
-            })
-          }, 1000);
-        } else {
-          // Clear user data from localStorage if no user is signed in
-          localStorage.removeItem('userData')
-        }
-      })
-
-      return () => {
-        unsubscribe()
+      if (currentUser) {
+        setTimeout(() => {
+          getUserData(currentUser.uid).then((data) => {
+            setUserData({ ...data, id: currentUser.uid })
+            localStorage.setItem('userData', JSON.stringify({ ...data, id: currentUser.uid }))
+          })
+        }, 1000);
+      } else {
+        // Clear user data from localStorage if no user is signed in
+        localStorage.removeItem('userData')
       }
-    }, 3000);
+    })
+
+    return () => {
+      unsubscribe()
+    }
   }, [])
 
   return (
