@@ -98,9 +98,9 @@ export function AuthProvider({ children }) {
       setUserData(JSON.parse(storedUserData));
     }
 
-    // if ((!storedUserData && !user) && !window.location.pathname.includes('/login')) {
-    //   window.location.href = window.location.protocol + '//' + window.location.host + '/login'
-    // }
+    if ((!storedUserData && !user) && !window.location.pathname.includes('/login')) {
+      window.location.href = window.location.protocol + '//' + window.location.host + '/login'
+    }
   }, [window.location.href])
 
   useEffect(() => {

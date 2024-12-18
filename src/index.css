@@ -542,3 +542,15 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .slick-track {
   margin-left: 0 !important;
 }
+
+/* Hides the number input spinner in Chrome, Safari, and Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hides the number input spinner in Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
