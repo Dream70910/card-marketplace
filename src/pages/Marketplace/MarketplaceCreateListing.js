@@ -223,9 +223,6 @@ const MarketplaceCreateListing = () => {
 						</div>
 
 						<div className="flex mt-auto flex-col lg:flex-row gap-4">
-							<button className="hover:bg-white relative w-full hover:text-[#141414] justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap">
-								Preview
-							</button>
 							<Button isActive divClassName="w-full" onClick={onCreateListing}>
 								Create
 							</Button>

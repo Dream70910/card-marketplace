@@ -4,6 +4,8 @@ import Button from "../components/commons/Button"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext"
 import { toast } from 'react-toastify';
+import { useAtom } from "jotai"
+import { userAtom } from "../store"
 
 const Login = () => {
   const { login, loginWithGoogle, resetPassword, getUpdatedUserData } = useAuth()
@@ -17,9 +19,16 @@ const Login = () => {
 
       toast.success("Successfully logged in!");
 
-      setTimeout(() => {
-        navigate('/')
-      }, 1500);
+      const intervalId = setInterval(async () => {
+        await getUpdatedUserData()
+        const storedUserData = localStorage.getItem('userData')
+        const data = JSON.parse(storedUserData)
+
+        if (data && data.balance !== undefined) {
+          navigate('/')
+          clearInterval(intervalId)
+        }
+      }, 2000);
     } catch (error) {
       console.log(error.code)
     }

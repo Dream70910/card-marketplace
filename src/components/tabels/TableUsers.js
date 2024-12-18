@@ -22,7 +22,6 @@ const TableUsers = () => {
           Users
         </h4>
         <div className="px-8 pb-1 hidden lg:block">
-
           <table
             className="border-separate w-full mt-[-15px]"
             style={{ borderSpacing: "0 15px" }}

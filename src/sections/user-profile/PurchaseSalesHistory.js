@@ -67,30 +67,34 @@ const PurchaseSalesHistory = () => {
 
 const CartList = () => {
   const [userData, setUserAtom] = useAtom(userAtom)
+  const { getUpdatedUserData } = useAuth()
 
   const removeItemFromCart = async (card) => {
-    const oldCart = userData.cartList.reduce((acc, cur) => {
-      if (cur.id !== card.id) acc.push(cur)
-      return acc
-    }, [])
+    // const oldCart = userData.cartList.reduce((acc, cur) => {
+    //   if (cur.id !== card.id) acc.push(cur)
+    //   return acc
+    // }, [])
 
-    const newData = { ...userData, cartList: oldCart }
-    setUserAtom(newData)
+    // const newData = { ...userData, cartList: oldCart }
+    // setUserAtom(newData)
 
     await removeFromCart(userData.id, card.id)
+    await getUpdatedUserData()
 
     return true
   }
 
   const buyCart = async (card) => {
     await removeFromCart(userData.id, card.id)
-    const oldCart = userData.cartList.reduce((acc, cur) => {
-      if (cur.id !== card.id) acc.push(cur)
-      return acc
-    }, [])
 
-    const newData = { ...userData, cartList: oldCart, balance: userData.balance - card.price }
-    setUserAtom(newData)
+    await getUpdatedUserData()
+    // const oldCart = userData.cartList.reduce((acc, cur) => {
+    //   if (cur.id !== card.id) acc.push(cur)
+    //   return acc
+    // }, [])
+
+    // const newData = { ...userData, cartList: oldCart, balance: userData.balance - card.price }
+    // setUserAtom(newData)
 
     return true
   }

@@ -26,7 +26,7 @@ const CardItem = ({
   cardId = ""
 }) => {
   const [isInCart, setIsInCart] = useState(false)
-  const { user } = useAuth()
+  const { getUpdatedUserData } = useAuth()
   const [userData, setUserData] = useAtom(userAtom)
 
   useEffect(() => {
@@ -43,11 +43,12 @@ const CardItem = ({
 
     const cartedItem = { title: title, price: price, picture: imageSrc, sellerId: sellerId, sellerUserName: sellerUserName, id: cardId }
 
-    const newData = { ...userData, cartList: [...userData.cartList, cartedItem] }
-    setUserData(newData)
+    // const newData = { ...userData, cartList: [...userData.cartList, cartedItem] }
+    // setUserData(newData)
     setIsInCart(true)
 
-    await addToCart(user.uid, cartedItem)
+    await addToCart(userData.id, cartedItem)
+    getUpdatedUserData()
     toast.success(`${title} was successfully added to cart !`)
   }
 

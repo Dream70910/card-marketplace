@@ -12,7 +12,7 @@ import { userAtom } from "../../store"
 
 const PersonalInformation = () => {
   const [openDialog, setOpenDialog] = useState(null)
-  const { user } = useAuth()
+  const { user, getUpdatedUserData } = useAuth()
   const [initialData, setUserInitialData] = useState()
   const [loading, setLoading] = useState(true)
   const [, setUserData] = useAtom(userAtom)
@@ -40,11 +40,7 @@ const PersonalInformation = () => {
   const onSubmitUserProfile = async () => {
     updateUserProfile(user.uid, userData)
 
-    await getUserData(user.uid).then((data) => {
-      setUserData({ ...data, id: user.uid })
-      localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
-    })
-
+    getUpdatedUserData()
     toast.success("User data successfully updated !")
   }
 

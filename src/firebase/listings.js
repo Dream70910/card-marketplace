@@ -384,7 +384,7 @@ export const cancelBuyListing = async (card) => {
         const listingData = listingSnapshot.data()
 
         const newUserData = { ...userData, balance: userData.balance + card.price }
-        await updateDoc(listingsRef, { ...listingData, state: "active", buyer: null })
+        await updateDoc(listingsRef, { ...listingData, state: "market", buyer: null })
         await updateDoc(usersRef, newUserData)
     } catch (e) {
         console.error("Error getting document: ", e)

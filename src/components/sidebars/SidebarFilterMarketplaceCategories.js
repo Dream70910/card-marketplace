@@ -219,7 +219,7 @@ const SidebarFilterMarketplaceCategories = ({ className }) => {
 
 					<div className="mt-8 mb-4 mx-2">
 						<InputRange
-							maxValue={2000}
+							maxValue={10000}
 							minValue={0}
 							formatLabel={v => `$ ${v}`}
 							step={10}
