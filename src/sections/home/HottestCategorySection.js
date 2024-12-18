@@ -1,7 +1,7 @@
 import React from "react"
 import CategoryCard from "../../components/cards/CardCategory"
 import Slider from "react-slick"
-import { homeSliderSettings } from "../../utils/data"
+import { homeCategorySliderSettings } from "../../utils/data"
 
 const HottestCategorySection = ({ categories }) => {
   return (
@@ -20,7 +20,7 @@ const HottestCategorySection = ({ categories }) => {
 
       <Slider
         className="mt-8 flex items-stretch dots-top"
-        {...homeSliderSettings}
+        {...homeCategorySliderSettings}
       >
         {
           categories.map(item =>

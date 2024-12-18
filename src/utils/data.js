@@ -77,3 +77,37 @@ export const homeSliderSettings = {
         }
     ]
 }
+
+export const homeCategorySliderSettings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3.5,
+    slidesToScroll: 1,
+    arrows: false,
+    customPaging: function (i) {
+        return (
+            <div className="slick-dot w-[8px] lg:w-[10px] h-[8px] lg:h-[10px] cursor-pointer bg-white/30 backdrop-blur-sm"></div>
+        );
+    },
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 360,
+            settings: {
+                slidesToShow: 1
+            }
+        }
+    ]
+}
