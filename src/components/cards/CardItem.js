@@ -79,7 +79,7 @@ const CardItem = ({
               {title} {quantity}
             </h4>
             <span
-              className={`text-[10px] lg:text-base text-primary uppercase font-aero ${priceClassName}`}
+              className={`text-[10px] lg:text-base text-primary uppercase font-aeonik font-bold text-nowrap ${priceClassName}`}
             >
               {
                 typeof price === 'number' ?

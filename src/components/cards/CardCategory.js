@@ -14,7 +14,8 @@ const CategoryCard = ({
 }) => (
   <Link
     className={`w-full h-full flex flex-col justify-between card-category relative group ${cardClassName}`}
-    to={`/marketplace/categories?categories=${categoryId}`}
+    // to={`/marketplace/categories?categories=${categoryId}`}
+    to={`/marketplace/categories`}
   >
     <button
       className={`absolute top-0 right-0 bg-white p-2 lg:p-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition ${buttonClassName}`}

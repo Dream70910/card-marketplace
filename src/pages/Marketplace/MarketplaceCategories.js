@@ -159,14 +159,14 @@ const MarketplaceCategories = () => {
 				open={openDialog === "filter"}
 				onClose={() => setOpenDialog(null)}
 			/>
-			<div className="container mx-auto px-5 text-white relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
+			<div className="container mx-auto px-5 pt-36 text-white relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
 				<div className="flex flex-col lg:flex-row pb-24 lg:pb-48 gap-16">
 					<div className="w-full hidden lg:block lg:max-w-[285px] mt-9">
 						<h4 className="text-xl mb-8">Filter By</h4>
 						<SidebarFilterMarketplaceCategories />
 					</div>
 					<div className="w-full">
-						<div className="flex flex-col lg:flex-row items-center justify-between">
+						{/* <div className="flex flex-col lg:flex-row items-center justify-between">
 							{
 								categories.length > 0 &&
 								<div className="flex items-center gap-2 mt-5 lg:mt-0 lg:gap-4 overflow-x-auto w-full no-scrollbar">
@@ -240,7 +240,7 @@ const MarketplaceCategories = () => {
 									className="w-full lg:max-w-[285px]"
 								/>
 							</div>
-						</div>
+						</div> */}
 
 						{
 							listings.length > 0 ?
