@@ -178,8 +178,8 @@ const MarketplaceCategories = () => {
 				open={openDialog === "filter"}
 				onClose={() => setOpenDialog(null)}
 			/>
-			<div className="container mx-auto px-5 pt-36 text-white relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
-				<div className="flex flex-col lg:flex-row pb-24 lg:pb-48 gap-16">
+			<div className="container mx-auto px-5 pt-32 text-white relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
+				<div className="flex flex-col lg:flex-row pb-24 lg:pb-48 lg:gap-16">
 					<div className="w-full hidden lg:block lg:max-w-[285px] mt-9">
 						<div className="relative mb-8">
 							<input
@@ -347,7 +347,7 @@ const MarketplaceCategories = () => {
 
 						{
 							listings.length > 0 ?
-								<div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6 mt-8">
+								<div className="grid grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mt-8">
 									{
 										listings.slice(0, itemsToShow).map((item) =>
 											<CardItem
