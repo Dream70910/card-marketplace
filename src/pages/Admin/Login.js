@@ -32,7 +32,7 @@ const AdminLogin = () => {
                   <TextInput
                     placeholder="Enter password"
                     inputClassName="placeholder:text-white/60"
-                    type="password"
+                    defaultType="password"
                     endIcon={<img src="/assets/icons/icon-eye-slash.svg" />}
                   />
                 </label>

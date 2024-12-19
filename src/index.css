@@ -644,3 +644,13 @@ input[type=number] {
   width: 1px;
   background-color: white;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: block;
+  margin-top: -5px;
+  background: url('../public/assets/icons/icon-date.svg') no-repeat;
+  cursor: pointer;
+  /*width: 20px;
+  height: 20px;
+  border-width: thin; */
+}

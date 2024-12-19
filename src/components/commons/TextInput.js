@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const TextInput = ({
   divClassName = "",
@@ -11,6 +11,7 @@ const TextInput = ({
 }) => {
   const [type, setType] = useState(props.type)
   const [value, setValue] = useState(null)
+  const calendarRef = useRef(null)
 
   useEffect(() => {
     if (props.onChange) {
@@ -34,9 +35,18 @@ const TextInput = ({
       setType('password')
   }
 
+  const openCalendar = () => {
+    calendarRef.current.focus()
+
+    setTimeout(() => {
+      calendarRef.current.click()
+    }, 100);
+  }
+
   return (
     <div
       className={`border-style-decoration w-full flex items-center ${divClassName}`}
+
     >
       {startIcon && <button className="ml-6">{startIcon}</button>}
       <input
@@ -45,9 +55,16 @@ const TextInput = ({
         {...props}
         type={type}
         onChange={(e) => setValue(e.currentTarget.value)}
+        ref={calendarRef}
       />
-      {endIcon && <button className="mr-6" onClick={toggleType}>{endIcon}</button>}
-    </div>
+      {endIcon ?
+        type === 'date' ?
+          <button className="mr-6" onClick={openCalendar}>{endIcon}</button>
+          :
+          < button className="mr-6" onClick={toggleType}>{endIcon}</button>
+        : ""
+      }
+    </div >
   )
 };
 

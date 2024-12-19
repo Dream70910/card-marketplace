@@ -120,6 +120,8 @@ const PersonalInformation = () => {
           />
         </label>
       </div>
+
+
       <div className="flex flex-col lg:flex-row gap-5 w-full mt-5 lg:mt-8">
         <label className="w-full  text-white">
           <span className="text-base lg:text-xl mb-3 block">Email</span>
