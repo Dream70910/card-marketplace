@@ -8,12 +8,16 @@ const TableUsers = () => {
   const [loading, setLoading] = useState(true)
   const [activeUser, setActiveUser] = useState(null)
   const [listingsCount, setListingsCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const itemsPerPage = 10
 
   useEffect(() => {
     getAllUserData().then(data => {
       setUsers(data)
       setLoading(false)
       setActiveUser(data[0])
+      setTotalPages(Math.ceil(data.length / itemsPerPage))
     })
   }, [])
 
@@ -79,7 +83,7 @@ const TableUsers = () => {
             </thead>
             <tbody>
               {
-                users.map((user) =>
+                users.slice(itemsPerPage * (currentPage - 1), itemsPerPage * currentPage).map((user) =>
                   <tr
                     className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-base border-style-decoration"
                     key={user.username}
@@ -124,10 +128,30 @@ const TableUsers = () => {
               }
             </tbody>
           </table>
+
+          <div className="flex justify-between mb-3">
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="self-center text-white">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
         <div className="p-5 space-y-4 lg:hidden">
           {
-            users.map((user) =>
+            users.slice(itemsPerPage * (currentPage - 1), itemsPerPage * currentPage).map((user) =>
               <CardUser
                 username={user.username}
                 role={user.role}
