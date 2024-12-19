@@ -49,7 +49,7 @@ const DropdownMenu = () => {
         <div className="flex flex-col container mx-auto px-8">
           <div className="relative my-8  rounded-[4px] border-[rgba(255,255,255,.4)] border-[1px]">
             <input
-              className="px-4 py-4 bg-transparent w-full text-primary"
+              className="px-4 py-4 bg-transparent w-full text-primary placeholder-primary"
               placeholder="SEARCH"
               onChange={(e) => setSearchText(e.currentTarget.value)}
               onKeyDown={onChangeSearch}
@@ -57,9 +57,9 @@ const DropdownMenu = () => {
             </input>
 
             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-[50%] -translate-y-1/2 right-4">
-              <g clip-path="url(#clip0_772_1360)">
-                <path d="M11.0109 19.2326C15.3457 19.2326 18.8598 15.7186 18.8598 11.3838C18.8598 7.04902 15.3457 3.53497 11.0109 3.53497C6.67615 3.53497 3.16211 7.04902 3.16211 11.3838C3.16211 15.7186 6.67615 19.2326 11.0109 19.2326Z" stroke="white" stroke-width="2.09302" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M16.5615 16.9337L21.9998 22.3719" stroke="white" stroke-width="2.09302" stroke-linecap="round" stroke-linejoin="round" />
+              <g clipPath="url(#clip0_772_1360)">
+                <path d="M11.0109 19.2326C15.3457 19.2326 18.8598 15.7186 18.8598 11.3838C18.8598 7.04902 15.3457 3.53497 11.0109 3.53497C6.67615 3.53497 3.16211 7.04902 3.16211 11.3838C3.16211 15.7186 6.67615 19.2326 11.0109 19.2326Z" stroke="white" strokeWidth="2.09302" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M16.5615 16.9337L21.9998 22.3719" stroke="white" strokeWidth="2.09302" strokeLinecap="round" strokeLinejoin="round" />
               </g>
               <defs>
                 <clipPath id="clip0_772_1360">

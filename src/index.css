@@ -607,8 +607,25 @@ input[type=number] {
 }
 
 .gradient-border {
-  border-width: 1px;
+  border-top-width: 1px;
   /* Adjust the border width as needed */
   border-style: solid;
-  border-image: linear-gradient(90deg, #3B77F4, #3B77F400) 1;
+  border-image: linear-gradient(180deg, #3B77F4, #3B77F400) 1;
+}
+
+.input-range__track.input-range__track--active,
+.input-range__slider {
+  background-color: #B1CCFF !important;
+  border-color: #B1CCFF !important;
+}
+
+.input-range__slider {
+  width: 10px !important;
+  height: 10px !important;
+  margin-top: -6px !important;
+}
+
+.input-range__track {
+  height: 2px !important;
+  background: linear-gradient(180deg, #3B77F4, #3B77F400) !important;
 }
