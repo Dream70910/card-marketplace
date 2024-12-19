@@ -88,7 +88,7 @@ const MostPopularSection = ({ cards }) => {
                 sellerId={item.seller}
                 cardId={item.id}
                 key={`popular-card-${item.id}`}
-                isRare
+                rarity={item.rarity}
               />
             </div>
           )

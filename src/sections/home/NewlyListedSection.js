@@ -53,6 +53,7 @@ const NewlyListedSection = ({ categories, cards }) => {
                 cardId={item.id}
                 key={`new-card-${item.id}`}
                 isRare
+                rarity={item.rarity}
               />
             </div>
           )

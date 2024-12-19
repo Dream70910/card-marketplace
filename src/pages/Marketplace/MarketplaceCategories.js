@@ -356,6 +356,7 @@ const MarketplaceCategories = () => {
 												price={item.price}
 												description={item.description}
 												cardId={item.id}
+												rarity={item.rarity}
 												sellerId={item.sellerId}
 												sellerName={item.sellerName}
 												buttonText="Add to cart"

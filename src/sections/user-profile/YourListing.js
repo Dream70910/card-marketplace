@@ -46,10 +46,10 @@ const YourListing = () => {
             localCards.map(item =>
               <CardItemListing
                 imageSrc={item.pictures[0]}
+                rarity={item.rarity}
                 title={item.title}
                 price={`$ ${item.price.toFixed(2)}`}
                 description={item.description}
-                rarity={item.rarity}
                 buttonText="View Product"
                 id={item.id}
                 key={`your-listing-${updatedTime}-${item.id}`}
@@ -70,6 +70,7 @@ const YourListing = () => {
           marketCards.length > 0 ?
             marketCards.map(item =>
               <CardItemListing
+                rarity={item.rarity}
                 imageSrc={item.pictures[0]}
                 title={item.title}
                 price={`$ ${item.price.toFixed(2)}`}
