@@ -559,6 +559,14 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.slick-slide {
+  padding: 0 15px;
+}
+
+.slick-list {
+  margin: 0 -15px !important;
+}
+
 .custom-arrows .slick-prev {
   left: 0 !important;
 }
@@ -602,9 +610,9 @@ input[type=number] {
   left: 50px !important;
 }
 
-.slick-active+.slick-active {
+/* .slick-active+.slick-active {
   padding-left: 30px;
-}
+} */
 
 .gradient-border {
   border-top-width: 1px;

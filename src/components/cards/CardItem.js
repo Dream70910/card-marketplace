@@ -93,21 +93,32 @@ const CardItem = ({
             {description}
           </p>
         </div>
-
         {
-          !isInCart ?
-            <Button
-              divClassName={`text-sm lg:text-base ${buttonClassName}`}
-              onClick={handleAddtoCart}
-            >
-              Add to Cart
-            </Button>
-            :
-            <Button
-              divClassName={`text-sm lg:text-base ${buttonClassName}`}
-            >
-              Go to Detail
-            </Button>
+          userData ?
+            <>
+              {
+                !isInCart ?
+                  <Button
+                    divClassName={`text-sm lg:text-base ${buttonClassName}`}
+                    onClick={handleAddtoCart}
+                  >
+                    Add to Cart
+                  </Button>
+                  :
+                  <Button
+                    divClassName={`text-sm lg:text-base ${buttonClassName}`}
+                  >
+                    Go to Detail
+                  </Button>
+              }
+            </> :
+            <Link to="/login">
+              <Button
+                divClassName={`text-sm lg:text-base ${buttonClassName}`}
+              >
+                Login
+              </Button>
+            </Link>
         }
       </div>
     </Link>

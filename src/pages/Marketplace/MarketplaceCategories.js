@@ -38,48 +38,48 @@ const MarketplaceCategories = () => {
 		const selectedRarities = queries.get('rarities') ? queries.get('rarities').split(',') : []
 		const selectedBrandValues = queries.get('brands') ? queries.get('brands').split(',') : []
 		const selectedConditionValues = queries.get('conditions') ? queries.get('conditions').split(',') : []
+		const userId = userData && userData.id ? userData.id : null
 
-		if (userData && userData.id) {
-			getAllCategories().then((items) => {
-				const temp = items.filter((item) => selectedCategories.includes(item.id))
-				setCategories(temp)
+		// if (userData && userData.id) {
+		getAllCategories().then((items) => {
+			const temp = items.filter((item) => selectedCategories.includes(item.id))
+			setCategories(temp)
 
-				// const temp1 = brands.filter((item) => selectedBrands.includes(item.value))
-				// setSelectedBrands(temp1)
+			// const temp1 = brands.filter((item) => selectedBrands.includes(item.value))
+			// setSelectedBrands(temp1)
 
-				// const temp2 = conditions.filter((item) => selectedConditionValues.includes(item.value))
-				// setSelectedConditions(temp2)
+			// const temp2 = conditions.filter((item) => selectedConditionValues.includes(item.value))
+			// setSelectedConditions(temp2)
+		})
+
+		if (selectedCategories.length > 0) {
+			getListingsByCategories(selectedCategories, userId).then((items) => {
+				updateListings(items)
 			})
-
-			if (selectedCategories.length > 0) {
-				getListingsByCategories(selectedCategories, userData.id).then((items) => {
-					updateListings(items)
-				})
-			}
-
-			if (selectedRarities.length > 0) {
-				getListingsByRarities(selectedRarities, userData.id).then((items) => {
-					updateListings(items)
-				})
-			}
-
-			if (selectedBrandValues.length > 0) {
-				getListingsByBrands(selectedBrandValues, userData.id).then((items) => {
-					updateListings(items)
-				})
-			}
-
-			if (selectedConditionValues.length > 0) {
-				getListingsByConditions(selectedConditionValues, userData.id).then((items) => {
-					updateListings(items)
-				})
-			}
-
-			if (selectedCategories.length === 0 && selectedBrandValues.length === 0 && selectedConditionValues.length === 0 && selectedRarities.length === 0)
-				getAllListings(userData.id).then((items) => {
-					updateListings(items)
-				})
 		}
+
+		if (selectedRarities.length > 0) {
+			getListingsByRarities(selectedRarities, userId).then((items) => {
+				updateListings(items)
+			})
+		}
+
+		if (selectedBrandValues.length > 0) {
+			getListingsByBrands(selectedBrandValues, userId).then((items) => {
+				updateListings(items)
+			})
+		}
+
+		if (selectedConditionValues.length > 0) {
+			getListingsByConditions(selectedConditionValues, userId).then((items) => {
+				updateListings(items)
+			})
+		}
+
+		if (selectedCategories.length === 0 && selectedBrandValues.length === 0 && selectedConditionValues.length === 0 && selectedRarities.length === 0)
+			getAllListings(userId).then((items) => {
+				updateListings(items)
+			})
 	}, [queries, userData])
 
 

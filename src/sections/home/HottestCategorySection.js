@@ -7,7 +7,7 @@ const HottestCategorySection = ({ categories }) => {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3.5,
+    slidesToShow: 4,
     prevArrow:
       <div>
         <button className="flex justify-center items-center pl-4 pr-5 py-3 bg-[#1AB6F9] border-[1px]">
