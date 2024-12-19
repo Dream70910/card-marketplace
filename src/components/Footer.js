@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div>
       <div
-        className="container p-4 mx-auto flex flex-col items-center justify-between text-white relative after:content-[''] after:w-[360px] after:left-[100%] after:h-[360px] after:bottom-[100%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]"
+        className="container p-4 max-lg:mt-16 mx-auto flex flex-col items-center justify-between text-white relative after:content-[''] after:w-[360px] after:left-[100%] after:h-[360px] after:bottom-[100%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]"
         style={{
           background: "url('/assets/backgrounds/footer_background.png')",
           backgroundSize: "100% 100%",
