@@ -466,6 +466,15 @@ export const acceptOnBuyerSide = async (card) => {
         await updateDoc(listingsRef, { ...listingData, state: "local", buyer: null, seller: card.buyer })
         await updateDoc(sellerRef, newSellerData)
 
+        const buyerRef = doc(db, "users", card.buyer)
+        const buyerSnapshot = await getDoc(buyerRef)
+        const buyerData = buyerSnapshot.data()
+        const purchases = buyerData.purchases ? buyerData.purchases + 1 : 1
+
+        const newBuyerData = { ...buyerData, purchases }
+        await updateDoc(buyerRef, newBuyerData)
+
+
         const usersCollection = collection(db, "users");
         const q = query(usersCollection, where("role", "==", 'admin'));
         const querySnapshot = await getDocs(q);

@@ -76,7 +76,7 @@ const MarketplaceItemDetails = () => {
   }
 
   const handleAddtoCart = async (item) => {
-    const cartedItem = { title: item.title, price: item.price, picture: item.imageSrc, sellerId: item.sellerId, sellerUserName: item.sellerUserName, id: item.id }
+    const cartedItem = { title: item.title, price: item.price, picture: item.pictures[0], sellerId: item.sellerId, sellerUserName: item.sellerUserName, id: item.id }
     await addToCart(userData.id, cartedItem)
 
     toast.success(`${item.title} was successfully added to cart !`)

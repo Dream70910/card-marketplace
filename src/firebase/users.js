@@ -129,11 +129,14 @@ export const getUserData = async (userId) => {
             where("recipientId", "==", userId),
             where("state", "==", 'unread'))
         const querySnapshot = await getDocs(q)
+
+        const purchases = userData.purchases ? userData.purchases : 0
+
         querySnapshot.forEach((doc) => {
             unReadMessages.push({ id: doc.id, ...doc.data() })
         })
 
-        return { ...userData, unReadMessages: unReadMessages }
+        return { ...userData, unReadMessages: unReadMessages, purchases }
     } catch (e) {
         console.error("Error getting document: ", e)
     }
