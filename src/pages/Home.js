@@ -50,12 +50,12 @@ const Home = () => {
           <>
             <HeroSection />
 
-            <div className="pt-20 max-lg:pb-20 lg:pt-64 ">
+            <div className="pt-20 max-lg:pb-20 lg:pt-40 ">
               <HottestCategorySection categories={categories} />
               <ProductQuestionSection />
               <NewlyListedSection categories={categories} cards={cards} />
               <KeyFeaturesSection />
-              <MostPopularSection cards={cards} />
+              {/* <MostPopularSection cards={cards} /> */}
             </div>
           </>
       }

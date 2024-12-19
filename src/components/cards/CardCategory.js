@@ -10,10 +10,12 @@ const CategoryCard = ({
   cardClassName = "",
   buttonClassName = "",
   titleClassName = "",
+  background = "",
   descriptionClassName = "",
 }) => (
   <Link
-    className={`w-full h-full flex flex-col justify-between card-category relative group ${cardClassName}`}
+    className={`w-full h-full flex flex-col justify-between card-category relative group`}
+    style={{ background: background }}
     // to={`/marketplace/categories?categories=${categoryId}`}
     to={`/marketplace/categories`}
   >
@@ -26,23 +28,26 @@ const CategoryCard = ({
         className="max-w-[12px] max-h-[12px] lg:max-w-[unset] lg:max-h-[unset]"
       />
     </button>
-    <div className="p-4 py-6 pb-0 lg:p-6  mb-0 lg:mb-5">
+    <div className="p-4 py-6 pb-0 lg:p-6  mb-0">
       <h4
-        className={`font-aero uppercase text-base lg:text-[32px] text-white leading-[1.2] mb-3 ${titleClassName}`}
+        className={`font-aero uppercase text-base lg:text-[32px] text-white leading-[1.2] ${titleClassName}`}
       >
         {title}
       </h4>
-      <p
+      {/* <p
         className={`text-[8px] lg:text-base text-white ${descriptionClassName}`}
       >
         {description}
-      </p>
+      </p> */}
     </div>
-    <img
-      src={imageSrc || "/assets/decorations/category_default.png"}
-      alt={title}
-      className="max-h-[335px] object-cover w-full"
-    />
+
+    <div className="relative pt-[100%]">
+      <img
+        src={imageSrc || "/assets/decorations/category_default.png"}
+        alt={title}
+        className="absolute top-0 w-full h-full object-cover"
+      />
+    </div>
   </Link>
 );
 

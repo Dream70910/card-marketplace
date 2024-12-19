@@ -44,7 +44,7 @@ const Header = ({ isLogin = false }) => {
     // <div className={`top-0 w-full z-[1000] ${isFixed ? 'fixed bg-slate-800' : 'relative'}`}>
     //   <div className="relative after:content-[''] w-full after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">
     <>
-      <div className={`px-4 py-4 w-full z-[100] h-fit  fixed bg-black left-0 top-0`}>
+      <div className={`px-4 py-4 w-full z-[100] h-fit  fixed border-b-[1px] border-white bg-black left-0 top-0`}>
         <div className="flex px-4 container mx-auto items-center justify-between w-full">
           <div className="flex items-center lg:hidden  gap-6">
             <DropdownMenu />
@@ -93,12 +93,12 @@ const Header = ({ isLogin = false }) => {
 
             <div className="splitter xl:mx-9 mx-7 h-5 max-lg:hidden" />
 
-            <div className="hidden lg:flex gap-[2rem] text-[1.1rem] uppercase  text-white ">
+            <div className="hidden lg:flex gap-[2rem] text-[1rem] uppercase  text-white ">
               <div className="flex items-center text-[#484F52]">
                 <Link to="/" className={isExactActive('/') ? 'text-white' : ''}>Home</Link>
               </div>
               <div className="flex items-center text-[#484F52]">
-                <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Categories</Link>
+                <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Find cards</Link>
               </div>
               {/* <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/chat/all" className={isActive('/marketplace/chat') && !isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Messages</Link>
@@ -113,16 +113,13 @@ const Header = ({ isLogin = false }) => {
               <div className="flex items-center text-[#484F52]">
                 <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-white' : ''}>Sell Cards</Link>
               </div>
-              <div className="flex items-center  text-[#484F52] max-xl:hidden">
-                <Link to="/faqs" className={isActive('/faqs') ? 'text-white' : ''}>FAQ</Link>
-              </div>
               {
                 userData && userData.role === 'admin' ?
                   <div className="flex items-center  text-[#484F52]">
                     <Link to="/admin" className={isActive('/admin') ? 'text-white' : ''}>Admin</Link>
                   </div> :
                   <div className="flex items-center text-[#484F52]">
-                    <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Contact</Link>
+                    <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Support</Link>
                   </div>
               }
             </div>
@@ -135,14 +132,14 @@ const Header = ({ isLogin = false }) => {
             </button> */}
             {!userData || !userData.cartList ?
               <Link to="/login">
-                <Button isActive divClassName="hidden lg:block">
+                <button className="flex items-center text-white">
                   <img
                     src={"/assets/icons/icon-person.svg"}
                     alt="icon"
                     className="mr-2"
                   />{" "}
-                  Login
-                </Button>
+                  LOGIN
+                </button>
               </Link>
               :
               <>
