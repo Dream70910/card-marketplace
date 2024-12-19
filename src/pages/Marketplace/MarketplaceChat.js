@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import TextInput from "../../components/commons/TextInput"
-import { Link, useParams } from "react-router-dom"
+import { useLocation, Link, useNavigate, useParams } from "react-router-dom"
 import { useAtom } from "jotai"
 import { userAtom } from "../../store"
 import { addRecipient, getUserData } from "../../firebase/users"
@@ -22,6 +22,11 @@ const MarketplaceChat = () => {
   const [sentMessages, setSentMessages] = useState([])
   const [receivedMessages, setReceivedMessages] = useState([])
   const [messageText, setMessageText] = useState('')
+  const [recipients, setRecipients] = useState([])
+  const [showRooms, setShowRooms] = useState(false)
+  const navigate = useNavigate()
+  const queries = new URLSearchParams(useLocation().search)
+  const backSteps = queries.get('back') ? parseInt(queries.get('back')) : 1
 
   useEffect(() => {
     let newMsgs = [...sentMessages, ...receivedMessages]
@@ -47,6 +52,24 @@ const MarketplaceChat = () => {
   useEffect(() => {
     if (userData && userData.id) {
       setMessages([])
+
+
+      if (recipientId === 'all') {
+        if (userData.recipients && userData.recipients[0]) {
+          navigate(`/marketplace/chat/${userData.recipients[0].id}?back=3`)
+        }
+      }
+
+      let temp = userData.recipients ? [...userData.recipients] : []
+      if (temp.findIndex(item => item.id === recipientId) === -1) {
+        getUserData(recipientId).then((data) => {
+          temp = userData.recipients ? [{ displayName: data.displayName, id: recipientId, picture: data.picture }, ...userData.recipients] :
+            [{ displayName: data.displayName, id: recipientId, picture: data.picture }]
+          setRecipients(temp)
+        })
+      } else {
+        setRecipients(temp)
+      }
 
       const q1 = query(
         collection(db, "messages"),
@@ -94,6 +117,10 @@ const MarketplaceChat = () => {
       getUpdatedUserData()
     }
   }, [loading])
+
+  const goBack = () => {
+    navigate(-1 * backSteps)
+  }
 
   const scrollToBottom = () => {
     const element = document.querySelector("#product-ask-section")
@@ -179,9 +206,9 @@ const MarketplaceChat = () => {
                 </g>
               </svg>
 
-              <Link to="/marketplace/chat/all" className="text-white">
+              <button onClick={goBack} className="text-white">
                 Go Back
-              </Link>
+              </button>
             </div>
 
             <div className="flex items-center justify-between">
@@ -189,21 +216,29 @@ const MarketplaceChat = () => {
                 Chat
               </h1>
 
-              <Link to="/user-profile">
+              <Link to="/user-profile" className="hidden md:block">
                 <button
                   className={`relative w-full max-w-[168px] lg:max-w-[214px] justify-center text-sm lg:text-base flex items-center p-4 px-6 whitespace-nowrap border-style-decoration after:bottom-[-.5px] right-[-.5px] text-white hover:bg-white hover:text-[#141414]`}
                 >
                   View Profile
                 </button>
               </Link>
+
+              <button
+                className={`md:hidden relative w-full max-w-[168px] lg:max-w-[214px] justify-center text-sm lg:text-base flex items-center p-4 px-6 whitespace-nowrap border-style-decoration after:bottom-[-.5px] right-[-.5px] text-white hover:bg-white hover:text-[#141414]`}
+                onClick={() => setShowRooms(!showRooms)}
+              >
+                Rooms
+              </button>
             </div>
 
-            <div className="flex mt-10 lg:mt-16">
+
+            <div className="md:flex mt-10 lg:mt-16">
               {
-                userData.recipients && userData.recipients.length > 0 ?
-                  <div className="mr-10 border-default min-w-[250px]">
+                recipients && recipients.length > 0 ?
+                  <div className="max-md:mb-5 md:mr-10 min-w-[250px] border-style-decoration max-md:!max-h-[30rem] max-md:!h-auto !h-[790px] nice-scrollbar">
                     {
-                      userData.recipients.map((item) =>
+                      recipients.map((item) =>
                         <Link
                           to={`/marketplace/chat/${item.id}`}
                           className={`flex items-center hover:bg-[#1AB6F950] p-5 ${item.id === recipientId ? 'bg-[#1AB6F950]' : ''}`}
@@ -348,6 +383,7 @@ const MarketplaceChat = () => {
                     onChange={onChangeMessageText}
                     onKeyDown={onKeyDown}
                     value={messageText}
+                    disabled={recipientId === 'all'}
                   />
                 </div>
               </div>
