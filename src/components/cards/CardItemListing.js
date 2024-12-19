@@ -18,6 +18,7 @@ const CardItemListing = ({
   onButtonClick,
   isRare = false,
   state = 'local',
+  rarity = "",
   updateCard,
   id = ""
 }) => {
@@ -37,11 +38,14 @@ const CardItemListing = ({
           alt={title}
           className={`border-style-decoration w-full object-cover max-h-[250px] ${imageClassName}`}
         />
-        {isRare && (
+        {/* {isRare && (
           <span className="text-white p-2 px-4 bg-primary-gradient absolute top-2 right-2  font-aero uppercase text-[8px] lg:text-xs">
             Rare find
           </span>
-        )}
+        )} */}
+        <span className="text-white p-2 px-4 bg-primary-gradient absolute top-2 right-2  font-aero uppercase text-[8px] lg:text-xs">
+          {rarity}
+        </span>
       </div>
 
       <div className="mt-4 flex flex-col justify-between h-full gap-6">
@@ -53,7 +57,7 @@ const CardItemListing = ({
               {title} {quantity}
             </h4>
             <span
-              className={`text-[10px] lg:text-base text-primary uppercase font-aero whitespace-nowrap ${priceClassName}`}
+              className={`text-[10px] lg:text-base text-primary uppercase  font-aeonik font-bold whitespace-nowrap ${priceClassName}`}
             >
               {price}
             </span>

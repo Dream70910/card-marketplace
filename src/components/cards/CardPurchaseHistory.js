@@ -52,7 +52,7 @@ const CardPurchaseHistory = ({
                 </div>
               </div>
 
-              <span className="gradient-text font-aero text-base lg:text-2xl ">
+              <span className="gradient-text  font-aeonik font-bold text-base lg:text-2xl ">
                 {price}
               </span>
             </div>

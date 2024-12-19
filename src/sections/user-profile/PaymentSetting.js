@@ -159,34 +159,36 @@ const PaymentSetting = () => {
           }
 
           <div className="container mx-auto w-[80%]">
-            <h2 className="text-xl font-bold mt-20 mb-4 text-white">Transaction History</h2>
-            <table className="min-w-full border-gray-300">
-              <thead>
-                <tr className="bg-gray-700 text-white uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">Payout ID</th>
-                  <th className="py-3 px-6 text-left">Created At</th>
-                  <th className="py-3 px-6 text-left">Type</th>
-                  <th className="py-3 px-6 text-left">Amount</th>
-                  <th className="py-3 px-6 text-left">State</th>
-                </tr>
-              </thead>
-              <tbody className="text-white text-sm font-light">
-                {userData && userData.transactions && userData.transactions.length > 0 ?
-                  userData.transactions.slice(itemsPerPage * (currentPage - 1), itemsPerPage * currentPage).map(tr => (
-                    <tr key={tr.id} className="border-b border-gray-300 hover:bg-gray-800">
-                      <td className="py-3 px-6 text-left">{tr.id}</td>
-                      <td className="py-3 px-6 text-left">{formatDate(new Date(tr.created_at.seconds * 1000))}</td>
-                      <td className="py-3 px-6 text-left">{toCapitalize(tr.type)}</td>
-                      <td className="py-3 px-6 text-left">{tr.amount}</td>
-                      <td className="py-3 px-6 text-left">{toCapitalize(tr.state)}</td>
-                    </tr>
-                  )) :
-                  <tr>
-                    <td colSpan="5" className="py-3 px-6 text-center text-lg">No transactions yet</td>
+            <div className="overflow-x-auto overflow-y-hidden w-full max-w-full">
+              <h2 className="text-xl font-bold mt-20 mb-4 text-white">Transaction History</h2>
+              <table className="max-w-full w-full border-gray-300">
+                <thead>
+                  <tr className="bg-gray-700 text-white uppercase text-sm leading-normal">
+                    <th className="py-3 px-6 text-left">Payout ID</th>
+                    <th className="py-3 px-6 text-left">Created At</th>
+                    <th className="py-3 px-6 text-left">Type</th>
+                    <th className="py-3 px-6 text-left">Amount</th>
+                    <th className="py-3 px-6 text-left">State</th>
                   </tr>
-                }
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="text-white text-sm font-light">
+                  {userData && userData.transactions && userData.transactions.length > 0 ?
+                    userData.transactions.slice(itemsPerPage * (currentPage - 1), itemsPerPage * currentPage).map(tr => (
+                      <tr key={tr.id} className="border-b border-gray-300 hover:bg-gray-800">
+                        <td className="py-3 px-6 text-left">{tr.id}</td>
+                        <td className="py-3 px-6 text-left">{formatDate(new Date(tr.created_at.seconds * 1000))}</td>
+                        <td className="py-3 px-6 text-left">{toCapitalize(tr.type)}</td>
+                        <td className="py-3 px-6 text-left">{tr.amount}</td>
+                        <td className="py-3 px-6 text-left">{toCapitalize(tr.state)}</td>
+                      </tr>
+                    )) :
+                    <tr>
+                      <td colSpan="5" className="py-3 px-6 text-center text-lg">No transactions yet</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
 
             <div className="flex justify-between mt-4">
               <button
@@ -207,18 +209,18 @@ const PaymentSetting = () => {
                 Next
               </button>
             </div>
-          </div>
 
-          <div className="flex flex-col  md:flex-row justify-end  items-center gap-5 mt-20">
-            {/* <button
-              className="hover:bg-primary relative w-full hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap md:max-w-[300px]"
-              onClick={handleDeposit}
-            >
-              Deposit
-            </button> */}
-            <Button isActive divClassName="w-full md:max-w-[300px]" onClick={onSubmit}>
-              Submit
-            </Button>
+            <div className="flex flex-col  md:flex-row justify-end  items-center gap-5 mt-20">
+              {/* <button
+    className="hover:bg-primary relative w-full hover:text-white !border-primary after:!border-t-primary after:!border-l-primary before:!border-b-primary before:!border-r-primary justify-center text-sm lg:text-base flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px] whitespace-nowrap md:max-w-[300px]"
+    onClick={handleDeposit}
+  >
+    Deposit
+  </button> */}
+              <Button isActive divClassName="w-full md:max-w-[300px]" onClick={onSubmit}>
+                Submit
+              </Button>
+            </div>
           </div>
         </div>
       </div>

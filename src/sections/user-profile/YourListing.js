@@ -40,12 +40,13 @@ const YourListing = () => {
       <h3 className="text-white text-lg">
         Local Cards
       </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mt-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 mt-8">
         {
           localCards.length > 0 ?
             localCards.map(item =>
               <CardItemListing
                 imageSrc={item.pictures[0]}
+                rarity={item.rarity}
                 title={item.title}
                 price={`$ ${item.price.toFixed(2)}`}
                 description={item.description}
@@ -64,11 +65,12 @@ const YourListing = () => {
       <h3 className="mt-20 text-white text-lg">
         Market Cards
       </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mt-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 mt-8">
         {
           marketCards.length > 0 ?
             marketCards.map(item =>
               <CardItemListing
+                rarity={item.rarity}
                 imageSrc={item.pictures[0]}
                 title={item.title}
                 price={`$ ${item.price.toFixed(2)}`}

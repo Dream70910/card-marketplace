@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { getAllUserData } from "../../firebase/users";
 import CardUser from "../cards/CardUser";
+import { getListingsByUserId } from "../../firebase/listings";
 
 const TableUsers = () => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeUser, setActiveUser] = useState(null)
+  const [listingsCount, setListingsCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const itemsPerPage = 10
 
   useEffect(() => {
     getAllUserData().then(data => {
       setUsers(data)
       setLoading(false)
       setActiveUser(data[0])
+      setTotalPages(Math.ceil(data.length / itemsPerPage))
     })
   }, [])
+
+  useEffect(() => {
+    if (activeUser && activeUser.id) {
+      getListingsByUserId(activeUser.id).then((items) => {
+        setListingsCount(items.length)
+      })
+    }
+  }, [activeUser])
+
+  const toCapitalize = (str) => {
+    return str[0].toUpperCase() + str.slice(1, str.length).toLowerCase()
+  }
 
   return (
     !loading && <div className="flex items-start gap-8 mt-14">
@@ -45,18 +63,18 @@ const TableUsers = () => {
               >
                 Role
               </th>
-              <th
-                align="left"
-                className="bg-transparent py-5 uppercase !font-medium text-white/60 p-4 px-6 text-sm"
-              >
-                Phone
-              </th>
 
               <th
                 align="left"
                 className="bg-transparent py-5 uppercase !font-medium text-white/60 p-4 px-6 text-sm"
               >
-                tickets
+                Gender
+              </th>
+              <th
+                align="left"
+                className="bg-transparent py-5 uppercase !font-medium text-white/60 p-4 px-6 text-sm"
+              >
+                Phone
               </th>
               <th
                 align="left"
@@ -65,18 +83,20 @@ const TableUsers = () => {
             </thead>
             <tbody>
               {
-                users.map((user) =>
+                users.slice(itemsPerPage * (currentPage - 1), itemsPerPage * currentPage).map((user) =>
                   <tr
                     className="bg-white/5 hover:bg-white hover:text-[#141414] group text-white backdrop-blur-sm text-base border-style-decoration"
                     key={user.username}
                   >
                     <td className="p-4 border-l border-l-white/20 border-y border-y-white/20">
                       <div className="flex items-center space-x-4 ">
-                        <img
-                          src={user.picture}
-                          className="max-w-[48px] lg:max-w-[48px] border-style-decoration object-cover"
-                          alt="User Avatar"
-                        />
+                        <div className="flex justify-center items-center rounded-[50%] bg-primary w-10 h-10">
+                          <img
+                            src={"/assets/icons/icon-person.svg"}
+                            alt="icon"
+                          />{" "}
+                        </div>
+
                         <div className="flex items-center">
                           <span className="text-sm lg:text-base whitespace-nowrap">
                             {user.displayName}
@@ -85,9 +105,9 @@ const TableUsers = () => {
                       </div>
                     </td>
                     <td className="p-4 w-fit border-y border-y-white/20">{user.username}</td>
-                    <td className="p-4 border-y border-y-white/20">{user.role}</td>
+                    <td className="p-4 border-y border-y-white/20">{toCapitalize(user.role)}</td>
+                    <td className="h-full p-4 border-y border-y-white/20">{toCapitalize(user.gender)}</td>
                     <td className="h-full p-4 border-y border-y-white/20">{user.phoneNumber}</td>
-                    <td className="h-full p-4 border-y border-y-white/20">{user.tickets}</td>
 
                     <td className="p-4 pr-8 border-y border-y-white/20 border-r border-r-white/20">
                       <div className="flex items-center gap-4 justify-end">
@@ -108,10 +128,30 @@ const TableUsers = () => {
               }
             </tbody>
           </table>
+
+          <div className="flex justify-between mb-3">
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="self-center text-white">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
         <div className="p-5 space-y-4 lg:hidden">
           {
-            users.map((user) =>
+            users.slice(itemsPerPage * (currentPage - 1), itemsPerPage * currentPage).map((user) =>
               <CardUser
                 username={user.username}
                 role={user.role}
@@ -133,10 +173,16 @@ const TableUsers = () => {
         <div className="p-5">
           <div className="flex items-start justify-between w-full">
             <div className="flex items-center space-x-2 lg:space-x-4">
-              <img
+              {/* <img
                 src={activeUser.picture ? activeUser.picture : '/assets/avatars/avatar.png'}
                 className=" max-w-[32px] lg:max-w-[74px] border-style-decoration object-cover"
-              />
+              /> */}
+              <div className="flex justify-center items-center rounded-[50%] bg-primary w-10 h-10">
+                <img
+                  src={"/assets/icons/icon-person.svg"}
+                  alt="icon"
+                />{" "}
+              </div>
               <div className="flex flex-col items-start">
                 <span className="text-sm lg:text-xl text-white">
                   {activeUser.displayName}
@@ -169,7 +215,7 @@ const TableUsers = () => {
                 </div>
                 <div>
                   <h4 className="text-white/60 text-sm">Total Listings</h4>
-                  <span className="text-xl text-white block mt-1">24</span>
+                  <span className="text-xl text-white block mt-1">{listingsCount}</span>
                 </div>
               </div>
               <div className="flex items-center gap-4 py-4 border-y border-y-white/20">
@@ -178,7 +224,7 @@ const TableUsers = () => {
                 </div>
                 <div>
                   <h4 className="text-white/60 text-sm">Total Purchases</h4>
-                  <span className="text-xl text-white block mt-1">45</span>
+                  <span className="text-xl text-white block mt-1">{activeUser.purchases ? activeUser.purchases : 0}</span>
                 </div>
               </div>
               <div className="flex items-center gap-4 py-4">

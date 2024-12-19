@@ -32,6 +32,12 @@ const HottestCategorySection = ({ categories }) => {
     },
     responsive: [
       {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3

@@ -9,7 +9,7 @@ const HeroSection = () => {
 
   return (
     // <div className="relative h-screen w-full text-white  pt-[15rem] lg:pt-[8em] px-5">
-    <div className="relative w-full text-white  pt-[20rem] lg:pt-[15rem] px-5">
+    <div className="relative w-full text-white  pt-[10rem] lg:pt-[15rem] px-5">
       {/* left  decoration */}
       <div className="absolute top-0 left-0">
         <img
@@ -49,7 +49,7 @@ const HeroSection = () => {
       </div>
 
       <div className="flex justify-center items-center flex-col h-full w-full">
-        <h1 className="uppercase font-aero text-[48px] lg:text-[72px] text-center leading-[1.2] text-white">
+        <h1 className="uppercase font-aero text-[48px] lg:text-[72px] text-center leading-[1.2] text-white z-10">
           Discover <br /> Millions Of <br /> Cards
         </h1>
         <p className="text-base lg:text-2xl text-center my-2 text-white/60">

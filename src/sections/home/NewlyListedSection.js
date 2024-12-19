@@ -7,12 +7,12 @@ import { homeSliderSettings } from "../../utils/data"
 const NewlyListedSection = ({ categories, cards }) => {
   return (
     <div className="container px-5 mx-auto pb-24 lg:pb-48">
-      <div className="flex flex-col lg:flex-row lg:items-center  justify-between">
+      <div className="flex items-center  justify-between">
         <h2 className="uppercase font-aero text-[32px] lg:text-[42px]  leading-[1.4] text-white">
           Newly Listed
         </h2>
 
-        <div className="flex items-center gap-2 mt-5 lg:mt-0 lg:gap-4">
+        <div className="flex items-center gap-2 lg:mt-0 lg:gap-4">
           {/* {
             categories && categories.map(item =>
               <Link
@@ -53,6 +53,7 @@ const NewlyListedSection = ({ categories, cards }) => {
                 cardId={item.id}
                 key={`new-card-${item.id}`}
                 isRare
+                rarity={item.rarity}
               />
             </div>
           )

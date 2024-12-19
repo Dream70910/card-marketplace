@@ -9,6 +9,7 @@ import { userAtom } from "../../store";
 
 const CardItem = ({
   imageSrc,
+  rarity = "",
   title = "Item Title",
   quantity = "",
   price = "$0.00",
@@ -63,11 +64,11 @@ const CardItem = ({
           alt={title}
           className={`border-style-decoration w-full object-cover max-h-[250px] ${imageClassName}`}
         />
-        {isRare && (
-          <span className="text-white p-2 px-4 bg-primary-gradient absolute top-2 right-2  font-aero uppercase text-[8px] lg:text-xs">
-            Rare find
-          </span>
-        )}
+        {/* {isRare && ( */}
+        <span className="text-white p-2 px-4 bg-primary-gradient absolute top-2 right-2  font-aero uppercase text-[8px] lg:text-xs">
+          {rarity}
+        </span>
+        {/* )} */}
       </div>
 
       <div className="mt-4 flex flex-col justify-between h-full gap-6">

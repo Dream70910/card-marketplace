@@ -60,7 +60,11 @@ const MarketplaceItemDetails = () => {
       })
 
       getListingsByUserId(card.seller).then((items) => {
-        setOtherCards(items)
+        let tempCards = items.reduce((acc, cur) => {
+          if (cur.id !== card.id) acc.push(cur)
+          return acc
+        }, [])
+        setOtherCards(tempCards)
         setLoading(false)
       })
     }
@@ -76,7 +80,7 @@ const MarketplaceItemDetails = () => {
   }
 
   const handleAddtoCart = async (item) => {
-    const cartedItem = { title: item.title, price: item.price, picture: item.imageSrc, sellerId: item.sellerId, sellerUserName: item.sellerUserName, id: item.id }
+    const cartedItem = { title: item.title, price: item.price, picture: item.pictures[0], sellerId: item.sellerId, sellerUserName: item.sellerUserName, id: item.id }
     await addToCart(userData.id, cartedItem)
 
     toast.success(`${item.title} was successfully added to cart !`)
@@ -196,7 +200,7 @@ const MarketplaceItemDetails = () => {
                 </h1>
 
                 <div className="w-full flex items-center justify-between mt-2 lg:mt-0">
-                  <span className="gradient-text text-[24px] lg:text-[32px] font-aero ">
+                  <span className="gradient-text text-[24px] lg:text-[32px] font-aeonik font-bold">
                     ${card.price.toFixed(2)}
                   </span>
                   <span className="hidden lg:block  rounded-full px-4 py-2 text-xs lg:text-sm text-primary bg-primary/20 border border-primary">

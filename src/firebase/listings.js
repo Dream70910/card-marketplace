@@ -461,10 +461,19 @@ export const acceptOnBuyerSide = async (card) => {
         const listingSnapshot = await getDoc(listingsRef)
         const listingData = listingSnapshot.data()
 
-        const newSellerData = { ...sellerData, balance: sellerData.balance + card.price * 0.95 }
+        const newSellerData = { ...sellerData, balance: sellerData.balance + card.price * 0.98 }
 
         await updateDoc(listingsRef, { ...listingData, state: "local", buyer: null, seller: card.buyer })
         await updateDoc(sellerRef, newSellerData)
+
+        const buyerRef = doc(db, "users", card.buyer)
+        const buyerSnapshot = await getDoc(buyerRef)
+        const buyerData = buyerSnapshot.data()
+        const purchases = buyerData.purchases ? buyerData.purchases + 1 : 1
+
+        const newBuyerData = { ...buyerData, purchases }
+        await updateDoc(buyerRef, newBuyerData)
+
 
         const usersCollection = collection(db, "users");
         const q = query(usersCollection, where("role", "==", 'admin'));
@@ -475,7 +484,7 @@ export const acceptOnBuyerSide = async (card) => {
             const adminData = adminDoc.data(); // Get the data from the document
 
             // Add balance to the admin user
-            const newAdminData = { ...adminData, balance: adminData.balance + card.price * 0.05 }; // Assuming you want to give the admin 5% of the card price
+            const newAdminData = { ...adminData, balance: adminData.balance + card.price * 0.02 }; // Assuming you want to give the admin 5% of the card price
             const adminRef = doc(db, "users", adminDoc.id);
 
             await updateDoc(adminRef, newAdminData);
