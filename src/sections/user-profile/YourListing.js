@@ -49,6 +49,7 @@ const YourListing = () => {
                 title={item.title}
                 price={`$ ${item.price.toFixed(2)}`}
                 description={item.description}
+                rarity={item.rarity}
                 buttonText="View Product"
                 id={item.id}
                 key={`your-listing-${updatedTime}-${item.id}`}

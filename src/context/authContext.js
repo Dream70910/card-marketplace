@@ -103,7 +103,7 @@ export function AuthProvider({ children }) {
     // if ((!storedUserData && !user) && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/marketplace/categories')) {
     //   window.location.href = window.location.protocol + '//' + window.location.host + '/login'
     // }
-  }, [window.location.href,])
+  }, [window.location.href])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

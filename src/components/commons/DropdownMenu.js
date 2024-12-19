@@ -35,7 +35,7 @@ const DropdownMenu = () => {
 
   return (
     <Menu>
-      <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 px-3 text-sm/6 font-semibold focus:outline-none">
+      <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 text-sm/6 font-semibold focus:outline-none">
         <button>
           <img src="/assets/icons/icon-menu.svg" alt="" />
         </button>
@@ -46,10 +46,10 @@ const DropdownMenu = () => {
         anchor="bottom end"
         className="w-full origin-top-right !top-[68] text-white border shadow-[2px_19px_8px_rgba(97,51,142,.01),1px_11px_7px_rgba(97,51,142,.02),0px_5px_5px_rgba(97,51,142,.03),0px_1px_3px_rgba(97,51,142,.04)] border-white/5 p-2 text-sm/6 transition duration-100 [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:top-[-999px] z-10 bg-[#141414]"
       >
-        <div className="flex flex-col container mx-auto px-8">
+        <div className="flex flex-col container mx-auto px-4">
           <div className="relative my-8  rounded-[4px] border-[rgba(255,255,255,.4)] border-[1px]">
             <input
-              className="px-4 py-4 bg-transparent w-full text-primary placeholder-primary"
+              className="px-4 py-3.5 bg-transparent w-full text-primary placeholder-primary"
               placeholder="SEARCH"
               onChange={(e) => setSearchText(e.currentTarget.value)}
               onKeyDown={onChangeSearch}
@@ -71,7 +71,7 @@ const DropdownMenu = () => {
 
           <div className="mx-auto mb-8">
             <img
-              className="h-[2rem] lg:min-h-[3rem]"
+              className="h-7 lg:min-h-[3rem]"
               src="/assets/logos/logo.svg"
               alt=""
             />
@@ -96,7 +96,7 @@ const DropdownMenu = () => {
           <div className="gradient-border mt-8 mb-8" />
 
           <Link to='/marketplace/chat/all'>
-            <button className="flex bg-primary w-full py-4 rounded-[4px] justify-center items-center">
+            <button className="flex bg-primary w-full py-3.5 rounded-[4px] justify-center items-center">
               <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
                 <mask id="mask0_772_1535" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="23" height="24">
                   <rect x="0.0332031" y="0.812561" width="22.3284" height="22.3284" fill="white" />

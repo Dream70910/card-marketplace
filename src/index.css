@@ -637,3 +637,10 @@ input[type=number] {
   height: 2px !important;
   background: linear-gradient(180deg, #3B77F4, #3B77F400) !important;
 }
+
+.splitter {
+  content: '';
+  display: block;
+  width: 1px;
+  background-color: white;
+}
