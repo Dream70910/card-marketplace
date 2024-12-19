@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate, useQuery } from "react-router-dom"
 import { getAllCategories } from "../../firebase/categories"
-import { brands, conditions } from "../../utils/data"
+import { brands, conditions, rarities } from "../../utils/data"
 import InputRange from 'react-input-range'
 import "react-input-range/lib/css/index.css"
 import { useAtom } from "jotai"
@@ -39,6 +39,7 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 		conditions: true,
 		year: true,
 		price: true,
+		rarities: true
 	})
 
 	const [priceValue, setPriceValue] = useAtom(priceRangeAtom)
@@ -46,6 +47,7 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 	const [categories, setCategories] = useState([])
 	const queries = new URLSearchParams(useLocation().search)
 	const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
+	const selectedRarities = queries.get('rarities') ? queries.get('rarities').split(',') : []
 	const selectedBrands = queries.get('brands') ? queries.get('brands').split(',') : []
 	const selectedConditions = queries.get('conditions') ? queries.get('conditions').split(',') : []
 	const navigate = useNavigate()
@@ -74,6 +76,18 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 		const categoryQuery = newCategories.join(',')
 
 		navigate(`/marketplace/categories?categories=${categoryQuery}`)
+	}
+
+	const toggleRarity = (rarityId) => {
+		let newRarities = []
+		if (selectedRarities.includes(rarityId)) {
+			newRarities = selectedRarities.filter(id => id !== rarityId)
+		} else {
+			newRarities = [...selectedRarities, rarityId]
+		}
+		const categoryQuery = newRarities.join(',')
+
+		navigate(`/marketplace/categories?rarities=${categoryQuery}`)
 	}
 
 	const toggleBrand = (brandValue) => {
@@ -219,6 +233,49 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 										}
 										<span className="ml-2">
 											{condition.label}
+										</span>
+									</button>
+								)
+							}
+						</div>
+					)}
+				</div>
+			</div>
+
+			<hr className="gradient-border my-8" />
+
+			<div
+				className={`w-full`}
+			>
+				<div>
+					<div
+						className="w-full flex justify-between items-center cursor-pointer"
+						// onClick={() => toggleSection("rarities")}
+						onClick={() => toggleSection("rarities")}
+					>
+						<span>Rarities</span>
+						<img
+							src="/assets/icons/icon-arrow-drop-down.svg"
+							className={`${!openSections.rarities ? "rotate-180" : ""}`}
+						/>
+					</div>
+					{openSections.rarities && (
+						<div className="flex flex-col items-center gap-2 mt-5 lg:gap-4">
+							{
+								rarities.map((rarity) =>
+									<button
+										className={`hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center`}
+										onClick={() => { toggleRarity(rarity.value) }}
+										key={`sidebar-rarity-${rarity.value}`}
+									>
+										{
+											selectedRarities.includes(rarity.value) ?
+												<CheckedIcon />
+												:
+												<UnCheckedIcon />
+										}
+										<span className="ml-2">
+											{rarity.label}
 										</span>
 									</button>
 								)

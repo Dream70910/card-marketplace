@@ -5,7 +5,7 @@ import SidebarFilterMarketplaceCategories from "../../components/sidebars/Sideba
 import Dropdown from "../../components/commons/Dropdown"
 import CardItem from "../../components/cards/CardItem"
 import DialogMarketplaceFilterCategories from "../../components/dialogs/DialogMarketplaceFilterCategories"
-import { getAllListings, getListingsByBrands, getListingsByCategories, getListingsByConditions } from "../../firebase/listings"
+import { getAllListings, getListingsByBrands, getListingsByCategories, getListingsByConditions, getListingsByRarities } from "../../firebase/listings"
 import { useLocation, useNavigate } from "react-router-dom"
 import { getAllCategories } from "../../firebase/categories"
 import DialogConfirmation from "../../components/dialogs/DialogConfirmation";
@@ -29,27 +29,36 @@ const MarketplaceCategories = () => {
 	const queries = new URLSearchParams(useLocation().search)
 	const [loading, setLoading] = useState(true)
 	const [itemsToShow, setItemsToShow] = useState(6)
-	const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
-	const selectedBrandValues = queries.get('brands') ? queries.get('brands').split(',') : []
-	const selectedConditionValues = queries.get('conditions') ? queries.get('conditions').split(',') : []
 	const searchText = queries.get('search') ? queries.get('search') : ''
+
 	const navigate = useNavigate()
 
 	useEffect(() => {
+		const selectedCategories = queries.get('categories') ? queries.get('categories').split(',') : []
+		const selectedRarities = queries.get('rarities') ? queries.get('rarities').split(',') : []
+		const selectedBrandValues = queries.get('brands') ? queries.get('brands').split(',') : []
+		const selectedConditionValues = queries.get('conditions') ? queries.get('conditions').split(',') : []
+
 		if (userData && userData.id) {
 			getAllCategories().then((items) => {
 				const temp = items.filter((item) => selectedCategories.includes(item.id))
 				setCategories(temp)
 
-				const temp1 = brands.filter((item) => selectedBrands.includes(item.value))
-				setSelectedBrands(temp1)
+				// const temp1 = brands.filter((item) => selectedBrands.includes(item.value))
+				// setSelectedBrands(temp1)
 
-				const temp2 = conditions.filter((item) => selectedConditionValues.includes(item.value))
-				setSelectedConditions(temp2)
+				// const temp2 = conditions.filter((item) => selectedConditionValues.includes(item.value))
+				// setSelectedConditions(temp2)
 			})
 
 			if (selectedCategories.length > 0) {
 				getListingsByCategories(selectedCategories, userData.id).then((items) => {
+					updateListings(items)
+				})
+			}
+
+			if (selectedRarities.length > 0) {
+				getListingsByRarities(selectedRarities, userData.id).then((items) => {
 					updateListings(items)
 				})
 			}
@@ -66,7 +75,7 @@ const MarketplaceCategories = () => {
 				})
 			}
 
-			if (selectedCategories.length === 0 && selectedBrandValues.length === 0 && selectedConditionValues.length === 0)
+			if (selectedCategories.length === 0 && selectedBrandValues.length === 0 && selectedConditionValues.length === 0 && selectedRarities.length === 0)
 				getAllListings(userData.id).then((items) => {
 					updateListings(items)
 				})

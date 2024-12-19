@@ -118,10 +118,10 @@ const Header = ({ isLogin = false }) => {
                 <Menu>
                   <MenuButton className="inline-flex items-center gap-2 rounded-md bg-transparent py-1.5 px-3 text-sm/6 font-semibold focus:outline-none">
                     <div className="flex items-center relative">
-                      <div className="border-style-decoration">
-                        {
+                      <div className="w-8 h-8 flex items-center justify-center  rounded-[50%] border-[2px]">
+                        {/* {
                           userData.picture ?
-                            <img
+                          <img
                               src={userData.picture}
                               className="object-cover lg:w-[45px] lg:h-[45px] relative z-0"
                             /> :
@@ -129,7 +129,19 @@ const Header = ({ isLogin = false }) => {
                               src="/assets/avatars/avatar.png"
                               className="object-cover lg:w-[45px] lg:h-[45px] relative z-0"
                             />
-                        }
+                        } */}
+
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clipPath="url(#clip0_763_2198)">
+                            <path d="M8.89618 10.0862C11.0863 10.0862 12.8617 8.31076 12.8617 6.12067C12.8617 3.93057 11.0863 2.15515 8.89618 2.15515C6.70609 2.15515 4.93066 3.93057 4.93066 6.12067C4.93066 8.31076 6.70609 10.0862 8.89618 10.0862Z" stroke="#1AB6F9" strokeWidth="1.18966" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2.94824 13.556C4.14843 11.4822 6.32823 10.0862 8.89652 10.0862C11.4648 10.0862 13.6446 11.4822 14.8448 13.556" stroke="#1AB6F9" strokeWidth="1.18966" strokeLinecap="round" strokeLinejoin="round" />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_763_2198">
+                              <rect width="15.8621" height="15.8621" fill="white" transform="translate(0.96582 0.172424)" />
+                            </clipPath>
+                          </defs>
+                        </svg>
                       </div>
                       <div className="ml-4 hidden lg:flex items-center whitespace-nowrap">
                         <div>
@@ -151,7 +163,7 @@ const Header = ({ isLogin = false }) => {
                   <MenuItems
                     transition
                     anchor="bottom end"
-                    className="w-52 origin-top-right text-white border border-style-decoration shadow-[2px_19px_8px_rgba(97,51,142,.01),1px_11px_7px_rgba(97,51,142,.02),0px_5px_5px_rgba(97,51,142,.03),0px_1px_3px_rgba(97,51,142,.04)] border-white/5 bg-white/5 p-2 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 z-10"
+                    className="w-52 origin-top-right text-white border border-style-decoration shadow-[2px_19px_8px_rgba(97,51,142,.01),1px_11px_7px_rgba(97,51,142,.02),0px_5px_5px_rgba(97,51,142,.03),0px_1px_3px_rgba(97,51,142,.04)] border-white/5 bg-white/5 p-2 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 z-[200]"
                   >
                     <MenuItem>
                       <Link

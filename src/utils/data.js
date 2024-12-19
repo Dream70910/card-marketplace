@@ -19,28 +19,39 @@ export const brands = [
 
 export const conditions = [
     {
-        label: 'Box Damage',
-        value: 'box_damage'
+        label: 'Brand New',
+        value: 'brand_new'
     },
     {
         label: 'Like New',
         value: 'like_new'
     },
     {
-        label: 'Mixed',
-        value: 'mixed'
+        label: 'Good',
+        value: 'good'
     },
     {
-        label: 'New',
-        value: 'new'
+        label: 'Bad',
+        value: 'bad'
+    }
+]
+
+export const rarities = [
+    {
+        label: 'Common',
+        value: 'common'
     },
     {
-        label: 'Online Returns',
-        value: 'online_returns'
+        label: 'Rare',
+        value: 'rare'
     },
     {
-        label: 'Returns',
-        value: 'returns'
+        label: 'Ultra Rare',
+        value: 'ultra_rare'
+    },
+    {
+        label: 'Legendary',
+        value: 'legendary'
     }
 ]
 
