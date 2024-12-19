@@ -40,11 +40,11 @@ const CartItem = ({
                                 </div> */}
                             </div>
 
-                            <span className="gradient-text font-aero text-base lg:text-2xl ">
+                            <span className="gradient-text  font-aeonik font-bold text-base lg:text-2xl ">
                                 ${item.price}
                             </span>
 
-                            <span className="text-white text-base lg:text-2xl ">
+                            <span className="text-white font-aeonik font-bold lg:text-2xl ">
                                 {item.sellerUserName}
                             </span>
                         </div>

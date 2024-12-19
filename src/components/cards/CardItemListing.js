@@ -53,7 +53,7 @@ const CardItemListing = ({
               {title} {quantity}
             </h4>
             <span
-              className={`text-[10px] lg:text-base text-primary uppercase font-aero whitespace-nowrap ${priceClassName}`}
+              className={`text-[10px] lg:text-base text-primary uppercase  font-aeonik font-bold whitespace-nowrap ${priceClassName}`}
             >
               {price}
             </span>

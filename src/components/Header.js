@@ -70,7 +70,7 @@ const Header = ({ isLogin = false }) => {
             <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Categories</Link>
             </div>
-            <div className="flex items-center text-[#484F52]">
+            {/* <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/chat/all" className={isActive('/marketplace/chat') && !isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Messages</Link>
 
               {
@@ -79,7 +79,7 @@ const Header = ({ isLogin = false }) => {
                   <span className="absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 text-white text-[12px]">{userData.unReadMessages.length}</span>
                 </div>
               }
-            </div>
+            </div> */}
             <div className="flex items-center text-[#484F52]">
               <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-white' : ''}>Sell Cards</Link>
             </div>
