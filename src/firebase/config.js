@@ -17,7 +17,6 @@ import { getStorage } from "firebase/storage";
 //     measurementId: "G-7GHXC3VD0J"
 // }
 
-console.log("process.env.REACT_APP_FIREBASE_API_KEY:", process.env.REACT_APP_FIREBASE_API_KEY)
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Aeonik-Bold';
+  font-family: 'Aeonik';
   /* The name of the custom font */
   src: url('./assets/fonts/Aeonik-Bold.otf') format('opentype');
   /* Path to your .otf file */
@@ -12,7 +12,7 @@
 }
 
 @font-face {
-  font-family: 'Aeonik-Light';
+  font-family: 'Aeonik';
   /* The name of the custom font */
   src: url('./assets/fonts/Aeonik-Light.otf') format('opentype');
   /* Path to your .otf file */
@@ -22,7 +22,7 @@
 }
 
 @font-face {
-  font-family: 'Aeonik-Regular';
+  font-family: 'Aeonik';
   /* The name of the custom font */
   src: url('./assets/fonts/Aeonik-Regular.otf') format('opentype');
   /* Path to your .otf file */
@@ -38,14 +38,14 @@
 }
 
 * {
-  font-family: 'Aeonik-Regular', 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Aeonik', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
 
 html {
   overflow-x: hidden;
-  font-family: 'Aeonik-Regular', sans-serif;
+  font-family: 'Aeonik', sans-serif;
 }
 
 
@@ -64,6 +64,10 @@ code {
 
 .font-aero {
   font-family: "Aero", sans-serif;
+}
+
+.font-aeonik {
+  font-family: "Aeonik", sans-serif;
 }
 
 input {
@@ -546,11 +550,90 @@ input[type='date']::-webkit-calendar-picker-indicator {
 /* Hides the number input spinner in Chrome, Safari, and Edge */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Hides the number input spinner in Firefox */
 input[type=number] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.slick-slide {
+  padding: 0 15px;
+}
+
+.slick-list {
+  margin: 0 -15px !important;
+}
+
+.custom-arrows .slick-prev {
+  left: 0 !important;
+}
+
+.custom-arrows .slick-next {
+  right: 0 !important;
+  width: auto;
+}
+
+.custom-arrows .slick-arrow {
+  z-index: 10;
+  transition: all .25s;
+}
+
+.custom-arrows .slick-arrow:hover {
+  filter: brightness(.85);
+}
+
+.custom-arrows.arrows-center .slick-arrow {
+  opacity: 0;
+}
+
+.custom-arrows.arrows-center:hover .slick-arrow {
+  opacity: 1;
+}
+
+.custom-arrows .slick-arrow::before {
+  content: none;
+}
+
+.custom-arrows.arrows-down .slick-arrow {
+  top: auto;
+  bottom: -80px;
+}
+
+.custom-arrows.arrows-down .slick-prev {
+  left: 0 !important;
+}
+
+.custom-arrows.arrows-down .slick-next {
+  left: 50px !important;
+}
+
+/* .slick-active+.slick-active {
+  padding-left: 30px;
+} */
+
+.gradient-border {
+  border-top-width: 1px;
+  /* Adjust the border width as needed */
+  border-style: solid;
+  border-image: linear-gradient(180deg, #3B77F4, #3B77F400) 1;
+}
+
+.input-range__track.input-range__track--active,
+.input-range__slider {
+  background-color: #B1CCFF !important;
+  border-color: #B1CCFF !important;
+}
+
+.input-range__slider {
+  width: 10px !important;
+  height: 10px !important;
+  margin-top: -6px !important;
+}
+
+.input-range__track {
+  height: 2px !important;
+  background: linear-gradient(180deg, #3B77F4, #3B77F400) !important;
 }

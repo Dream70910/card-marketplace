@@ -13,17 +13,24 @@ const NewlyListedSection = ({ categories, cards }) => {
         </h2>
 
         <div className="flex items-center gap-2 mt-5 lg:mt-0 lg:gap-4">
-          {
+          {/* {
             categories && categories.map(item =>
               <Link
-                className="hover:bg-white w-full lg:w-fit hover:text-[#141414] justify-center text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]"
+                className="hover:bg-white uppercase w-full lg:w-fit hover:text-[#141414] justify-center text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]"
                 key={`home-category-2-${item.id}`}
                 to={`/marketplace/categories?categories=${item.id}`}
               >
                 {item.name}
               </Link>
             )
-          }
+          } */}
+
+          <Link
+            className="hover:bg-white uppercase w-full lg:w-fit hover:text-[#141414] justify-center text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]"
+            to={`/marketplace/categories`}
+          >
+            View More
+          </Link>
         </div>
       </div>
 
@@ -35,7 +42,7 @@ const NewlyListedSection = ({ categories, cards }) => {
           cards && cards.slice(0, 5).map(item =>
             <div
               key={`new-listed-${item.id}`}
-              className="px-4 h-full"
+              className="h-full"
             >
               <CardItem
                 imageSrc={item.pictures[0]}

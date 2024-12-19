@@ -85,10 +85,12 @@ export function AuthProvider({ children }) {
   }
 
   const getUpdatedUserData = () => {
-    getUserData(user.uid).then((data) => {
-      setUserData({ ...data, id: user.uid })
-      localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
-    })
+    if (user && user.uid) {
+      getUserData(user.uid).then((data) => {
+        setUserData({ ...data, id: user.uid })
+        localStorage.setItem('userData', JSON.stringify({ ...data, id: user.uid }))
+      })
+    }
   }
 
   useEffect(() => {
@@ -98,10 +100,10 @@ export function AuthProvider({ children }) {
       setUserData(JSON.parse(storedUserData));
     }
 
-    if ((!storedUserData && !user) && !window.location.pathname.includes('/login')) {
-      window.location.href = window.location.protocol + '//' + window.location.host + '/login'
-    }
-  }, [window.location.href])
+    // if ((!storedUserData && !user) && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/marketplace/categories')) {
+    //   window.location.href = window.location.protocol + '//' + window.location.host + '/login'
+    // }
+  }, [window.location.href,])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

@@ -46,32 +46,32 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          {/* <Route path="/marketplace" element={<Marketplace />} /> */}
           <Route
             path="/marketplace/categories"
             element={<MarketplaceCategories />}
           />
           <Route
             path="/marketplace/:cardId"
-            element={<MarketplaceItemDetails />}
+            element={<PrivateRoute element={<MarketplaceItemDetails />} />}
           />
-          <Route path="/support" element={<Support />} />
-          <Route path="/tickets" element={<Tickets />} />
+          {/* <Route path="/support" element={<Support />} />
+          <Route path="/tickets" element={<Tickets />} /> */}
           <Route path="/faqs" element={<Faq />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<PrivateRoute element={<AdminLogin />} />} />
 
-          <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/payment-settings" element={<PaymentSettings />} />
+          <Route path="/user-profile" element={<PrivateRoute element={<UserProfile />} />} />
+          <Route path="/payment-settings" element={<PrivateRoute element={<PaymentSettings />} />} />
 
-          <Route path="/my-listings" element={<MyListingsPage />} />
+          <Route path="/my-listings" element={<PrivateRoute element={<MyListingsPage />} />} />
 
-          <Route path="/purchase-sale" element={<Cart />} />
+          <Route path="/purchase-sale" element={<PrivateRoute element={<Cart />} />} />
           <Route
             path="/marketplace/create-listing"
-            element={<MarketplaceCreateListing />}
+            element={< PrivateRoute element={<MarketplaceCreateListing />} />}
           />
-          <Route path={`/marketplace/chat/:recipientId`} element={<MarketplaceChat />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path={`/marketplace/chat/:recipientId`} element={<PrivateRoute element={<MarketplaceChat />} />} />
+          <Route path="/admin" element={<PrivateRoute element={<Admin />} />} />
         </Routes>
       </Router>
     </AuthProvider>

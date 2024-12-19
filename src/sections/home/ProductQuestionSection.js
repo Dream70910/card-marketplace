@@ -15,11 +15,9 @@ const ProductQuestionSection = () => {
               </span>
             </h2>
             <p className="w-full text-xs lg:text-base text-center mt-5 lg:mt-0 lg:text-left max-w-[370px] opacity-60 font-light">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. <br />
+              We bring collectors, players, and enthusiasts together on a single platform to buy, sell, and trade Pokémon and other collectible cards with ease. <br />
               <br />
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Whether you’re a seasoned collector or just starting your journey, our marketplace is designed to provide you with an unparalleled experience in finding the cards you love.
             </p>
           </div>
 

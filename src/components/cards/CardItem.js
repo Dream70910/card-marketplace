@@ -79,7 +79,7 @@ const CardItem = ({
               {title} {quantity}
             </h4>
             <span
-              className={`text-[10px] lg:text-base text-primary uppercase font-aero ${priceClassName}`}
+              className={`text-[10px] lg:text-base text-primary uppercase font-aeonik font-bold text-nowrap ${priceClassName}`}
             >
               {
                 typeof price === 'number' ?
@@ -93,21 +93,32 @@ const CardItem = ({
             {description}
           </p>
         </div>
-
         {
-          !isInCart ?
-            <Button
-              divClassName={`text-sm lg:text-base ${buttonClassName}`}
-              onClick={handleAddtoCart}
-            >
-              Add to Cart
-            </Button>
-            :
-            <Button
-              divClassName={`text-sm lg:text-base ${buttonClassName}`}
-            >
-              Go to Detail
-            </Button>
+          userData ?
+            <>
+              {
+                !isInCart ?
+                  <Button
+                    divClassName={`text-sm lg:text-base ${buttonClassName}`}
+                    onClick={handleAddtoCart}
+                  >
+                    Add to Cart
+                  </Button>
+                  :
+                  <Button
+                    divClassName={`text-sm lg:text-base ${buttonClassName}`}
+                  >
+                    Go to Detail
+                  </Button>
+              }
+            </> :
+            <Link to="/login">
+              <Button
+                divClassName={`text-sm lg:text-base ${buttonClassName}`}
+              >
+                Login
+              </Button>
+            </Link>
         }
       </div>
     </Link>

@@ -36,14 +36,16 @@ const Register = () => {
     try {
       await loginWithGoogle()
       toast.success("Successfully logged in!")
-      const intervalId = setInterval(() => {
-        getUpdatedUserData()
+      const intervalId = setInterval(async () => {
+        await getUpdatedUserData()
+        const storedUserData = localStorage.getItem('userData')
+        const data = JSON.parse(storedUserData)
 
-        if (userData.balance !== undefined) {
+        if (data && data.balance !== undefined) {
           navigate('/')
           clearInterval(intervalId)
         }
-      }, 1000);
+      }, 2000);
     } catch (error) {
       console.log(error.code)
     }

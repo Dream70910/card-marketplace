@@ -83,39 +83,35 @@ const Tickets = () => {
           {/*  */}
           <ul className="w-full flex mt-12">
             <li
-              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${
-                activeTab === "all" ? "border-b-primary" : "border-b-white/20"
-              }`}
+              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${activeTab === "all" ? "border-b-primary" : "border-b-white/20"
+                }`}
               onClick={() => handleTabClick("all")}
             >
               All
             </li>
             <li
-              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${
-                activeTab === "on-hold"
-                  ? "border-b-primary"
-                  : "border-b-white/20"
-              }`}
+              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${activeTab === "on-hold"
+                ? "border-b-primary"
+                : "border-b-white/20"
+                }`}
               onClick={() => handleTabClick("on-hold")}
             >
               On hold
             </li>
             <li
-              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${
-                activeTab === "in-progress"
-                  ? "border-b-primary"
-                  : "border-b-white/20"
-              }`}
+              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${activeTab === "in-progress"
+                ? "border-b-primary"
+                : "border-b-white/20"
+                }`}
               onClick={() => handleTabClick("in-progress")}
             >
               In Progress
             </li>
             <li
-              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${
-                activeTab === "completed"
-                  ? "border-b-primary"
-                  : "border-b-white/20"
-              }`}
+              className={`text-white text-center w-full pb-4 border-b-2 cursor-pointer text-xs lg:text-base ${activeTab === "completed"
+                ? "border-b-primary"
+                : "border-b-white/20"
+                }`}
               onClick={() => handleTabClick("completed")}
             >
               Completed

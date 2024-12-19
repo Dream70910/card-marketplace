@@ -169,16 +169,33 @@ const MarketplaceChat = () => {
             onButtonClick={() => setOpenDialog(null)}
           /> :
           <div className="container mx-auto px-5 py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
+            <div className="flex items-center mb-7 -ml-3">
+              <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <mask id="mask0_772_551" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="-1" y="0" width="36" height="35">
+                  <rect width="34.3333" height="34.3333" transform="matrix(-4.37114e-08 -1 -1 4.37114e-08 34.332 34.667)" fill="#D9D9D9" />
+                </mask>
+                <g mask="url(#mask0_772_551)">
+                  <path d="M12.8746 17.4991L20.0273 24.6519L20.0273 10.3463L12.8746 17.4991Z" fill="white" />
+                </g>
+              </svg>
+
+              <Link to="/marketplace/chat/all" className="text-white">
+                Go Back
+              </Link>
+            </div>
+
             <div className="flex items-center justify-between">
               <h1 className="font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[48px]">
                 Chat
               </h1>
 
-              {/* <button
-            className={`relative w-full max-w-[168px] lg:max-w-[214px] justify-center text-sm lg:text-base flex items-center p-4 px-6 whitespace-nowrap border-style-decoration after:bottom-[-.5px] right-[-.5px] text-white hover:bg-white hover:text-[#141414]`}
-          >
-            View Profile
-          </button> */}
+              <Link to="/user-profile">
+                <button
+                  className={`relative w-full max-w-[168px] lg:max-w-[214px] justify-center text-sm lg:text-base flex items-center p-4 px-6 whitespace-nowrap border-style-decoration after:bottom-[-.5px] right-[-.5px] text-white hover:bg-white hover:text-[#141414]`}
+                >
+                  View Profile
+                </button>
+              </Link>
             </div>
 
             <div className="flex mt-10 lg:mt-16">
@@ -189,13 +206,38 @@ const MarketplaceChat = () => {
                       userData.recipients.map((item) =>
                         <Link
                           to={`/marketplace/chat/${item.id}`}
-                          className={`flex items-center hover:bg-primary p-5 ${item.id === recipientId ? 'bg-primary' : ''}`}
+                          className={`flex items-center hover:bg-[#1AB6F950] p-5 ${item.id === recipientId ? 'bg-[#1AB6F950]' : ''}`}
                           key={`recipent-${item.id}`}
                         >
-                          <img
+                          {/* <img
                             src={item.picture}
                             className="border-style-decoration max-w-[48px] mr-4"
-                          />
+                          /> */}
+
+                          <div className="bg-primary w-10 h-10 flex justify-center items-center mr-3">
+                            <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clipPath="url(#clip0_772_194)">
+                                <mask id="mask0_772_194" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="0" y="0" width="8" height="11">
+                                  <path d="M7.28144 8.14928L5.29655 10.4669H1.73101C0.779557 10.4669 0.000976562 9.68847 0.000976562 8.73702V7.00699H3.70436L5.0038 5.48985L7.28155 8.14938L7.28144 8.14928ZM5.0037 4.97716L3.70426 3.45993H0.000976562V1.73C0.000976562 0.778448 0.779455 -3.05176e-05 1.73101 -3.05176e-05H5.29655L7.28144 2.31764L5.0037 4.97716Z" fill="white" />
+                                </mask>
+                                <g mask="url(#mask0_772_194)">
+                                  <path d="M7.28144 -3.05176e-05H0.000976562V10.4668H7.28144V-3.05176e-05Z" fill="#151415" />
+                                </g>
+                                <mask id="mask1_772_194" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="5" y="0" width="10" height="11">
+                                  <path d="M9.77717 5.23349L11.296 3.45996H14.9994V1.73003C14.9994 0.778478 14.2209 0 13.2694 0H9.70385L7.46277 2.61674L5.22168 5.23349L7.46277 7.85023L9.70385 10.467H13.2694C14.2208 10.467 14.9994 9.6885 14.9994 8.73705V7.00712H11.296L9.77717 5.23359V5.23349Z" fill="white" />
+                                </mask>
+                                <g mask="url(#mask1_772_194)">
+                                  <path d="M14.9994 0H5.22168V10.4669H14.9994V0Z" fill="white" />
+                                </g>
+                                <path opacity="0.15" fillRule="evenodd" clipRule="evenodd" d="M5.00275 4.58248L6.94241 2.3177L5.17746 0.256836H1.73006C0.920237 0.256836 0.256836 0.920237 0.256836 1.73006V3.20329H3.82156L5.00275 4.58258V4.58248Z" fill="#151415" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_772_194">
+                                  <rect width="15" height="10.4669" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </div>
 
                           <span className="text-white">
                             {item.displayName}
@@ -218,10 +260,30 @@ const MarketplaceChat = () => {
                   {messages.map(msg =>
                     msg.senderId === userData.id ?
                       <div className="flex flex-row-reverse items-start gap-6" key={`sent-${msg.id}`}>
-                        <img
-                          src={userData.picture}
-                          className="border-style-decoration max-w-[48px]"
-                        />
+                        <div className="bg-primary w-10 h-10 flex justify-center items-center mr-3">
+                          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clipPath="url(#clip0_772_194)">
+                              <mask id="mask0_772_194" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="0" y="0" width="8" height="11">
+                                <path d="M7.28144 8.14928L5.29655 10.4669H1.73101C0.779557 10.4669 0.000976562 9.68847 0.000976562 8.73702V7.00699H3.70436L5.0038 5.48985L7.28155 8.14938L7.28144 8.14928ZM5.0037 4.97716L3.70426 3.45993H0.000976562V1.73C0.000976562 0.778448 0.779455 -3.05176e-05 1.73101 -3.05176e-05H5.29655L7.28144 2.31764L5.0037 4.97716Z" fill="white" />
+                              </mask>
+                              <g mask="url(#mask0_772_194)">
+                                <path d="M7.28144 -3.05176e-05H0.000976562V10.4668H7.28144V-3.05176e-05Z" fill="#151415" />
+                              </g>
+                              <mask id="mask1_772_194" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="5" y="0" width="10" height="11">
+                                <path d="M9.77717 5.23349L11.296 3.45996H14.9994V1.73003C14.9994 0.778478 14.2209 0 13.2694 0H9.70385L7.46277 2.61674L5.22168 5.23349L7.46277 7.85023L9.70385 10.467H13.2694C14.2208 10.467 14.9994 9.6885 14.9994 8.73705V7.00712H11.296L9.77717 5.23359V5.23349Z" fill="white" />
+                              </mask>
+                              <g mask="url(#mask1_772_194)">
+                                <path d="M14.9994 0H5.22168V10.4669H14.9994V0Z" fill="white" />
+                              </g>
+                              <path opacity="0.15" fillRule="evenodd" clipRule="evenodd" d="M5.00275 4.58248L6.94241 2.3177L5.17746 0.256836H1.73006C0.920237 0.256836 0.256836 0.920237 0.256836 1.73006V3.20329H3.82156L5.00275 4.58258V4.58248Z" fill="#151415" />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_772_194">
+                                <rect width="15" height="10.4669" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </div>
                         <div className="mb-5 flex flex-col items-end">
                           <div className="border-style-decoration p-4 px-6 bg-white/5 backdrop-blur-sm">
                             <span className="uppercase text-xs lg:text-sm text-white/60 font-medium block">
@@ -237,10 +299,30 @@ const MarketplaceChat = () => {
                         </div>
                       </div> :
                       <div className="flex items-start gap-6 mb-5" key={`received-${msg.id}`}>
-                        <img
-                          src={partyData.picture}
-                          className="border-style-decoration max-w-[48px]"
-                        />
+                        <div className="bg-primary w-10 h-10 flex justify-center items-center mr-3">
+                          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clipPath="url(#clip0_772_194)">
+                              <mask id="mask0_772_194" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="0" y="0" width="8" height="11">
+                                <path d="M7.28144 8.14928L5.29655 10.4669H1.73101C0.779557 10.4669 0.000976562 9.68847 0.000976562 8.73702V7.00699H3.70436L5.0038 5.48985L7.28155 8.14938L7.28144 8.14928ZM5.0037 4.97716L3.70426 3.45993H0.000976562V1.73C0.000976562 0.778448 0.779455 -3.05176e-05 1.73101 -3.05176e-05H5.29655L7.28144 2.31764L5.0037 4.97716Z" fill="white" />
+                              </mask>
+                              <g mask="url(#mask0_772_194)">
+                                <path d="M7.28144 -3.05176e-05H0.000976562V10.4668H7.28144V-3.05176e-05Z" fill="#151415" />
+                              </g>
+                              <mask id="mask1_772_194" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="5" y="0" width="10" height="11">
+                                <path d="M9.77717 5.23349L11.296 3.45996H14.9994V1.73003C14.9994 0.778478 14.2209 0 13.2694 0H9.70385L7.46277 2.61674L5.22168 5.23349L7.46277 7.85023L9.70385 10.467H13.2694C14.2208 10.467 14.9994 9.6885 14.9994 8.73705V7.00712H11.296L9.77717 5.23359V5.23349Z" fill="white" />
+                              </mask>
+                              <g mask="url(#mask1_772_194)">
+                                <path d="M14.9994 0H5.22168V10.4669H14.9994V0Z" fill="white" />
+                              </g>
+                              <path opacity="0.15" fillRule="evenodd" clipRule="evenodd" d="M5.00275 4.58248L6.94241 2.3177L5.17746 0.256836H1.73006C0.920237 0.256836 0.256836 0.920237 0.256836 1.73006V3.20329H3.82156L5.00275 4.58258V4.58248Z" fill="#151415" />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_772_194">
+                                <rect width="15" height="10.4669" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </div>
                         <div className="flex flex-col items-start">
                           <div className="border-style-decoration p-4 px-6 bg-white backdrop-blur-sm">
                             <span className="uppercase text-xs lg:text-sm text-[#7F8289] font-medium block">

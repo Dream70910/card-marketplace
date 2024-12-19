@@ -21,17 +21,17 @@ const Home = () => {
   const [loading2, setLoaindg2] = useState(true)
 
   useEffect(() => {
-    if (userData && userData.id) {
-      getAllCategories().then(items => {
-        setCatgories(items)
-        setLoaindg1(false)
-      })
+    const userId = userData && userData.id ? userData.id : null
 
-      getAllListings(userData.id).then(items => {
-        setCards(items)
-        setLoaindg2(false)
-      })
-    }
+    getAllCategories().then(items => {
+      setCatgories(items)
+      setLoaindg1(false)
+    })
+
+    getAllListings(userId).then(items => {
+      setCards(items)
+      setLoaindg2(false)
+    })
   }, [userData])
 
   return (

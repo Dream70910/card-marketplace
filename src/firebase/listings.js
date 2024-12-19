@@ -2,7 +2,7 @@ import { db, storage } from "./config"
 import { collection, addDoc, getDocs, query, where, doc, updateDoc, getDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
-export const createListing = async ({ userId, username, images, title, condition, price, category, description, brand, date }) => {
+export const createListing = async ({ userId, username, images, title, condition, price, category, description, brand, date, rarity }) => {
     try {
         // Reference to the "listings" collection
         const listingRef = collection(db, "listings")
@@ -24,6 +24,7 @@ export const createListing = async ({ userId, username, images, title, condition
             condition: condition,
             price: parseInt(price),
             brand: brand,
+            rarity: rarity,
             condition: condition,
             category: category,
             description: description,
@@ -165,6 +166,33 @@ export const getListingsByConditions = async (conditions, userId) => {
             const q = query(
                 listingsRef,
                 where("condition", "==", condition),
+                where("seller", '!=', userId),
+                where('state', '==', 'market')
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() })
+            })
+        }
+
+        return listings // Return the array of listings
+    } catch (e) {
+        console.error("Error getting documents: ", e)
+        return [] // Return an empty array in case of error
+    }
+}
+
+export const getListingsByRarities = async (rarities, userId) => {
+    try {
+        // Reference to the "listings" collection
+        const listingsRef = collection(db, "listings")
+
+        const listings = []
+
+        for (let rarity of rarities) {
+            const q = query(
+                listingsRef,
+                where("rarity", "==", rarity),
                 where("seller", '!=', userId),
                 where('state', '==', 'market')
             )

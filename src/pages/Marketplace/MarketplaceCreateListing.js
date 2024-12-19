@@ -14,13 +14,14 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/authContext"
 import { useAtom } from "jotai"
 import { userAtom } from "../../store"
-import { brands, conditions } from "../../utils/data"
+import { brands, conditions, rarities } from "../../utils/data"
 
 const MarketplaceCreateListing = () => {
 	const [categories, setCategories] = useState([])
 	const [title, setTitle] = useState("")
 	const [brand, setBrand] = useState(brands[0].value)
 	const [condition, setCondition] = useState(conditions[0].value)
+	const [rarity, setRarity] = useState(rarities[0].value)
 	const [price, setPrice] = useState(null)
 	const [category, setCategory] = useState("")
 	const [description, setDescription] = useState("")
@@ -35,7 +36,7 @@ const MarketplaceCreateListing = () => {
 			const catOptions = []
 
 			cats.forEach((cat) => {
-				catOptions.push({ value: cat.id, label: cat.name })
+				catOptions.push({ value: cat.id, label: cat.name.toUpperCase() })
 			})
 
 			if (cats.length > 0)
@@ -66,7 +67,7 @@ const MarketplaceCreateListing = () => {
 			return
 		}
 
-		await createListing({ userId: user.uid, username: userData.username, images: images, title, condition, price, category, description, brand, date })
+		await createListing({ userId: user.uid, username: userData.username, images: images, title, condition, price, category, description, brand, date, rarity })
 		toast.success("Listing has been created successfully!")
 		navigate("/my-listings")
 	}
@@ -84,7 +85,7 @@ const MarketplaceCreateListing = () => {
 	return (
 		<div>
 			<Header isLogin />
-			<div className="container mx-auto px-5  py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
+			<div className="container mx-auto px-5 py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
 				<h1 className="font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[48px]">
 					create Listing
 				</h1>
@@ -144,7 +145,7 @@ const MarketplaceCreateListing = () => {
 								</span>
 								<Dropdown
 									options={brands}
-									placeholder="Select Category"
+									placeholder="Select Brand"
 									onChange={(e) => setBrand(e.target.value)}
 									className="w-full"
 								/>
@@ -157,8 +158,21 @@ const MarketplaceCreateListing = () => {
 								</span>
 								<Dropdown
 									options={conditions}
-									placeholder="Select Category"
+									placeholder="Select Condition"
 									onChange={(e) => setCondition(e.target.value)}
+									className="w-full"
+								/>
+							</label>
+						</div>
+						<div className="text-white">
+							<label className="w-full">
+								<span className="text-base lg:text-xl mb-3 block">
+									Rarity
+								</span>
+								<Dropdown
+									options={rarities}
+									placeholder="Select Rarity"
+									onChange={(e) => setRarity(e.target.value)}
 									className="w-full"
 								/>
 							</label>
@@ -184,8 +198,6 @@ const MarketplaceCreateListing = () => {
 								/>
 							</label>
 						</div>
-
-
 					</div>
 
 					<div className="w-full flex flex-col gap-6">
@@ -220,6 +232,8 @@ const MarketplaceCreateListing = () => {
 									uploadId="thumb-3"
 								/>
 							</div>
+
+
 						</div>
 
 						<div className="flex mt-auto flex-col lg:flex-row gap-4">
