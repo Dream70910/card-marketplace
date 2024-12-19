@@ -44,7 +44,7 @@ const Header = ({ isLogin = false }) => {
     // <div className={`top-0 w-full z-[1000] ${isFixed ? 'fixed bg-slate-800' : 'relative'}`}>
     //   <div className="relative after:content-[''] w-full after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">
     <>
-      <div className={`px-4 py-8 w-full z-[100] h-fit  fixed bg-black left-0 top-0`}>
+      <div className={`px-4 py-4 w-full z-[100] h-fit  fixed bg-black left-0 top-0`}>
         <div className="flex px-4 container mx-auto items-center justify-between w-full">
           {/*  */}
           <div className="flex items-center lg:hidden  gap-6">

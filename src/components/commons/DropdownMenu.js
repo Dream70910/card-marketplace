@@ -44,7 +44,7 @@ const DropdownMenu = () => {
       <MenuItems
         transition
         anchor="bottom end"
-        className="w-full origin-top-right !top-[96px] text-white border shadow-[2px_19px_8px_rgba(97,51,142,.01),1px_11px_7px_rgba(97,51,142,.02),0px_5px_5px_rgba(97,51,142,.03),0px_1px_3px_rgba(97,51,142,.04)] border-white/5 p-2 text-sm/6 transition duration-100 [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:top-[-999px] z-10 bg-[#141414]"
+        className="w-full origin-top-right !top-[68] text-white border shadow-[2px_19px_8px_rgba(97,51,142,.01),1px_11px_7px_rgba(97,51,142,.02),0px_5px_5px_rgba(97,51,142,.03),0px_1px_3px_rgba(97,51,142,.04)] border-white/5 p-2 text-sm/6 transition duration-100 [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:top-[-999px] z-10 bg-[#141414]"
       >
         <div className="flex flex-col container mx-auto px-8">
           <div className="relative my-8  rounded-[4px] border-[rgba(255,255,255,.4)] border-[1px]">
