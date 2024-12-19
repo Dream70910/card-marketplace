@@ -60,7 +60,11 @@ const MarketplaceItemDetails = () => {
       })
 
       getListingsByUserId(card.seller).then((items) => {
-        setOtherCards(items)
+        let tempCards = items.reduce((acc, cur) => {
+          if (cur.id !== card.id) acc.push(cur)
+          return acc
+        }, [])
+        setOtherCards(tempCards)
         setLoading(false)
       })
     }
@@ -196,7 +200,7 @@ const MarketplaceItemDetails = () => {
                 </h1>
 
                 <div className="w-full flex items-center justify-between mt-2 lg:mt-0">
-                  <span className="gradient-text text-[24px] lg:text-[32px] font-aero ">
+                  <span className="gradient-text text-[24px] lg:text-[32px] font-aeonik font-bold">
                     ${card.price.toFixed(2)}
                   </span>
                   <span className="hidden lg:block  rounded-full px-4 py-2 text-xs lg:text-sm text-primary bg-primary/20 border border-primary">
