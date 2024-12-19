@@ -40,7 +40,7 @@ const YourListing = () => {
       <h3 className="text-white text-lg">
         Local Cards
       </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mt-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 mt-8">
         {
           localCards.length > 0 ?
             localCards.map(item =>
@@ -65,7 +65,7 @@ const YourListing = () => {
       <h3 className="mt-20 text-white text-lg">
         Market Cards
       </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mt-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 mt-8">
         {
           marketCards.length > 0 ?
             marketCards.map(item =>
