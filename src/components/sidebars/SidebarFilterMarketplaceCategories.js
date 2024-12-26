@@ -6,6 +6,13 @@ import InputRange from 'react-input-range'
 import "react-input-range/lib/css/index.css"
 import { useAtom } from "jotai"
 import { priceRangeAtom, yearRangeAtom } from "../../store"
+import Button from "../commons/Button"
+
+let showItemCounts = {
+	category: 6,
+	rarity: 6,
+	condition: 6
+}
 
 const CheckedIcon = () => (
 	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,16 +132,17 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 						className="w-full flex justify-between items-center cursor-pointer"
 						onClick={() => toggleSection("categories")}
 					>
-						<span>Categories</span>
+						<span>Category</span>
 						<img
 							src="/assets/icons/icon-arrow-drop-down.svg"
 							className={`${!openSections.categories ? "rotate-180" : ""}`}
 						/>
 					</div>
+
 					{openSections.categories && (
 						<div className="flex flex-col items-center gap-5 mt-5">
 							{
-								categories.map((cat) =>
+								categories.slice(0, showItemCounts.category).map((cat) =>
 									<button
 										className={`hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center`}
 										onClick={() => { toggleCategory(cat.id) }}
@@ -154,12 +162,22 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 							}
 						</div>
 					)}
+
+					{
+						categories.length > showItemCounts.category &&
+						<Button
+							divClassName={`mt-6 uppercase bg-transparent text-sm rounded-[4px]`}
+							onClick={() => showItemCounts.category += 6}
+						>
+							VIEW ALL CATEGORIES
+						</Button>
+					}
 				</div>
 			</div>
 
 			<hr className="gradient-border my-8" />
 
-			<div
+			{/* <div
 				className={`w-full`}
 			>
 				<div>
@@ -167,7 +185,7 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 						className="w-full flex justify-between items-center cursor-pointer"
 						onClick={() => toggleSection("brands")}
 					>
-						<span>Brands</span>
+						<span>Brand</span>
 						<img
 							src="/assets/icons/icon-arrow-drop-down.svg"
 							className={`${!openSections.brands ? "rotate-180" : ""}`}
@@ -200,49 +218,7 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 				</div>
 			</div>
 
-			<hr className="gradient-border my-8" />
-
-			<div
-				className={`w-full`}
-			>
-				<div>
-					<div
-						className="w-full flex justify-between items-center cursor-pointer"
-						onClick={() => toggleSection("conditions")}
-					>
-						<span>Conditions</span>
-						<img
-							src="/assets/icons/icon-arrow-drop-down.svg"
-							className={`${!openSections.conditions ? "rotate-180" : ""}`}
-						/>
-					</div>
-					{openSections.conditions && (
-						<div className="flex flex-col items-center gap-2 mt-5 lg:gap-4">
-							{
-								conditions.map((condition) =>
-									<button
-										className={`hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center`}
-										onClick={() => { toggleCondition(condition.value) }}
-										key={`sidebar-condition-${condition.value}`}
-									>
-										{
-											selectedConditions.includes(condition.value) ?
-												<CheckedIcon />
-												:
-												<UnCheckedIcon />
-										}
-										<span className="ml-2">
-											{condition.label}
-										</span>
-									</button>
-								)
-							}
-						</div>
-					)}
-				</div>
-			</div>
-
-			<hr className="gradient-border my-8" />
+			<hr className="gradient-border my-8" /> */}
 
 			<div
 				className={`w-full`}
@@ -253,7 +229,7 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 						// onClick={() => toggleSection("rarities")}
 						onClick={() => toggleSection("rarities")}
 					>
-						<span>Rarities</span>
+						<span>Rarity</span>
 						<img
 							src="/assets/icons/icon-arrow-drop-down.svg"
 							className={`${!openSections.rarities ? "rotate-180" : ""}`}
@@ -276,6 +252,48 @@ const SidebarFilterMarketplaceCategories = ({ className, show }) => {
 										}
 										<span className="ml-2">
 											{rarity.label}
+										</span>
+									</button>
+								)
+							}
+						</div>
+					)}
+				</div>
+			</div>
+
+			<hr className="gradient-border my-8" />
+
+			<div
+				className={`w-full`}
+			>
+				<div>
+					<div
+						className="w-full flex justify-between items-center cursor-pointer"
+						onClick={() => toggleSection("conditions")}
+					>
+						<span>Condition</span>
+						<img
+							src="/assets/icons/icon-arrow-drop-down.svg"
+							className={`${!openSections.conditions ? "rotate-180" : ""}`}
+						/>
+					</div>
+					{openSections.conditions && (
+						<div className="flex flex-col items-center gap-2 mt-5 lg:gap-4">
+							{
+								conditions.map((condition) =>
+									<button
+										className={`hover:border-primary w-full hover:text-white text-[11px] lg:text-base flex items-center`}
+										onClick={() => { toggleCondition(condition.value) }}
+										key={`sidebar-condition-${condition.value}`}
+									>
+										{
+											selectedConditions.includes(condition.value) ?
+												<CheckedIcon />
+												:
+												<UnCheckedIcon />
+										}
+										<span className="ml-2">
+											{condition.label}
 										</span>
 									</button>
 								)

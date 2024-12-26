@@ -54,33 +54,29 @@ const CardItem = ({
   }
 
   return (
-    <Link
-      className={`p-3 lg:p-5 flex flex-col card-item w-full min-w-[160px] lg:min-h-[500px] bg-white/5 backdrop-blur-sm ${cardClassName}`}
-      to={`/marketplace/${cardId}`}
+    <div
+      className={`p-3 flex flex-col card-item w-full bg-white/5 backdrop-blur-sm ${cardClassName}`}
     >
       <div className="relative">
-        <img
-          src={imageSrc || "/assets/images/image_item_default.png"}
-          alt={title}
-          className={`border-style-decoration w-full object-cover max-h-[250px] ${imageClassName}`}
-        />
+        <div className="relative w-full !pt-[90%]">
+          <img
+            src={imageSrc || "/assets/images/image_item_default.png"}
+            alt={title}
+            className={`!absolute top-0 h-full object-cover w-full ${imageClassName}`}
+          />
+        </div>
         {/* {isRare && ( */}
-        <span className="text-white p-2 px-4 bg-primary-gradient absolute top-2 right-2  font-aero uppercase text-[8px] lg:text-xs">
+        {/* <span className="text-white p-2 px-4 bg-primary-gradient absolute top-2 right-2  font-aero uppercase text-[8px] lg:text-xs">
           {rarity}
-        </span>
+        </span> */}
         {/* )} */}
       </div>
 
-      <div className="mt-4 flex flex-col justify-between h-full gap-6">
+      <div className="mt-3 flex flex-col justify-between h-full gap-4">
         <div>
-          <div className="flex items-center justify-between gap-2">
-            <h4
-              className={`text-sm lg:text-2xl uppercase font-aero text-white leading-[1.4] ${titleClassName}`}
-            >
-              {title} {quantity}
-            </h4>
+          <div className="flex items-center gap-2">
             <span
-              className={`text-[10px] lg:text-base text-primary uppercase font-aeonik font-bold text-nowrap ${priceClassName}`}
+              className={`text-base text-primary uppercase font-aeonik font-bold text-nowrap ${priceClassName}`}
             >
               {
                 typeof price === 'number' ?
@@ -88,13 +84,20 @@ const CardItem = ({
               }
             </span>
           </div>
+
+          <h4
+            className={`text-lg uppercase text-white leading-[1.4] ${titleClassName}`}
+          >
+            {title} {quantity}
+          </h4>
+
           <p
-            className={`text-white/60 text-[10px] lg:text-sm mt-3 font-light ${descriptionClassName}`}
+            className={`text-white/60 text-sm mt-1 font-light ${descriptionClassName}`}
           >
             {description}
           </p>
         </div>
-        {
+        {/* {
           userData ?
             <>
               {
@@ -120,9 +123,25 @@ const CardItem = ({
                 Login
               </Button>
             </Link>
-        }
+        } */}
+        <Link to={`/marketplace/${cardId}`}>
+          <Button
+            divClassName={`bg-primary text-base ${buttonClassName}`}
+            buttonClassName="group-hover:!bg-white group-hover:!bg-none group-hover:text-black !p-3"
+          >
+            <div className="flex items-center">
+              <span className="mr-1">
+                View Details
+              </span>
+
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="mt-[1px]">
+                <path d="M0.708333 8L0 7.29167L3.29167 4L0 0.708333L0.708333 0L4.70833 4L0.708333 8Z" className="fill-white group-hover:fill-black" />
+              </svg>
+            </div>
+          </Button>
+        </Link>
       </div>
-    </Link>
+    </div>
   )
 };
 

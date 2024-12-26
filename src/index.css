@@ -229,27 +229,25 @@ input:focus {
   position: relative;
   outline: none;
   border: 2px solid rgba(255, 255, 255, .2);
+  border-right: 0;
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   /* overflow: hidden; */
-  clip-path: polygon(0 15px, 15px 15px, 15px 0,
+  /* clip-path: polygon(0 15px, 15px 15px, 15px 0,
       calc(100% - 15px) 0, 100% 0, 100% 15px,
       100% calc(100% - 15px), calc(100% - 15px) calc(100% - 15px),
-      calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px));
+      calc(100% - 15px) 100%, 15px 100%, 0 100%, 0 calc(100% - 15px)); */
 }
 
 
-.product-ask-section::before {
+/* .product-ask-section::before {
   content: '';
   position: absolute;
   top: 0px;
   left: 0px;
   width: 15px;
   height: 15px;
-  /* background-color: #141414; */
   border-bottom: 2px solid rgba(255, 255, 255, .2);
-  /* Outer border color */
   border-right: 2px solid rgba(255, 255, 255, .2);
-  /* Outer border color */
   pointer-events: none;
 }
 
@@ -262,11 +260,9 @@ input:focus {
   height: 15px;
   background-color: #141414;
   border-top: 2px solid rgba(255, 255, 255, .2);
-  /* Outer border color */
   border-left: 2px solid rgba(255, 255, 255, .2);
-  /* Outer border color */
   pointer-events: none;
-}
+} */
 
 
 /* card item */
@@ -275,13 +271,13 @@ input:focus {
 .card-item {
   position: relative;
   outline: none;
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid #474747;
   /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
   /* overflow: hidden; */
-  clip-path: polygon(0 10px, 10px 10px, 10px 0,
+  /* clip-path: polygon(0 10px, 10px 10px, 10px 0,
       calc(100% - 10px) 0, 100% 0, 100% 10px,
       100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
-      calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px));
+      calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px)); */
 }
 
 /* 
@@ -290,15 +286,13 @@ input:focus {
   transition: .25s;
 } */
 
-.card-item:hover {
+/* .card-item:hover {
   border: 1px solid rgba(26, 182, 249, 1);
-  /* background: linear-gradient(to bottom, #5CC9F8, #1AB6F9); */
-  /* overflow: hidden; */
   clip-path: polygon(0 10px, 10px 10px, 10px 0,
       calc(100% - 10px) 0, 100% 0, 100% 10px,
       100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
       calc(100% - 10px) 100%, 10px 100%, 0 100%, 0 calc(100% - 10px));
-}
+} */
 
 
 .border-style-decoration {
@@ -358,18 +352,15 @@ input:focus {
 
 
 
-.card-item::before {
+/* .card-item::before {
   content: '';
   position: absolute;
   top: 0px;
   left: 0px;
   width: 10px;
   height: 10px;
-  /* background-color: #141414; */
   border-bottom: 1px solid rgba(255, 255, 255, 1);
-  /* Outer border color */
   border-right: 1px solid rgba(255, 255, 255, 1);
-  /* Outer border color */
   pointer-events: none;
 }
 
@@ -382,25 +373,19 @@ input:focus {
   height: 10px;
   background-color: #141414;
   border-top: 1px solid rgba(255, 255, 255, 1);
-  /* Outer border color */
   border-left: 1px solid rgba(255, 255, 255, 1);
-  /* Outer border color */
   pointer-events: none;
-}
+} */
 
-.card-item:hover::before {
+/* .card-item:hover::before {
   border-bottom: 1px solid rgba(26, 182, 249, 1);
-  /* Outer border color */
   border-right: 1px solid rgba(26, 182, 249, 1);
-  /* Outer border color */
 }
 
 .card-item:hover::after {
   border-top: 1px solid rgba(26, 182, 249, 1);
-  /* Outer border color */
   border-left: 1px solid rgba(26, 182, 249, 1);
-  /* Outer border color */
-}
+} */
 
 .animate-marquee {
   display: flex;

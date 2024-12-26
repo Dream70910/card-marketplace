@@ -5,59 +5,72 @@ import TextInput from "../components/commons/TextInput";
 import CardFaq from "../components/cards/CardFaq";
 
 const Faq = () => {
-  const [activeTab, setActiveTab] = useState("All");
-  const tabs = ["All", "Purchases", "Returns", "Payments"];
+  const [itemCount, setItemCount] = useState(6)
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleFAQ = () => {
-    setIsOpen((prev) => !prev);
-  };
 
   // Example data array for FAQs
   const faqData = [
     {
-      question: "Can I create my own custom category?",
+      question: "What is Card Shop Exchange?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Card Shop Exchange is an online marketplace where collectors, players, and enthusiasts can buy, sell, and trade Pokémon and other collectible cards. Our platform is designed to provide a seamless experience for finding, listing, and trading cards.",
     },
     {
-      question: "What are the payment methods?",
+      question: "How do I create an account on Card Shop Exchange?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Available payment methods are credit card, PayPal, and others.",
+        "To create an account, click the “Log In” button at the top of the page, select “Sign Up,” and follow the simple steps to register using your email or social media accounts.",
     },
     {
-      question: "Will I get a replacement if the cards are damaged?",
+      question: "How does buying and selling work on the platform?",
       answer:
-        "Yes, you can get a replacement within 30 days of purchase if the cards are damaged.",
+        "Sellers list their cards with detailed descriptions and images, while buyers can browse categories, view listings, and make offers or purchases directly. Payments are secure and processed through our integrated system.",
     },
     {
-      question: "How does Card Marketplace help my business?",
+      question: "What types of cards can I find on Card Shop Exchange?",
       answer:
-        "Card Marketplace provides a platform for buying and selling customized cards to expand your business reach.",
+        "You can explore a variety of categories, including Pokémon, Zelda, Naruto, Formula 1, One Piece, WWE, Football, and Attack on Titan (AOT), among others.",
     },
     {
-      question: "How do returns & refunds work?",
+      question: "Are the cards on the platform verified for authenticity?",
       answer:
-        "Returns and refunds are processed within 7 business days upon receiving the returned items.",
+        "While we encourage sellers to list only authentic cards, buyers are advised to review descriptions and images carefully. Our support team is available to assist with any concerns.",
     },
     {
-      question: "What are the terms & conditions for returning a product?",
+      question: "How do I contact a seller or buyer?",
       answer:
-        "Products should be returned in their original condition within 30 days to be eligible for a refund.",
+        "Our integrated chat functionality allows you to communicate directly with other users regarding listings, offers, or trades.",
+    },
+    {
+      question: "What payment methods are accepted?",
+      answer:
+        "We support various secure payment options, including credit/debit cards, PayPal, and other popular payment gateways, ensuring a smooth transaction process.",
+    },
+    {
+      question: "Can I track my transactions and earnings?",
+      answer:
+        "Yes, your account dashboard provides easy access to your transaction history, listed items, earnings, and account details for streamlined management.",
+    },
+    {
+      question: "What should I do if I have an issue with a transaction?",
+      answer:
+        "If you encounter any issues, our dedicated support team is here to help. Visit the “Support” section or contact us directly for prompt assistance.",
+    },
+    {
+      question: "Is there a fee for using Card Shop Exchange?",
+      answer:
+        "Creating an account and browsing the marketplace is free. A small fee is applied to successful transactions to maintain and improve the platform’s features and security.",
     },
   ];
 
   return (
     <div>
-      <Header isLogin />
-      <div className="container mx-auto px-5 py-32 lg:py-48 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
-        <h1 className="font-aero uppercase text-center text-white leading-[1.2] text-[32px] lg:text-[48px]">
-          Faq's
-        </h1>
-
+      <Header />
+      <h1 className="container py-32 lg:py-48 font-aero uppercase text-white leading-[1.2] text-[32px] lg:text-[32x]">
+        Faqs
+      </h1>
+      <div className="container mx-auto px-5 relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[80%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[1]">
         <div className="w-full max-w-[960px] mx-auto">
-          <div className="w-full flex flex-col-reverse lg:flex-row items-center gap-3 my-12">
+          {/* <div className="w-full flex flex-col-reverse lg:flex-row items-center gap-3 my-12">
             <div className="grid grid-cols-2 mt-4 lg:mt-0 lg:flex w-full items-center gap-3 ">
               {tabs.map((tab) => (
                 <button
@@ -78,18 +91,22 @@ const Faq = () => {
               placeholder="Search for FAQs..."
               inputClassName="placeholder:text-white/60"
             />
-          </div>
+          </div> */}
 
           <div className="space-y-6">
-            {faqData.map((faq, index) => (
+            {faqData.slice(0, itemCount).map((faq, index) => (
               <CardFaq key={index} title={faq.question} content={faq.answer} />
             ))}
           </div>
-          <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-12">
-            <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]">
-              Load More
-            </button>
-          </div>
+
+          {
+            faqData.length > itemCount &&
+            <div className="w-full lg:w-fit mx-auto mt-8 lg:mt-12">
+              <button className="hover:bg-white w-full  lg:w-fit hover:text-[#141414] justify-center flex items-center p-4 px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]" onClick={() => setItemCount(itemCount + 6)}>
+                Load More
+              </button>
+            </div>
+          }
         </div>
       </div>
       <Footer />

@@ -44,7 +44,7 @@ const Header = ({ isLogin = false }) => {
     // <div className={`top-0 w-full z-[1000] ${isFixed ? 'fixed bg-slate-800' : 'relative'}`}>
     //   <div className="relative after:content-[''] w-full after:w-full after:absolute after:h-[100px] after:bg-[linear-gradient(to_bottom,#141414_0%,#14141400_100%)] z-10  after:pointer-events-none">
     <>
-      <div className={`px-4 py-4 w-full z-[100] h-fit  fixed border-b-[1px] border-white bg-black left-0 top-0`}>
+      <div className={`px-4 py-4 w-full z-[100] h-fit  fixed border-b-[1px] border-[#474747] bg-[#181B1C] left-0 top-0`}>
         <div className="flex px-4 container mx-auto items-center justify-between w-full">
           <div className="flex items-center lg:hidden  gap-6">
             <DropdownMenu />
@@ -95,31 +95,31 @@ const Header = ({ isLogin = false }) => {
 
             <div className="hidden lg:flex gap-[2rem] text-[1rem] uppercase  text-white ">
               <div className="flex items-center text-[#484F52]">
-                <Link to="/" className={isExactActive('/') ? 'text-white' : ''}>Home</Link>
+                <Link to="/" className={isExactActive('/') ? 'text-primary' : ''}>Home</Link>
               </div>
               <div className="flex items-center text-[#484F52]">
-                <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-white' : ''}>Find cards</Link>
+                <Link to="/marketplace/categories" className={isActive('/marketplace/categories') ? 'text-primary' : ''}>Find cards</Link>
               </div>
               {/* <div className="flex items-center text-[#484F52]">
-              <Link to="/marketplace/chat/all" className={isActive('/marketplace/chat') && !isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Messages</Link>
+              <Link to="/marketplace/chat/all" className={isActive('/marketplace/chat') && !isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-primary' : ''}>Messages</Link>
 
               {
                 userData && userData.unReadMessages && userData.unReadMessages.length > 0 &&
                 <div className="relative ml-2 bg-[#f00] rounded-[50%] w-4 h-4">
-                  <span className="absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 text-white text-[12px]">{userData.unReadMessages.length}</span>
+                  <span className="absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 text-primary text-[12px]">{userData.unReadMessages.length}</span>
                 </div>
               }
             </div> */}
-              <div className="flex items-center text-[#484F52]">
-                <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-white' : ''}>Sell Cards</Link>
-              </div>
+              {/* <div className="flex items-center text-[#484F52]">
+                <Link to="/marketplace/create-listing" className={isActive('/marketplace/create-listing') ? 'text-primary' : ''}>Sell Cards</Link>
+              </div> */}
               {
                 userData && userData.role === 'admin' ?
                   <div className="flex items-center  text-[#484F52]">
-                    <Link to="/admin" className={isActive('/admin') ? 'text-white' : ''}>Admin</Link>
+                    <Link to="/admin" className={isActive('/admin') ? 'text-primary' : ''}>Admin</Link>
                   </div> :
                   <div className="flex items-center text-[#484F52]">
-                    <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-white' : ''}>Support</Link>
+                    <Link to="/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1" className={isActive('/marketplace/chat/soeyv2FdZVQ8z48ANba93YLpZOk1') ? 'text-primary' : ''}>Support</Link>
                   </div>
               }
             </div>
@@ -174,12 +174,12 @@ const Header = ({ isLogin = false }) => {
                         </div>
                         <div className="ml-4 hidden lg:flex items-center whitespace-nowrap">
                           <div>
-                            <div className="text-base text-white">
+                            <div className="text-base font-medium text-white">
                               {userData.displayName}
                             </div>
-                            <div className="text-base text-left text-white">
+                            {/* <div className="text-base text-left text-white">
                               $ {userData.balance.toFixed(2)}
-                            </div>
+                            </div> */}
                           </div>
                           <img
                             src="/assets/icons/icon-arrow-drop-down.svg"
@@ -198,12 +198,21 @@ const Header = ({ isLogin = false }) => {
                         <Link
                           to="/user-profile"
                           className="group border-style-decoration flex w-full items-center gap-2 !border-0 hover:!border-1 py-2.5 px-4 data-[focus]:bg-white hover:text-black font-semibold text-sm lg:text-base">
-                          Profile Settings
+                          Profile
                         </Link>
                       </MenuItem>
+
                       <MenuItem>
-                        <Link to="/my-listings" className="group border-style-decoration flex w-full items-center gap-2 !border-0 hover:!border-1 py-2.5 px-4 data-[focus]:bg-white hover:text-black font-semibold text-sm lg:text-base">
-                          Your Listing
+                        <Link
+                          to="/marketplace/create-listing"
+                          className="group border-style-decoration flex w-full items-center gap-2 !border-0 hover:!border-1 py-2.5 px-4 data-[focus]:bg-white hover:text-black font-semibold text-sm lg:text-base">
+                          Create Listing
+                        </Link>
+                      </MenuItem>
+
+                      <MenuItem>
+                        <Link to="/faqs" className="group border-style-decoration flex w-full items-center gap-2 !border-0 hover:!border-1 py-2.5 px-4 data-[focus]:bg-white hover:text-black font-semibold text-sm lg:text-base">
+                          FAQ's
                         </Link>
                       </MenuItem>
                       <MenuItem>

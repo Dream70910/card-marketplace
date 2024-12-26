@@ -64,7 +64,14 @@ const HeroSection = () => {
           /> */}
           {/* <div className="absolute pointer-events-none w-[360px] h-[360px] bg-primary blur-[300px] rounded-full left-[50%] translate-x-[-50%] bottom-[100%]" /> */}
           {/* <TextInput placeholder="Search for cards" onChange={(value) => setSearchText(value)} /> */}
-          <Button divClassName="w-full" isActive onClick={() => navigate(`/marketplace/categories`)}>Explore Cards</Button>
+          <Button
+            divClassName="w-full border-style-decoration-container"
+            buttonClassName="border-style-decoration"
+            isActive
+            onClick={() => navigate(`/marketplace/categories`)}
+          >
+            Explore Cards
+          </Button>
         </div>
 
         <div className="flex items-start justify-center gap-3 w-full mt-12 lg:mt-20">
