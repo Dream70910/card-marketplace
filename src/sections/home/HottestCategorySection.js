@@ -73,8 +73,8 @@ const HottestCategorySection = ({ categories }) => {
       </div>
 
       <div className="relative">
-        <Slider
-          className="mt-8 flex items-stretch dots-top custom-arrows arrows-center"
+        <div
+          className="mt-8 grid xl:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5"
           {...homeCategorySliderSettings}
         >
           {
@@ -90,11 +90,12 @@ const HottestCategorySection = ({ categories }) => {
                   imageSrc={item.image}
                   iconSrc="/assets/icons/icon-arrow-up-right.svg"
                   cardClassName="bg-[linear-gradient(to_top,#FEDE00_0%,#ED4024_100%)]"
+                  background={item.background ? item.background : "linear-gradient(0deg,#297572 0,#00E4FD)"}
                 />
               </div>
             )
           }
-        </Slider>
+        </div>
 
         {/* <div className="flex absolute top-[50%] -translate-y-1/2 left-4 ml-[1px] w-full">
 

@@ -13,6 +13,7 @@ import { useAtom } from "jotai"
 import { priceRangeAtom, userAtom, yearRangeAtom } from "../../store"
 import { brands, conditions } from "../../utils/data"
 import Button from "../../components/commons/Button"
+import HeroSection from "../../sections/marketplace/HeroSection"
 
 const MarketplaceCategories = () => {
 	const [openDialog, setOpenDialog] = useState(null)
@@ -178,10 +179,23 @@ const MarketplaceCategories = () => {
 				open={openDialog === "filter"}
 				onClose={() => setOpenDialog(null)}
 			/>
-			<div className="container mx-auto px-5 pt-32 text-white relative after:content-[''] after:w-[360px] after:right-[100%] after:h-[360px] after:bottom-[50%] after:blur-[250px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
+
+			<HeroSection />
+
+			<div className="container mx-auto pt-36 px-5 lg:pt-12 text-white relative">
+				{/* <div className="flex justify-between max-h-[360px] border-[#ffffff22] border-[1px]">
+					<div className="p-16">
+
+					</div>
+
+					<div className="h-full -my-[2px]">
+						<img src="/assets/decorations/market_bg.png" className="h-full" width={480} height={360} />
+					</div>
+				</div> */}
+
 				<div className="flex flex-col lg:flex-row pb-24 lg:pb-48 lg:gap-16">
 					<div className="w-full hidden lg:block lg:max-w-[285px] mt-9">
-						<div className="relative mb-8">
+						{/* <div className="relative mb-8">
 							<input
 								className="px-4 py-4 bg-transparent w-full text-primary placeholder-primary"
 								placeholder="SEARCH"
@@ -201,7 +215,7 @@ const MarketplaceCategories = () => {
 									</clipPath>
 								</defs>
 							</svg>
-						</div>
+						</div> */}
 
 						<h4 className="flex items-center text-xl mb-8">
 							<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
@@ -216,19 +230,20 @@ const MarketplaceCategories = () => {
 							<div className="text-lg">Filter By</div>
 						</h4>
 
-						<hr className="gradient-border mb-8" />
+						<hr className="gradient-border mb-6" />
 
 						<SidebarFilterMarketplaceCategories />
 					</div>
 
 					<div className="w-full block lg:hidden lg:max-w-[285px]">
 						<Button
-							divClassName={`text-sm lg:text-base flex mb-6`}
+							divClassName={`text-sm lg:text-base flex mb-6 relative`}
 							buttonClassName="justify-between"
 							onClick={() => setShowSidebarFilter(!showSidebarFilter)}
 						>
 							Filter by
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-[50%] right-[1rem] -translate-y-1/2">
 								<mask id="mask0_344_655" style={{ maskType: "alpha" }} maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
 									<rect width="20" height="20" fill="#D9D9D9" />
 								</mask>
@@ -347,7 +362,7 @@ const MarketplaceCategories = () => {
 
 						{
 							listings.length > 0 ?
-								<div className="grid grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mt-8">
+								<div className="grid grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6 mt-4z">
 									{
 										listings.slice(0, itemsToShow).map((item) =>
 											<CardItem

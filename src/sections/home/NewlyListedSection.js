@@ -29,7 +29,7 @@ const NewlyListedSection = ({ categories, cards }) => {
             className="hover:bg-white uppercase w-full lg:w-fit hover:text-[#141414] justify-center text-[11px] lg:text-base flex items-center p-3 px-4 lg:p-4 lg:px-6 text-white border-style-decoration after:bottom-[-.5px] right-[-.5px]"
             to={`/marketplace/categories`}
           >
-            View More
+            Find Cards
           </Link>
         </div>
       </div>

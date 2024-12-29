@@ -12,6 +12,7 @@ import { getAllListings } from "../firebase/listings"
 import { useAtom } from "jotai"
 import { userAtom } from "../store"
 import DialogConfirmation from "../components/dialogs/DialogConfirmation"
+import MembershipSection from "../sections/home/MembershipSection"
 
 const Home = () => {
   const [categories, setCatgories] = useState(null)
@@ -50,12 +51,13 @@ const Home = () => {
           <>
             <HeroSection />
 
-            <div className="pt-20 max-lg:pb-20 lg:pt-64 ">
+            <div className="pt-20 max-lg:pb-20 lg:pt-40 ">
               <HottestCategorySection categories={categories} />
+              {/* <MembershipSection /> */}
               <ProductQuestionSection />
               <NewlyListedSection categories={categories} cards={cards} />
               <KeyFeaturesSection />
-              <MostPopularSection cards={cards} />
+              {/* <MostPopularSection cards={cards} /> */}
             </div>
           </>
       }

@@ -57,14 +57,21 @@ const HeroSection = () => {
           <br /> hassle-free at best prices.
         </p>
 
-        <div className="mt-6 flex items-center space-x-4 w-full max-w-[380px] lg:max-w-[500px] relative after:content-[''] after:w-[360px]  after:h-[360px] after:left-[50%] after:translate-x-[-50%] after:bottom-[100%] after:blur-[300px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
+        <div className="mt-6 flex items-center space-x-4 w-full max-w-[380px] lg:max-w-[350px] relative after:content-[''] after:w-[360px]  after:h-[360px] after:left-[50%] after:translate-x-[-50%] after:bottom-[100%] after:blur-[300px] after:bg-primary after:rounded-full after:absolute after:z-[-1]">
           {/* <img
             src="/assets/decorations/homepage_decoration_9.png"
             className="absolute top-[-2rem] pointer-events-none w-[700px]"
           /> */}
           {/* <div className="absolute pointer-events-none w-[360px] h-[360px] bg-primary blur-[300px] rounded-full left-[50%] translate-x-[-50%] bottom-[100%]" /> */}
-          <TextInput placeholder="Search for cards" onChange={(value) => setSearchText(value)} />
-          <Button isActive onClick={() => navigate(`/marketplace/categories?search=${searchText}`)}>Explore</Button>
+          {/* <TextInput placeholder="Search for cards" onChange={(value) => setSearchText(value)} /> */}
+          <Button
+            divClassName="w-full border-style-decoration-container"
+            buttonClassName="border-style-decoration"
+            isActive
+            onClick={() => navigate(`/marketplace/categories`)}
+          >
+            Explore Cards
+          </Button>
         </div>
 
         <div className="flex items-start justify-center gap-3 w-full mt-12 lg:mt-20">
